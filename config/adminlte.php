@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>商品管理</b>',
+    'logo' => '<b>おうちノート</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -228,6 +228,33 @@ return [
         [
             'text' => '商品一覧',
             'url'  => 'items',
+            'icon' => 'fas fa-gamepad',
+        ],
+        [
+            'text' => 'レシピ',
+            'icon' => 'fas fa-gamepad',
+            'submenu' => [
+                [
+                    'text' => '食材一覧',
+                    'url'  => 'index-foods',
+                ],
+                [
+                    'text' => '食材登録',
+                    'url'  => 'create-food',
+                ],
+                [
+                    'text' => 'レシピ一覧',
+                    'url'  => 'index-recipes',
+                ],
+                [
+                    'text' => 'レシピ登録',
+                    'url'  => 'create-recipe',
+                ],
+            ],
+        ],
+        [
+            'text' => '家計簿',
+            'url'  => 'household-account',
             'icon' => 'fas fa-gamepad',
         ],
 

@@ -1,0 +1,7 @@
+.addForm:nth-child(odd) {
+    background-color:aqua;
+}
+
+.preview-size {
+    width:400px;
+}

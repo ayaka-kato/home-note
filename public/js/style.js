@@ -1,134 +1,119 @@
-// // ログイン・会員登録フォームの切替
+// -------------------------
+// プレビュー機能
+// -------------------------
+document.addEventListener('DOMContentLoaded', function(){
 
-//     // ラジオボタンの選択に応じて表示項目を切り替える
-//     const loginFields = document.getElementById('login-fields');
-//     const registerFields = document.querySelectorAll('.register-fields');
-//     const loginHeader = document.getElementById('login-header');
-//     const registerHeader = document.getElementById('register-header');
-//     const radioButtons = document.querySelectorAll('input[name="action"]');
+  // 1.プレビュー画像を表示する場所(div)を取得
+  const previewImage = document.getElementById('previewImage');
 
-//     radioButtons.forEach(radio => {
-//         radio.addEventListener('change', () => {
-//             if (radio.value === 'login') {
-//                 loginFields.style.display = 'block';
-//                 loginHeader.style.display = 'block';
-//                 registerHeader.style.display = 'none';
-//                 registerFields.forEach(field => field.style.display = 'none');
-//                 removeValidationAttributes(registerFields);
-//             } else if (radio.value === 'register') {
-//                 loginFields.style.display = 'none';
-//                 loginHeader.style.display = 'none';
-//                 registerHeader.style.display = 'block';
-//                 registerFields.forEach(field => field.style.display = 'block');
-//                 addValidationAttributes(registerFields);
-//             }
-//         });
-//     });
+  // 対象がなければ、何もしない（プレビュー機能から抜ける）
+  if (!previewImage) { return false;}
 
-//     // バリデーション属性を削除する関数
-//     function removeValidationAttributes(formElements) {
-//         formElements.forEach(formElement => {
-//             const inputElements = formElement.querySelectorAll('input, textarea, select');
-//             inputElements.forEach(input => {
-//                 input.removeAttribute('required');
-//                 input.removeAttribute('max');
-//                 input.removeAttribute('min');
-//                 input.removeAttribute('maxlength');
-//                 input.removeAttribute('pattern');
-//             });
-//         });
-//     }
+  // --------------------------------------------------
 
-    // // バリデーション属性を追加する関数
-    // function addValidationAttributes(formElements) {
-    //     formElements.forEach(formElement => {
-    //         const inputElements = formElement.querySelectorAll('input, textarea, select');
-    //         inputElements.forEach(input => {
-    //             // 例えば、必須項目にする場合
-    //             input.setAttribute('required', 'required');
-    //         });
-    //     });
-    // }
-
-
-// // フォームの送信処理をJSで行う（Ajaxを使用する場合）
-// document.getElementById('loginForm').addEventListener('submit', function(event) {
-//     event.preventDefault();
-//     // ログインフォームの送信処理を記述（例：Ajaxリクエストを送信する）
-//     // 例：Ajaxを使用してフォームを送信する場合
-//     const form = document.getElementById('loginForm');
-//     const formData = new FormData(form);
-//     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-//     formData.append('_token', token);
-
-//     fetch('{{ route('login-check') }}', {
-//     method: 'POST',
-//     body: formData,
-// })
-// .then(response => {
-//   // レスポンスの処理
-// })
-// .catch(error => {
-//   // エラーの処理
-// });
-// });
-
-// document.getElementById('registerForm').addEventListener('submit', function(event) {
-//     event.preventDefault();
-//     // 会員登録フォームの送信処理を記述（例：Ajaxリクエストを送信する）
-// });
-
-
-// CSRFトークンを取得してフォームにセットする関数
-function setCsrfToken() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://127.0.0.1:8000/login", true); // サーバーのCSRFトークン取得エンドポイントのURLを指定
-  
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        const csrfToken = JSON.parse(xhr.responseText).csrfToken;
-        document.getElementById("csrfToken").value = csrfToken;
-      }
-    };
-  
-    xhr.send();
+  // 2.プレビュー画面を消去する関数
+  function clearPreviewImage() {
+    const previewImage = document.getElementById('previewImage');
+    while (previewImage.firstChild) {
+        previewImage.removeChild(previewImage.firstChild);
+    }
   }
-  
-  // ログイン処理
-  function login() {
-    // フォームからemailとpasswordの値を取得
-    const email = document.getElementById("email_1").value;
-    const password = document.getElementById("password_1").value;
-  
-    // CSRFトークンを取得してフォームにセット
-    setCsrfToken();
-  
-    // 送信するデータをオブジェクトにまとめる
-    const data = {
-      email: email,
-      password: password,
-      csrfToken: document.getElementById("csrfToken").value // CSRFトークンをリクエストに含める
-    };
-  
-    // Ajaxリクエストを作成
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://127.0.0.1:8000/login", true); // サーバーのログインエンドポイントのURLを指定
-    xhr.setRequestHeader("Content-Type", "application/json"); // リクエストのデータ形式をJSONに指定
-  
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          // ログイン成功の場合
-          const response = JSON.parse(xhr.responseText);
-          alert("ログイン成功: " + response.message);
-        } else {
-          // ログイン失敗の場合
-          alert("ログイン失敗: " + xhr.responseText);
-        }
-      }
-    };
-  
-    // リクエストを送信
-    xhr.send(JSON.stringify(data));
-  }
-  
+
+  // 3.画像ファイルが選択されたら処理実行
+    document.getElementById('image').addEventListener('change', function(e){
+
+      const file = e.target.files[0];
+
+      // fileオブジェクトをURLに変換させる処理
+      const blob = window.URL.createObjectURL(file);
+
+      // 古いプレビュー画像を削除
+      clearPreviewImage();
+
+      // 新しいプレビュー画像を作成
+      // 4.divタグ・imgタグを作成、クラス・属性を付与
+      const imageElement =  document.createElement('div');
+      const blobImage = document.createElement('img');
+      blobImage.setAttribute('src', blob);
+      blobImage.classList.add('preview-size');
+
+      // 5.親子紐づけ
+      imageElement.appendChild(blobImage);
+      previewImage.appendChild(imageElement);
+
+  });
+});
+
+// -------------------------
+// 入力項目の表示・非表示切替
+// -------------------------
+
+// 1.処理：きっかけとなる対象を取得
+let addBtns = document.querySelectorAll('.add-Btn');
+let deleteBtns = document.querySelectorAll('.delete-Btn');
+
+// 2.処理：styleのdisplayを変更する関数の設定
+let openElement = (el)=> {
+    if(el.style.display=='none'){
+        el.style.display='';
+    }
+}
+
+let closeElement = (el)=>{
+    if(el.style.display==''){
+    el.style.display='none'; 
+    }
+}
+
+let clearElement = (el) => {
+    if (el !== null){
+    el.value = '';
+    }
+}
+
+// 追加ボタン
+// 3.ループ処理：
+addBtns.forEach(function(addBtn){
+
+    // 3-1.発火設定
+    addBtn.addEventListener('click', ()=>{
+
+        // 3-2.処理：次のidを設定する
+        let add_id = Number(addBtn.dataset.id) + 1;
+
+        // 3-3.処理：表示・非表示を切り替える要素を取得
+        let div = document.getElementById('addForm-'+add_id);
+
+        // 3-4.処理：ボタンに処理を付与する
+        closeElement(addBtn);
+        openElement(div);
+
+    }, false);
+});
+
+// 削除ボタン
+deleteBtns.forEach(function(deleteBtn){
+
+    deleteBtn.addEventListener('click', ()=>{
+
+        let delete_id = Number(deleteBtn.dataset.id) ;
+
+        // 入力していたデータの消去処理
+        var headingInput = document.getElementById('heading' + delete_id);
+        var detailInput = document.getElementById('detail-' + delete_id);
+
+        clearElement(headingInput);
+        clearElement(detailInput);
+
+        let div = document.getElementById('addForm-'+delete_id);
+        let addBtn = document.getElementById('addBtn-'+ Number(delete_id-1));
+
+        // ボタンの表示・非表示
+        closeElement(div);   
+        openElement(addBtn);   
+    }, false);
+});
+
+
+
+
