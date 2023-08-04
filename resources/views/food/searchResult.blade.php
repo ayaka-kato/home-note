@@ -1,15 +1,16 @@
 @extends('adminlte::page')
 
-@section('title', '食材一覧')
+@section('title', '食材検索結果一覧')
 
 @section('content_header')
-    <h1>食材一覧</h1>
+    <h1>食材検索結果一覧</h1>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="input-group mb-2 offset-md-8">
+            <div class="">検索ワード"{{ $keyword }}"で検索したところ、"{{ $foods->count() }}"件ヒットしました。</div>
+            <div class="input-group mb-2 offset-md-8 col-md-4">
                 <form action="{{ url('/search-foods') }}" method="get">
                     <input type="text" name="keyword" class="form-control" placeholder="キーワードを入力">
                     <button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-search"></i> 検索</button>
@@ -17,7 +18,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">食材一覧</h3>
+                    <h3 class="card-title">食材検索結果一覧</h3>
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">

@@ -9,7 +9,8 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-        <div class="input-group mb-2 offset-md-8 col-md-4">
+        <div class="">検索ワード"{{ $keyword }}"で検索したところ、"{{ $recipes->count() }}"件ヒットしました。</div>
+            <div class="input-group mb-2 offset-md-8 col-md-4">
                 <form action="{{ url('/search-recipes') }}" method="get">
                     <input type="text" name="keyword" class="form-control" placeholder="キーワードを入力">
                     <button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-search"></i> 検索</button>
@@ -32,7 +33,6 @@
                             <tr>
                                 <th>画像</th>
                                 <th>名前</th>
-                                <th>カテゴリ</th>
                                 <th>食材</th>
                                 <!-- TODO:レビュー機能実装 -->
                                 <th>レビュー</th>
@@ -50,12 +50,7 @@
                                         @endif
                                     </div>
                                 </a></td>
-                                <td>
-                                    <a href="{{ url('/detail-recipe/'. $recipe->id ) }}">
-                                        <img src="{{ asset('img/journal-text.svg') }}" alt="レシピイメージ画僧" class="mr-2">{{ $recipe->name }}
-                                    </a>
-                                </td>
-                                <td>{{ $recipe->category }}</a></td>
+                                <td><a href="{{ url('/detail-recipe/'. $recipe->id ) }}">{{ $recipe->name }}</a></td>
                                 <td>
                                     <div class="row">
                                         @php $colCount = 0; @endphp
@@ -63,9 +58,9 @@
                                             <div class="col-md-2">
                                                 <p>{{ $food->name }}</p>
                                                 
-                                                <!-- 列が4列並んだ時、新しい行が作られる -->
+                                                <!-- 列が5列並んだ時、新しい行が作られる -->
                                                 @php $colCount++; @endphp
-                                                @if($colCount % 4 == 0)
+                                                @if($colCount % 5 == 0)
                                                     </div><div class="row">
                                                 @endif
                                             </div>
@@ -75,7 +70,7 @@
                                 <td></td>
                                 <td><a href="{{ url('/edit-recipe/' . $recipe->id ) }}" class="btn btn-success">編集</a></td>
                                 <td>
-                                    <form action=" {{ url('/delete-recipe/' . $recipe->id) }}" method="POST">
+                                    <form action="">
                                     @csrf
                                     @method('DELETE')
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除していいですか？')">削除</button>

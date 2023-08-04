@@ -4,44 +4,44 @@
 document.addEventListener('DOMContentLoaded', function(){
 
   // 1.プレビュー画像を表示する場所(div)を取得
-  const previewImage = document.getElementById('previewImage');
+    const previewImage = document.getElementById('previewImage');
 
   // 対象がなければ、何もしない（プレビュー機能から抜ける）
-  if (!previewImage) { return false;}
+    if (!previewImage) { return false;}
 
   // --------------------------------------------------
 
   // 2.プレビュー画面を消去する関数
-  function clearPreviewImage() {
-    const previewImage = document.getElementById('previewImage');
-    while (previewImage.firstChild) {
-        previewImage.removeChild(previewImage.firstChild);
+    function clearPreviewImage() {
+        const previewImage = document.getElementById('previewImage');
+        while (previewImage.firstChild) {
+            previewImage.removeChild(previewImage.firstChild);
+        }
     }
-  }
 
   // 3.画像ファイルが選択されたら処理実行
     document.getElementById('image').addEventListener('change', function(e){
 
-      const file = e.target.files[0];
+        const file = e.target.files[0];
 
-      // fileオブジェクトをURLに変換させる処理
-      const blob = window.URL.createObjectURL(file);
+        // fileオブジェクトをURLに変換させる処理
+        const blob = window.URL.createObjectURL(file);
 
-      // 古いプレビュー画像を削除
-      clearPreviewImage();
+        // 古いプレビュー画像を削除
+        clearPreviewImage();
 
-      // 新しいプレビュー画像を作成
-      // 4.divタグ・imgタグを作成、クラス・属性を付与
-      const imageElement =  document.createElement('div');
-      const blobImage = document.createElement('img');
-      blobImage.setAttribute('src', blob);
-      blobImage.classList.add('preview-size');
+        // 新しいプレビュー画像を作成
+        // 4.divタグ・imgタグを作成、クラス・属性を付与
+        const imageElement =  document.createElement('div');
+        const blobImage = document.createElement('img');
+        blobImage.setAttribute('src', blob);
+        blobImage.classList.add('preview-size');
 
-      // 5.親子紐づけ
-      imageElement.appendChild(blobImage);
-      previewImage.appendChild(imageElement);
+        // 5.親子紐づけ
+        imageElement.appendChild(blobImage);
+        previewImage.appendChild(imageElement);
 
-  });
+    });
 });
 
 // -------------------------
@@ -99,7 +99,7 @@ deleteBtns.forEach(function(deleteBtn){
         let delete_id = Number(deleteBtn.dataset.id) ;
 
         // 入力していたデータの消去処理
-        var headingInput = document.getElementById('heading' + delete_id);
+        var headingInput = document.getElementById('heading-' + delete_id);
         var detailInput = document.getElementById('detail-' + delete_id);
 
         clearElement(headingInput);
@@ -114,6 +114,31 @@ deleteBtns.forEach(function(deleteBtn){
     }, false);
 });
 
+// -------------------------
+// 食材登録を続けるか確認するアラート機能
+// -------------------------
+function confirmSubmit(event) {
+    event.preventDefault();
+    if (confirm('続けて入力しますか？\n続けて入力する場合は、「OK」を押してください。\n\n続けて入力"しない"場合は、「キャンセル」を押してください。\n(食材登録後に一覧画面に移動します。)')) {
+        document.getElementById('foodForm').submit();
+    } else {
+        document.getElementsByName('continue_input')[0].value = 0;
+        document.getElementById('foodForm').submit();
+    }
+}
 
+// -------------------------
+// ページ一番上にスクロールする機能
+// -------------------------
+function scrollToTop() {
+    window.scrollTo(0, 0);
+}
+
+// -------------------------
+// ページ一番下にスクロールする機能
+// -------------------------
+function scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+}
 
 

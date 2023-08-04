@@ -17,6 +17,7 @@ class CreateFoodsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('read')->nullable();
+            $table->string('type');
             $table->string('text')->nullable();
             $table->timestamps();
         });

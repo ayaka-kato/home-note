@@ -20,8 +20,9 @@ class foodController extends Controller
 
         $this->validate($request, [
             'name' => 'required | string | max:30 | unique:foods',
-            'read' => 'string | max:30',
-            'text' => 'string | max:100',
+            'read' => 'nullable|string | max:30',
+            'type' => 'required|string',
+            'text' => 'nullable|string | max:100',
         ]);
         // dd($request->name,$request->read,$request->text);
 
@@ -35,10 +36,16 @@ class foodController extends Controller
         $food = new Food();
         $food->name = $request->name;
         $food->read = $request->read;
+        $food->type = $request->type;
         $food->text = $request->text;
         $food->save();
 
-        return redirect()->back();
+        // 続けて入力するか確認するためのJavaScriptで設定した値を判定
+        if ($request->input('continue_input') == 1) {
+            return redirect('/create-food');
+        } else {
+            return redirect('/index-foods');
+        }
     }
 
     /**
@@ -60,9 +67,33 @@ class foodController extends Controller
     public function getFood($id)
     {
         $food = Food::find($id);
-        // dd($food);
         return view('food.edit', compact('food'));
     }
+
+    /**
+     * Request $request
+     * 
+     * 食材検索
+     */
+    public function searchFoods(Request $request)
+    {
+        // キーワード受け取り
+        $keyword = $request->input('keyword');
+        // クエリ作成
+        $query = Food::query();
+
+        // もしキーワードがあったら
+        if(!empty($keyword))
+        {
+            $query->where('name','like','%'.$keyword.'%');
+            $query->orWhere('read','like','%'.$keyword.'%');
+        }
+
+        // 全件取得
+        $foods = $query->orderBy('read','asc')->get();
+        return view('food.searchResult', compact('keyword','foods'));
+    }
+
 
     /**
      * Request $request
@@ -78,18 +109,20 @@ class foodController extends Controller
                 'max:30',
                 Rule::unique('foods')->ignore($request->id),
             ],
-            'read' => 'string|max:30',
-            'text' => 'string|max:100',
+            'read' => 'nullable|string|max:30',
+            'type' => 'required|string',
+            'text' => 'nullable|string|max:100',
         ]);
 
         $food = Food::where('id', $id)->first();
         $food->update([
             'name' => $request->name,
             'read' => $request->read,
+            'type' => $request->type,
             'text' => $request->text,
         ]);
 
-        return redirect('/index-foods');
+        return redirect()->to('/index-foods');
     }
 
     /**
@@ -103,6 +136,4 @@ class foodController extends Controller
         $food->delete();
         return redirect('index-foods');
     }
-
-
 }

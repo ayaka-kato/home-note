@@ -11,6 +11,7 @@ class Recipe extends Model
 
     public function joinFoodOnRecipe()
     {
+        // テーブルとテーブルをインナージョイン(結合)する
         $foods = Food::join('recipes', function($join) {
             $join->on('foods.recipe_id', '=', 'recipes.id');
         })
@@ -26,9 +27,10 @@ class Recipe extends Model
     ];
 
     protected $fillable = [
-        'img',
         'name',
+        'category',
         'link',
+        'image',
         'heading_0',
         'heading_1',
         'heading_2',
@@ -48,13 +50,10 @@ class Recipe extends Model
     ];
 
     // Recipe ModelがFood Modelのデータを取得できるコードを記述
-    // Recipe は複数のFoodを保持している
-    /**
-     * レシピの保持する全食材
-     */
-    public function food()
+    // Food は複数のRecipeに関連付けられる（Many-to-Many）
+    public function foods()
     {
-        return $this->hasMany(Food::class);
+        return $this->belongsToMany(Food::class);
     }
 
     // user は複数のrecipeを保持している

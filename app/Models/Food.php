@@ -15,17 +15,14 @@ class Food extends Model
     protected $fillable = [
         'name',
         'read',
+        'type',
         'text',
     ];
 
     // ↓Food Modelからrecipeデータを取得できるコードを記述
-    // foodはrecipeに所属する
-
-    /**
-     * 食材を保持するレシピの取得
-     */
-    public function recipe()
+    // Food は複数のRecipeに関連付けられる（Many-to-Many）
+    public function recipes()
     {
-        return $this->belongsTo(Recipe::class);
+        return $this->belongsToMany(Recipe::class);
     }
 }

@@ -27,13 +27,6 @@ Route::prefix('items')->group(function () {
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
 });
 
-// レシピ登録画面
-Route::get('/create-recipe', function(){
-    return view('/recipe/create');
-});
-// レシピ登録
-Route::post('/store-recipe',  [App\Http\Controllers\recipeController::class, 'store']);
-
 // 食材一覧
 Route::get('/index-foods', [App\Http\Controllers\foodController::class, 'index']);
 // 食材登録画面
@@ -45,6 +38,8 @@ Route::get('/edit-food/{id}', [App\Http\Controllers\foodController::class, 'getF
 
 // 食材登録
 Route::post('/store-food', [App\Http\Controllers\foodController::class, 'store']);
+// 食材検索
+Route::get('/search-foods', [App\Http\Controllers\foodController::class, 'searchFoods']);
 // 食材編集
 Route::post('/update-food/{id}', [App\Http\Controllers\foodController::class, 'update']);
 // 食材削除
@@ -52,15 +47,23 @@ Route::delete('/delete-food/{id}', [App\Http\Controllers\foodController::class, 
 
 
 
+// レシピ登録画面
+Route::get('/create-recipe',  [App\Http\Controllers\recipeController::class, 'getFoods']);
+// レシピ登録
+Route::post('/store-recipe',  [App\Http\Controllers\recipeController::class, 'store']);
+// レシピ検索
+Route::get('/search-recipes', [App\Http\Controllers\recipeController::class, 'searchRecipes']);
+
 
 // レシピ一覧画面
-// Route::get('/index-recipes', [App\Http\Controllers\recipeController::class, 'index']);
-Route::get('/index-recipes', function(){
-    return view('/recipe/index');
-});
+Route::get('/index-recipes', [App\Http\Controllers\recipeController::class, 'index']);
+// レシピ詳細画面
+Route::get('/detail-recipe/{id}', [App\Http\Controllers\recipeController::class, 'getRecipe']);
 
 // レシピ編集画面
 Route::get('/edit-recipes', [App\Http\Controllers\recipeController::class, 'edit']);
 // レシピ編集
 Route::get('/edit-recipes/edit', [App\Http\Controllers\recipeController::class, 'edit']);
+// レシピ削除
+Route::delete('/delete-recipe/{id}', [App\Http\Controllers\recipeController::class, 'destroy']);
 

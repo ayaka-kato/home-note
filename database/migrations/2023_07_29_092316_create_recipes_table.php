@@ -16,12 +16,12 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->unsigned()->index();
-            $table->mediumText('image')->nullable();
             $table->string('name');
-            $table->string('link');
-
+            $table->string('category')->nullable();
+            $table->string('link')->nullable();
+            $table->mediumText('image')->nullable();
+            
             for($i=0; $i < 8; $i++){
-                $table->integer('food_id_' . $i)->nullable();
                 $table->string('heading_'. $i)->nullable();
                 $table->string('detail_'. $i)->nullable();
             }

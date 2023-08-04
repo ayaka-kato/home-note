@@ -1,7 +1,45 @@
-.addForm:nth-child(odd) {
-    background-color:aqua;
+.addForm:nth-child(even) {
+    background-color:#F4F6F9;
 }
 
 .preview-size {
     width:400px;
+}
+
+#previewImage {
+    width:200px;
+}
+
+#previewImage img {
+    width:100%;
+}
+
+.food-select-area {
+    max-height: 200px; 
+
+    /* 指定した高さよりも大きくなるとスクロールになる */
+    overflow-y: auto;
+}
+
+.food-label {
+    width:100px;
+}
+
+.color-red {
+    color:red;
+}
+
+.upload-image {
+    width:80px;
+}
+
+.upload-image img {
+    width:100%;
+}
+
+.scroll-btn-area {
+    z-index:999;
+    position:fixed;
+        right:100px;
+        bottom: 40vh;
 }
