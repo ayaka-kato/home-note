@@ -35,7 +35,6 @@ Route::get('/create-food', function(){
 });
 // 食材編集画面
 Route::get('/edit-food/{id}', [App\Http\Controllers\foodController::class, 'getFood']);
-
 // 食材登録
 Route::post('/store-food', [App\Http\Controllers\foodController::class, 'store']);
 // 食材検索
@@ -60,8 +59,8 @@ Route::get('/index-recipes', [App\Http\Controllers\recipeController::class, 'ind
 // レシピ詳細画面
 Route::get('/detail-recipe/{id}', [App\Http\Controllers\recipeController::class, 'getRecipe']);
 
-// レシピ編集画面
-Route::get('/edit-recipes/{id}', [App\Http\Controllers\recipeController::class, 'getRecipe']);
+// // レシピ編集画面
+// Route::get('/edit-recipes/{id}', [App\Http\Controllers\recipeController::class, 'getRecipe']);
 // レシピ編集
 Route::get('/update-recipes', [App\Http\Controllers\recipeController::class, 'update']);
 // レシピ削除

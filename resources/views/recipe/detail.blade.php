@@ -15,7 +15,6 @@
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
-                                <!-- TODO -->
                                 <form action="{{ url('/detail-recipe/'. $recipe->id ) }}" method="GET">
                                 @csrf
                                     <input type="hidden" name="toEditPage" value="true">

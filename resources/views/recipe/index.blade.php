@@ -53,9 +53,9 @@
                                 <td>
                                     <form action="{{ url('/detail-recipe/'. $recipe->id ) }}" method="GET">
                                     @csrf
-                                        <input type="hidden" name="toEditPage" value="true">
-                                        <button type="submit" class="btn">
-                                            <img src="{{ asset('img/journal-text.svg') }}" alt="レシピイメージ画僧" class="mr-2 mb-1"><span class="detail-link">{{ $recipe->name }}</span>
+                                        <input type="hidden" name="toEditPage">
+                                        <button type="submit" class="btn btn-link">
+                                            <img src="{{ asset('img/journal-text.svg') }}" alt="レシピイメージ画僧" class="mr-2 mb-1">{{ $recipe->name }}
                                         </button>
                                     </form>
                                 </td>
@@ -77,8 +77,12 @@
                                     </div>
                                 </td>
                                 <td></td>
-                                <td><a href="{{ url('/edit-recipe/' . $recipe->id ) }}" class="btn btn-success">編集</a></td>
                                 <td>
+                                    <form action="{{ url('/detail-recipe/'. $recipe->id ) }}" method="GET">
+                                    @csrf
+                                        <input type="hidden" name="toEditPage" value="true">
+                                        <button type="submit" class="btn btn-success">編集</button>
+                                    </form>                                <td>
                                     <form action=" {{ url('/delete-recipe/' . $recipe->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')

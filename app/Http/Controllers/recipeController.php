@@ -125,13 +125,13 @@ class recipeController extends Controller
     }
 
     /**
-     * Request $request $id
+     * Request $request
      * 
      * レシピ一件表示
      * ※呼び出し元によって表示先を変える。
      * ※一覧→詳細 / 詳細→編集
      */
-    public function getRecipe($id)
+    public function getRecipe(Request $request, $id)
     {
         $recipe = Recipe::find($id);
 

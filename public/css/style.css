@@ -48,12 +48,14 @@
     width:100%;
 }
 .recipe-image img {
+    width:80%;
+}
+
+.recipe-image #previewImage {
     width:100%;
 }
 
-.detail-link {
-    color:#0056B3;
-    border-bottom:2px solid #0056B3;
+.recipe-image #previewImage img {
+    width:80%;
 }
-
 
