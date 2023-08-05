@@ -43,17 +43,21 @@
                         <tbody>
                         @foreach ($recipes as $recipe)
                             <tr>
-                                <td><a href="{{ url('/detail-recipe/'. $recipe->id ) }}">
+                                <td>
                                     <div class="upload-image">
                                         @if ( $recipe->image != null )
                                         <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
                                         @endif
                                     </div>
-                                </a></td>
+                                </td>
                                 <td>
-                                    <a href="{{ url('/detail-recipe/'. $recipe->id ) }}">
-                                        <img src="{{ asset('img/journal-text.svg') }}" alt="レシピイメージ画僧" class="mr-2">{{ $recipe->name }}
-                                    </a>
+                                    <form action="{{ url('/detail-recipe/'. $recipe->id ) }}" method="GET">
+                                    @csrf
+                                        <input type="hidden" name="toEditPage" value="true">
+                                        <button type="submit" class="btn">
+                                            <img src="{{ asset('img/journal-text.svg') }}" alt="レシピイメージ画僧" class="mr-2 mb-1"><span class="detail-link">{{ $recipe->name }}</span>
+                                        </button>
+                                    </form>
                                 </td>
                                 <td>{{ $recipe->category }}</a></td>
                                 <td>

@@ -61,9 +61,9 @@ Route::get('/index-recipes', [App\Http\Controllers\recipeController::class, 'ind
 Route::get('/detail-recipe/{id}', [App\Http\Controllers\recipeController::class, 'getRecipe']);
 
 // レシピ編集画面
-Route::get('/edit-recipes', [App\Http\Controllers\recipeController::class, 'edit']);
+Route::get('/edit-recipes/{id}', [App\Http\Controllers\recipeController::class, 'getRecipe']);
 // レシピ編集
-Route::get('/edit-recipes/edit', [App\Http\Controllers\recipeController::class, 'edit']);
+Route::get('/update-recipes', [App\Http\Controllers\recipeController::class, 'update']);
 // レシピ削除
 Route::delete('/delete-recipe/{id}', [App\Http\Controllers\recipeController::class, 'destroy']);
 

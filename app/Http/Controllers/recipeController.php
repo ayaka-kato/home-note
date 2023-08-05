@@ -116,12 +116,33 @@ class recipeController extends Controller
     /**
      * Request $request
      * 
-     * 一覧表示
+     * レシピ一覧表示
      */
     public function index()
     {
         $recipes = Recipe::orderBy('created_at', 'desc')->get();
         return view('recipe.index', compact('recipes'));
+    }
+
+    /**
+     * Request $request $id
+     * 
+     * レシピ一件表示
+     * ※呼び出し元によって表示先を変える。
+     * ※一覧→詳細 / 詳細→編集
+     */
+    public function getRecipe($id)
+    {
+        $recipe = Recipe::find($id);
+
+        // 遷移先が編集ページなら
+        $toEditPage = request()->input('toEditPage');
+
+        if($toEditPage){
+            return view('recipe.edit', compact('recipe'));
+        }else {
+            return view('recipe.detail', compact('recipe'));
+        }
     }
 
     /**
@@ -160,7 +181,7 @@ class recipeController extends Controller
     /**
      * Request $request
      * 
-     * 編集
+     * レシピ編集
      */
     public function edit()
     {
@@ -170,7 +191,7 @@ class recipeController extends Controller
     /**
      * Request $request
      * 
-     * 削除
+     * レシピ削除
      */
     public function destroy($id)
     {
