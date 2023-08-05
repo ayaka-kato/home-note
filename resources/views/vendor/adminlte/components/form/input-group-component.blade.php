@@ -1,3 +1,9 @@
+{{-- Setup the internal errors bag for the component --}}
+
+@php
+    $setErrorsBag($errors);
+@endphp
+
 {{-- Setup the input group component structure --}}
 
 <div class="{{ $makeFormGroupClass() }}">
@@ -28,7 +34,7 @@
     </div>
 
     {{-- Error feedback --}}
-    @if($isInvalid())
+    @if($isInvalid() && ! isset($disableFeedback))
         <span class="invalid-feedback d-block" role="alert">
             <strong>{{ $errors->first($errorKey) }}</strong>
         </span>

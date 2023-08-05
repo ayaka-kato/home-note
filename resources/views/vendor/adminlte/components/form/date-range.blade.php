@@ -1,11 +1,5 @@
 @extends('adminlte::components.form.input-group-component')
 
-{{-- Set errors bag internallly --}}
-
-@php($setErrorsBag($errors ?? null))
-
-{{-- Set input group item section --}}
-
 @section('input_group_item')
 
     {{-- Date Range Input --}}
@@ -34,12 +28,7 @@
             {
                 let startDate = picker.startDate.format(picker.locale.format);
                 let endDate = picker.endDate.format(picker.locale.format);
-
-                let value = picker.singleDatePicker
-                    ? startDate
-                    : startDate + picker.locale.separator + endDate;
-
-                $(this).val(value);
+                $(this).val(startDate + picker.locale.separator + endDate);
             });
 
             $('#{{ $id }}').on('cancel.daterangepicker', function(ev, picker)

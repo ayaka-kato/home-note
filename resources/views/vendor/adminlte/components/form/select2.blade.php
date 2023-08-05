@@ -1,11 +1,5 @@
 @extends('adminlte::components.form.input-group-component')
 
-{{-- Set errors bag internallly --}}
-
-@php($setErrorsBag($errors ?? null))
-
-{{-- Set input group item section --}}
-
 @section('input_group_item')
 
     {{-- Select --}}
@@ -45,7 +39,7 @@
 </script>
 @endpush
 
-{{-- CSS workarounds for the Select2 plugin --}}
+{{-- Setup the height and font size of the plugin when using sm/lg sizes --}}
 {{-- NOTE: this may change with newer plugin versions --}}
 
 @once
@@ -84,21 +78,6 @@
     .input-group-lg .select2-selection--multiple .select2-selection__rendered {
         font-size: 1.25rem !important;
         line-height: 1.7;
-    }
-
-    {{-- Enhance the plugin to support readonly attribute --}}
-    select[readonly].select2-hidden-accessible + .select2-container {
-        pointer-events: none;
-        touch-action: none;
-    }
-
-    select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
-        background: #e9ecef;
-        box-shadow: none;
-    }
-
-    select[readonly].select2-hidden-accessible + .select2-container .select2-search__field {
-        display: none;
     }
 
 </style>
