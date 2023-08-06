@@ -1,3 +1,173 @@
+/* ---------------------------------
+大枠
+--------------------------------- */
+main {
+    height:92vh;
+}
+
+/* ---------------------------------
+ログイン・会員登録画面
+--------------------------------- */
+
+.container.welcome-area {
+    height:100%; 
+    background-color: #8be4f0;
+	background-image:
+	 linear-gradient(-90deg, #fff 50%, transparent 50%);
+	background-size: 14px 14px;
+
+}
+
+.welcome-area .welcome-row {
+    height:100%;
+    box-shadow: 2px;
+    min-width:500px;
+    max-width:1080px;
+    margin:0 auto;
+}
+
+.welcome-area .welcome-row .welcome-col {
+    height:400px;
+    width:100%;
+    align-items: center;
+    padding:0;
+    border-radius:40px;
+    box-shadow: 6px 6px 12px gray;}
+
+/* 画面左 */
+/* ------------------------------------- */
+.welcome-col .welcome-image {
+    height:100%;
+    width:50%;
+    position:relative;
+    z-index: 0;
+}
+
+.welcome-col .welcome-image img {
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    z-index:1;
+}
+
+.welcome-col ul {
+    position: absolute;
+        bottom:70px;
+        left:27px;
+    padding:0;
+    width:100%;
+}
+
+.welcome-col .deco {
+    font-size: 36px;
+    border-radius: 50%;
+    background-color: rgba(230, 104, 129, 0.8);
+    border:2px solid ;
+    height:65px;
+    width:65px;
+    padding:3px;
+    color:white;
+    font-weight: bold;
+    list-style: none;
+    text-align: center;
+    z-index: 99;    
+}
+
+.welcome-col .deco:nth-child(even){
+    background-color: rgba(230, 156, 104, 0.8);
+}
+
+/* 画面右 */
+/* ------------------------------------- */
+.welcome-col .card {
+    width:50%;
+    height:100%;
+    align-items: center;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.welcome-col .card .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.welcome-col .card .flight {
+    display:inline-block;
+}
+
+.welcome-col .card form {
+    margin-top:20px;
+}
+
+.welcome-col .card .form-group {
+    margin:15px auto;
+    width:100%;
+}
+
+.welcome-col .card .form-group button {
+    width:80%;
+    text-align: center;
+    margin: 2px auto;
+}
+
+.welcome-col .card .form-group a {
+    text-align: center;
+    margin: 2px auto;
+}
+
+/* ボタン */
+/* ------------------------------------- */
+.color-pink {
+    color:rgb(230, 104, 129);
+}
+
+.color-pink:hover {
+    color:rgb(230, 104, 129);
+}
+
+.btn-pink {
+    background-color:rgb(230, 104, 129);
+    color:white;
+}
+
+.btn-pink:hover {
+    color:white;
+    transition: all 0.5s;
+    transform: scale(1.2, 1.2);
+}
+
+.color-orange {
+    color:rgb(230, 156, 104);
+}
+
+.color-orange:hover {
+    color:rgb(230, 156, 104);
+}
+
+.btn-orange {
+    width:100%;
+    background-color:rgb(230, 156, 104);
+    color:white;
+}
+
+.btn-orange:hover {
+    color:white;
+    transition: all 0.3s;
+    transform: scale(1.1, 1.1);
+}
+
+input:focus {
+    outline-color: rgba(230, 104, 129, 0.8);
+}
+
+/* ---------------------------------------
+--------------------------------------  */
 .addForm:nth-child(even) {
     background-color:#F4F6F9;
 }
