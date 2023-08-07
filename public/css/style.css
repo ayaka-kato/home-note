@@ -1,6 +1,10 @@
 /* ---------------------------------
 大枠
 --------------------------------- */
+*{
+    box-sizing: border-box;
+}
+
 main {
     height:92vh;
 }
@@ -11,11 +15,11 @@ main {
 
 .container.welcome-area {
     height:100%; 
-    background-color: #8be4f0;
-	background-image:
-	 linear-gradient(-90deg, #fff 50%, transparent 50%);
-	background-size: 14px 14px;
 
+    /* ボーダーの実装 */
+    background-color: #8be4f0;
+	background-image: linear-gradient(-90deg, #fff 50%, transparent 50%);
+	background-size: 14px 14px;
 }
 
 .welcome-area .welcome-row {
@@ -32,7 +36,8 @@ main {
     align-items: center;
     padding:0;
     border-radius:40px;
-    box-shadow: 6px 6px 12px gray;}
+    box-shadow: 6px 6px 12px gray;
+}
 
 /* 画面左 */
 /* ------------------------------------- */
@@ -123,6 +128,7 @@ main {
 
 /* ボタン */
 /* ------------------------------------- */
+/* ログイン画面・会員登録画面 */
 .color-pink {
     color:rgb(230, 104, 129);
 }
@@ -162,12 +168,46 @@ main {
     transform: scale(1.1, 1.1);
 }
 
-input:focus {
-    outline-color: rgba(230, 104, 129, 0.8);
+/* 検索バー */
+.btn-outline-success {
+    width:90px;
+}
+
+.search-window {
+    width:300px;
 }
 
 /* ---------------------------------------
+詳細画面
 --------------------------------------  */
+.print-area {
+    position: relative;
+    width:30px;
+}
+.print-area img {
+    position: absolute;
+    width:100%;
+    z-index: 0;
+}
+
+.print-area input {
+    position: absolute;
+    width:100%;
+    background-color: transparent;
+    border: none;
+    z-index: 1;
+}
+
+
+/* ---------------------------------------
+--------------------------------------  */
+.custom-topnav {
+    background-color: #8be4f0;
+	background-image: linear-gradient(-90deg, #fff 50%, transparent 50%);
+	background-size: 14px 14px;
+}
+
+
 .addForm:nth-child(even) {
     background-color:#F4F6F9;
 }
@@ -214,11 +254,57 @@ input:focus {
         bottom: 40vh;
 }
 
+.recipe-name {
+    background: -moz-linear-gradient(to right, #8be4f0 70%,white); 
+    background: -webkit-linear-gradient(to right,  #8be4f0 70%,white); 
+    background:linear-gradient(to right, #8be4f0 70%,white);
+    padding:6px;
+    border-left:double 10px #06a2ba;
+}
+
+/* 付箋のCSS */
+.food-ready-area {
+    margin-top:60px;
+    position: relative;
+    background: #fff0cd;
+    box-shadow: 0px 0px 0px 5px #fff0cd;
+    border: dashed 2px white;
+    padding: 0.2em 0.5em;
+    color: #454545;
+}
+
+/* 付箋のめくれた部分のCSS */
+.food-ready-area:after {
+    position: absolute;
+    content: '';
+    right: -7px;
+    top: -7px;
+    border-width: 0 20px 20px 0;
+    border-style: solid;
+    border-color: #ffdb88 #fff #ffdb88;
+    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.food-border {
+    width:90%;
+    margin: 0 15px 5px;
+    padding:0;
+    border-bottom:3px dotted white;
+}
+
+.dot-border {
+    border-top:3px dotted rgb(199, 197, 197);
+    padding-top:12px;
+}
+
 .recipe-image {
     width:100%;
 }
 .recipe-image img {
     width:80%;
+    height:auto;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px gray;
 }
 
 .recipe-image #previewImage {

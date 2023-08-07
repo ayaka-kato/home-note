@@ -28,11 +28,8 @@
                     <form action="{{ url('/update-recipe') }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="card-body d-flex">
-                            <!-- 画像・リンク・共有 -->
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="name">レシピ名：<input type="text" name="name" class="form-control" id="name" value="{{ $recipe->name }}"></label>
-                                </div>
+                            <div class="col-md-7">
+                                <h2 class="recipe-name"><input type="text" name="name" class="form-control" id="name" value="{{ $recipe->name }}"></h2>
                                 <div class="form-group">
                                     <label>現在のカテゴリ：{{ $recipe->category }}</label>
                                     <div class="form-group">

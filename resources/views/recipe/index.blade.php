@@ -9,12 +9,13 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-        <div class="input-group mb-2 offset-md-8 col-md-4">
-                <form action="{{ url('/search-recipes') }}" method="get">
-                    <input type="text" name="keyword" class="form-control" placeholder="キーワードを入力">
+            <div class="input-group mb-3">
+                <form action="{{ url('/search-recipes') }}" method="get" class="d-flex">
+                    <input type="text" name="keyword" class="form-control search-window" placeholder="キーワードを入力">
                     <button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-search"></i> 検索</button>
                 </form>
             </div>
+
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">レシピ一覧</h3>
