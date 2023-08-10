@@ -31,11 +31,13 @@
                         <span class="mr-2">{{ $recipe->category }}</span>
                         <span class="">レビュー</span>
                     </div>
+
+                    <!-- 画像 -->
                     <div class="recipe-image my-3">
                         <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
                     </div>
 
-                    <!-- 画像・リンク・共有 -->
+                    <!-- リンク・共有 -->
                     <p class="my-1">参考リンク：<a href="{{ $recipe->link }}">{{ $recipe->link }}</a></p>
                     <p>作成日：{{ $recipe->created_at }}</p>
                     <!-- TODO:印刷ボタン・共有ボタン・Herokuあげたらリンク先の設定する -->
@@ -53,12 +55,12 @@
                 </div>
 
                 <!-- 材料 -->
-                <div class="col-md-4 food-ready-area">
+                <div class="col-md-4 food-ready-area ml-5">
                     <div class="row">
                         <h4 class="mt-2">材料</h4>
                         @php $colCount = 0; @endphp
                         @foreach ($recipe->foods as $food)
-                        <p class="food-border">{{ $food->name }}</p>
+                        <p class="food-border">・ {{ $food->name }}</p>
                         @endforeach
                     </div>
                 </div>
@@ -94,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="card-body solid-border">
+            <div class="card-body">
                 <!-- TODO:おすすめレシピ -->
                 <div class="row">
                     <div class="col-md-4">

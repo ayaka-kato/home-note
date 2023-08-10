@@ -29,13 +29,12 @@
                     @csrf
                         <div class="card-body d-flex">
                             <div class="col-md-7">
-                                <h2 class="recipe-name"><input type="text" name="name" class="form-control" id="name" value="{{ $recipe->name }}"></h2>
+                                <h2 class="mb-1 recipe-name"><input type="text" name="name" class="form-control" id="name" value="{{ $recipe->name }}"></h2>
                                 <div class="form-group">
-                                    <label>現在のカテゴリ：{{ $recipe->category }}</label>
                                     <div class="form-group">
                                         <!-- Collapse ボタン -->
-                                        <a class="btn btn-success" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">変更する</a>
-
+                                        <a class="btn btn-success" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">カテゴリを変更する</a>
+                                        <span>現在のカテゴリ：{{ $recipe->category }}</span>
                                         <!-- Collapse コンテンツ -->
                                         <div class="collapse multi-collapse" id="multiCollapseExample1">
                                             <div class="card card-body food-select-area">
@@ -63,39 +62,74 @@
                                     </div>
                                 </div>
                                 <div class="form-group"><div class="">レビュー</div></div>
+
+                                <!-- 画像 -->
                                 <div class="form-group">
-                                    <div class="recipe-image">                                        
+                                    <div class="recipe-image my-3">                                        
                                         <div id="previewImage"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真"></div>
-                                        <label for="image">画像:</label>
+                                        <p class="my-1">画像：</p>
                                         <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">                                
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="link">参考リンク：<input type="text" name="link" id="link" class="form-control" value="{{ $recipe->link }}"></label>
-                                </div>
+
+                                <!-- リンク・共有 -->
+                                <p class="my-1">参考リンク：<input type="text" name="link" id="link" class="form-control" value="{{ $recipe->link }}"></p>
                             </div>
         
                             <!-- 材料 -->
-                            <div class="col-md-4">
+                            <div class="col-md-4 food-ready-area ml-5">
                                 <div class="row">
-                                    <h4>材料</h4>
+                                    <h4 class="mt-2">材料</h4>
                                     @php $colCount = 0; @endphp
                                     @foreach ($recipe->foods as $food)
-                                    <p>{{ $food->name }}</p>
+                                    <p class="food-border">{{ $food->name }}</p>
+
                                     @endforeach
+                                </div>
+
+                                <div class="form-group">
+                                    <!-- Collapse ボタン -->
+                                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">追加する</button>
+                                    <a href="{{ url('/create-food') }}">食材の登録をする</a>
+
+                                    <!-- Collapse コンテンツ -->
+                                    <div class="collapse multi-collapse" id="multiCollapseExample2">
+                                        <div class="card card-body food-select-area">
+                                            <div class="row">
+                                                <p class="color-red">*10個まで選択可能</p>
+                                                @foreach($types as $type)
+                                                <b class="border-bottom pb-1 mb-1">{{$type}}</b>                                        
+                                                    @php $colCount = 0; @endphp
+                                                    @foreach($foods as $food)
+                                                    @if($type == $food->type)
+                                                        <div class="col-md-4">
+                                                            <label for="food_{{ $food->id }}" class="food-label font-weight-normal">{{ $food->name }}</label>
+                                                            <input type="checkbox" name="food[]" value="{{ $food->id }}" id="food_{{ $food->id }}">
+                                                        </div>
+
+                                                        <!-- 列が3列並んだ時、新しい行が作られる -->
+                                                        @php $colCount++; @endphp
+                                                        @if($colCount % 3 == 0)
+                                                            </div><div class="row">
+                                                        @endif
+                                                    @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="col-md-10">
+                        <div class="card-body table-responsive">
+                            <div class="col-md-12 dot-border">
                                 <h4>作り方</h4>
-
-                                <table>
+                                <table class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th>順番</th>
-                                            <th>手順</th>
-                                            <th>詳細</th>
+                                            <th class="col-md-2">順番</th>
+                                            <th class="col-md-4">手順</th>
+                                            <th class="col-md-6">詳細</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -106,9 +140,9 @@
                                     @endphp
                                     @if(isset($recipe->{$heading}) || isset($recipe->{$detail}))
                                         <tr>
-                                            <td>{{$i+1}}</td>
-                                            <td><label for="$heading"><input type="text" id="$heading" class="form-control" value="{{ $recipe->{$heading} }}"></label></td>
-                                            <td><label for="$detail"><input type="textarea" id="$detail" class="form-control" value="{{ $recipe->{$detail} }}"></label></td>
+                                            <td class="col-md-2">{{$i+1}}</td>
+                                            <td class="col-md-4"><input type="text" class="form-control" value="{{ $recipe->{$heading} }}"></td>
+                                            <td class="col-md-6"><input type="textarea" class="form-control" value="{{ $recipe->{$detail} }}"></td>
                                         </tr>
                                     @endif
                                     </tbody>

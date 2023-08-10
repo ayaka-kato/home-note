@@ -266,15 +266,21 @@ return [
             ],
         ],
         [
-            'text'    => '食材管理',
+            'text'    => '食材在庫データ管理',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
-                'text' => '冷蔵庫チェックリスト',
-                'url'  => '',
-            ],
-            [
-                'text' => 'お買い物リスト',
-                'url'  => '',
+                [
+                    'text' => '食材在庫データ一覧',
+                    'url'  => 'index-foodRecords',
+                ],
+                [
+                    'text' => '食材在庫データ登録',
+                    'url'  => 'create-foodRecord',
+                ],
+                [
+                    'text' => 'お買い物リスト',
+                    'url'  => '',
+                ],
             ],
         ],
         [   

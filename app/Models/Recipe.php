@@ -17,7 +17,7 @@ class Recipe extends Model
         })
         ->get();
 
-        // ここで取得したデータをビューに渡すなど、適切な処理を行います
+        // ここで取得したデータをビューに渡すなど、適切な処理を行う
         // 書き換える
         return view('your-view', compact('foods'));
     }

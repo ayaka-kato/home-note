@@ -100,40 +100,52 @@
                             <div id="previewImage"></div>
                             <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
                         </div>
-                        <div class="form-group">
-                            <label for="heading-0">小見出し1</label>
-                            <input type="text" class="form-control" id="heading-0" name="heading-0" placeholder="（例）手順1" value="{{ old('heading-0') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="detail-0">詳細1</label>
-                            <textarea type="text" class="form-control" id="detail-0" name="detail-0" placeholder="（例）一口サイズに切る" value="{{ old('detail-0') }}"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-success add-Btn" id="addBtn-0" data-id="0">入力欄2を追加</button>
-                        </div>
 
-                        <!-- 追加項目 -->
-                        @for($i = 1; $i < 8; $i++)
-                        <div id="addForm-{{ $i }}" class="addForm" style="display:none;">
-                            <div class="form-group" id="add-heading-{{ $i }}">
-                                <label for="heading-{{ $i }}">小見出し{{ $i + 1 }}</label>
-                                <input type="text" class="form-control" id="heading-{{ $i }}" name="heading-{{ $i }}" value="{{ old('heading-' . $i) }}">
-                            </div>
-                            <div class="form-group" id="add-detail-{{ $i }}">
-                                <label for="detail-{{ $i }}">詳細{{ $i + 1 }}</label>
-                                <textarea class="form-control" id="detail-{{ $i }}" name="detail-{{ $i }}" value="{{ old('detail-' . $i) }}"></textarea>
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-2">順番</th>
+                                    <th class="col-md-4">工程</th>
+                                    <th class="col-md-6">詳細</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-2">1</td>
+                                    <td class="col-md-4">
+                                        <input type="text" class="form-control" name="heading-0" placeholder="（例）下準備" value="{{ old('heading-0') }}">
+                                    </td>
+                                    <td class="col-md-6">
+                                        <textarea type="text" class="form-control" name="detail-0" placeholder="（例）一口サイズに切る" value="{{ old('detail-0') }}"></textarea>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <button type="button" class="btn btn-success add-Btn" id="addBtn-0" data-id="0">追加</button>
+                                    </td>
+                                </tr>
+                                @for ($i = 1; $i < 8; $i++)
+                                <tr id="addForm-{{ $i }}" class="addForm" style="display:none;">
+                                    <td class="col-md-1">{{$i+1}}</td>
+                                    <td class="col-md-4">
+                                        <input type="text" class="form-control" name="heading-{{ $i }}" id="heading-{{ $i }}" value="{{ old('heading-'. $i ) }}">
+                                    </td>
+                                    <td class="col-md-5">
+                                        <textarea type="text" class="form-control" name="detail-{{ $i }}" id="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea>
+                                    </td>
 
-                            </div>
-
-                            @if($i == 7)
-                            <!-- <button type="button" class="btn add-Btn" id="addBtn-{{ $i }}" data-id="{{ $i }}">入力欄{{ $i + 2 }}を追加</button> -->
-                            @else
-                            <button type="button" class="btn btn-success add-Btn" id="addBtn-{{ $i }}" data-id="{{ $i }}">入力欄{{ $i + 2 }}を追加</button>
-                            @endif
-                            <button type="button" class="btn btn-danger delete-Btn" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">入力欄{{ $i + 1 }}を削除</button>
-
-                        </div>
-                        @endfor
+                                    @if($i == 7)
+                                    <!-- <button type="button" class="btn add-Btn" id="addBtn-{{ $i }}" data-id="{{ $i }}">入力欄{{ $i + 2 }}を追加</button> -->
+                                    @else
+                                    <td class="col-md-1">
+                                        <button type="button" class="btn btn-success add-Btn" id="addBtn-{{ $i }}" data-id="{{ $i }}">追加</button>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <button type="button" class="btn btn-danger delete-Btn" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
+                                    </td>
+                                    @endif
+                                </tr>
+                                @endfor
+                            </tbody>
+                        </table>   
                     </div>
 
                     <div class="card-footer">

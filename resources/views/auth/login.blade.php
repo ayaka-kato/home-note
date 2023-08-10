@@ -6,7 +6,7 @@
         <div class="col-md-10 welcome-col d-flex">
             <div class="welcome-image">
                 <img src="{{ asset('img/top-view.jpg') }}" alt="アプリイメージ画像">
-                <ul class="d-flex">
+                <ul class="d-flex title-area">
                     <li class="deco">お</li>
                     <li class="deco">う</li>
                     <li class="deco">ち</li>
@@ -52,7 +52,41 @@
                     </form>
                 </div>
             </div>
+            <ul class="pig-run-area">
+            @for($i = 0; $i < 10; $i++)
+                <li class="pig-run"><img src="{{ asset('img/pig.svg') }}" alt="豚の画像"></li>
+            @endfor
+            </ul>
         </div>
     </div>
 </div>
+<script>
+window.onload = function() {
+    // -------------------------
+    // 豚が順番に非表示になる機能
+    // -------------------------
+    // 対象の番号を設定
+    let currentIndex = 0;
+
+    function showPig() {
+        // 対象となる豚の画像を配列で取得
+        const pigs = document.querySelectorAll('.pig-run');
+
+        // 全ての豚の画像を表示状態にする
+        pigs.forEach(pig  => {
+            pig.innerHTML = '<img src="{{ asset("img/pig.svg") }}" alt="豚の画像">';
+        });
+
+        // 現在の対象の番号の豚の画像を非表示にし、次の番号に更新
+        pigs[currentIndex].innerHTML = '<div></div>';
+
+        // '% pigs.length'で配列内の数を超えないようにする
+        currentIndex = (currentIndex + 1) % pigs.length;
+    }
+
+    // 一定時間ごとにクラスを切り替える
+    setInterval(showPig, 500); // 2000ミリ秒（2秒）ごとに切り替える
+    showPig(); // 初回実行
+};
+</script>
 @endsection

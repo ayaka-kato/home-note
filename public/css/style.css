@@ -31,6 +31,7 @@ main {
 }
 
 .welcome-area .welcome-row .welcome-col {
+    position:relative;
     height:400px;
     width:100%;
     align-items: center;
@@ -57,21 +58,21 @@ main {
     z-index:1;
 }
 
-.welcome-col ul {
+.welcome-col .title-area {
     position: absolute;
-        bottom:70px;
-        left:27px;
-    padding:0;
+        bottom:75px;
+    padding:0 15px;
+    margin:0;
     width:100%;
 }
 
 .welcome-col .deco {
-    font-size: 36px;
+    font-size: 32px;
     border-radius: 50%;
     background-color: rgba(230, 104, 129, 0.8);
-    border:2px solid ;
-    height:65px;
-    width:65px;
+    border:2px solid white;
+    height:50%;
+    width:50%;
     padding:3px;
     color:white;
     font-weight: bold;
@@ -124,6 +125,37 @@ main {
 .welcome-col .card .form-group a {
     text-align: center;
     margin: 2px auto;
+}
+
+/* -------------------------------------
+豚の表示
+------------------------------------- */
+.pig-run-area {
+    position:absolute;
+        bottom:-20%; 
+    width:100%;
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    padding: 0;;
+}   
+
+.pig-run {
+    width:100%;
+    list-style: none;
+    text-align: center;
+}
+
+.pig-run img {
+    width:40%;
+}
+
+.pig-run div {
+    margin:0 auto;
+    width:10px;
+    height:10px;
+    background-color:#454545;
+    border-radius: 50%;
 }
 
 /* ボタン */
@@ -315,3 +347,30 @@ main {
     width:80%;
 }
 
+
+
+
+#myInput {
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#mySelect {
+    width:150px;
+    height: 70px;
+    overflow-y: scroll;
+}
+
+#myUL option {
+  border: 1px solid #ddd; /* Add a border to all links */
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6; /* Grey background color */
+  padding: 12px; /* Add some padding */
+  text-decoration: none; /* Remove default text underline */
+  font-size: 18px; /* Increase the font-size */
+  color: black; /* Add a black text color */
+  display: block; /* Make it into a block element to fill the whole list */
+}

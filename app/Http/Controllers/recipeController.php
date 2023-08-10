@@ -135,11 +135,17 @@ class recipeController extends Controller
     {
         $recipe = Recipe::find($id);
 
+        // 食材のカテゴリを取得（typeカラムのみを配列で取得）
+        $types = Food::distinct()->pluck('type')->toArray();
+
+        // 読み仮名であいうえお順で取得
+        $foods = Food::orderBy('read', 'asc')->get();
+
         // 遷移先が編集ページなら
         $toEditPage = request()->input('toEditPage');
 
         if($toEditPage){
-            return view('recipe.edit', compact('recipe'));
+            return view('recipe.edit', compact('recipe','types','foods'));
         }else {
             return view('recipe.detail', compact('recipe'));
         }
@@ -179,6 +185,7 @@ class recipeController extends Controller
 
 
     /**
+     * TODO:
      * Request $request
      * 
      * レシピ編集
