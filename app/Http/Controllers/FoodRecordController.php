@@ -24,13 +24,11 @@ class FoodRecordController extends Controller
 
     /**
      * 
-     * 食材データ全件取得
+     * 食材データ入力画面表示
      */
-    public function getFoods()
+    public function viewCreate()
     {
-        // 食材のカテゴリを取得（配列で取得）
-        $foods = Food::all();
-        return view('food-record.create', compact('foods'));
+        return view('food-record.create');
     }
 
         /**
@@ -38,15 +36,19 @@ class FoodRecordController extends Controller
      * 
      * 新規登録
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        $rules = [];
+        
+        for ($i = 0; $i < 50; $i++) {
+            $rules["ingredient-$i"] = "string|max:30|nullable";
+            $rules["ideal-amount-$i"] = "string|max:30|nullable";
+            $rules["real-amount-$i"] = "integer|max:5|nullable";
+            $rules["waste-amount-$i"] = "integer|max:5|nullable";
+        }
 
-        $this->validate($request, [
-            'name' => 'required | string | max:30 | unique:foods',
-            'read' => 'nullable|string | max:30',
-            'type' => 'required|string',
-            'text' => 'nullable|string | max:100',
-        ]);
-        // dd($request->name,$request->read,$request->text);
+        $this->validate($request, $rules);
+
 
         // Food::create([
         //     'name' => $request->name,
@@ -54,13 +56,19 @@ class FoodRecordController extends Controller
         //     'text' => $request->text,
         // ]);
 
-        // 上のやり方でダメな時は(tableが見つからないなどのエラーが出る)
-        $food = new Food();
-        $food->name = $request->name;
-        $food->read = $request->read;
-        $food->type = $request->type;
-        $food->text = $request->text;
-        $food->save();
+        // // 上のやり方でダメな時は(tableが見つからないなどのエラーが出る)
+        // $food = new Food();
+        // $food->name = $request->name;
+        // $food->read = $request->read;
+        // $food->type = $request->type;
+        // $food->text = $request->text;
+        // $food->save();
+
+        TODO:
+        $record = new FoodRecord([
+
+        ]);
+
 
         // 続けて入力するか確認するためのJavaScriptで設定した値を判定
         if ($request->input('continue_input') == 1) {

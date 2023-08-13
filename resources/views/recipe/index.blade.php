@@ -60,20 +60,16 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td>{{ $recipe->category }}</a></td>
+                                <td>{{ $recipe->category }}</td>
                                 <td>
-                                    <div class="row">
+                                    <div class="ingredients-row">
                                         @php $colCount = 0; @endphp
-                                        @foreach ($recipe->foods as $food)
-                                            <div class="col-md-2">
-                                                <p>{{ $food->name }}</p>
-                                                
-                                                <!-- 列が4列並んだ時、新しい行が作られる -->
-                                                @php $colCount++; @endphp
-                                                @if($colCount % 4 == 0)
-                                                    </div><div class="row">
-                                                @endif
-                                            </div>
+                                        @foreach($recipe->ingredients as $ingredient)
+                                            <span>{{ $ingredient->ingredient }}</span>
+                                            @php $colCount++; @endphp
+                                            @if($colCount %4 == 0)
+                                                </div><div class="ingredients-row">
+                                            @endif
                                         @endforeach
                                     </div>
                                 </td>

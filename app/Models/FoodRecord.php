@@ -18,14 +18,10 @@ class FoodRecord extends Model
         'restock-amount',
     ];
 
-    // FoodRecord ModelがFood Modelのデータを取得できるコードを記述
-    // Food は複数のFoodRecordに関連付けられる（Many-to-Many）
-    public function foods()
-    {
-        return $this->belongsToMany(Food::class);
-    }
-
-    // user は複数のfood-recordを保持している
+    // ---------------------------
+    // リレーション
+    // ---------------------------
+    // ユーザーとレコードは一対多の関係
     public function user()
     {
         return $this->belongTo(User::class);

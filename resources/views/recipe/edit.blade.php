@@ -25,9 +25,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('/update-recipe') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/update-recipe'. $recipe->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="card-body d-flex">
+
                             <div class="col-md-7">
                                 <h2 class="mb-1 recipe-name"><input type="text" name="name" class="form-control" id="name" value="{{ $recipe->name }}"></h2>
                                 <div class="form-group">
@@ -74,53 +75,47 @@
 
                                 <!-- リンク・共有 -->
                                 <p class="my-1">参考リンク：<input type="text" name="link" id="link" class="form-control" value="{{ $recipe->link }}"></p>
+
                             </div>
         
                             <!-- 材料 -->
                             <div class="col-md-4 food-ready-area ml-5">
                                 <div class="row">
                                     <h4 class="mt-2">材料</h4>
-                                    @php $colCount = 0; @endphp
-                                    @foreach ($recipe->foods as $food)
-                                    <p class="food-border">{{ $food->name }}</p>
+                                    @if( $recipe->serving )
+                                        <p>{{ $recipe->serving }}</p>
+                                    @endif
+                                    <!-- 登録済みの食材データ -->
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-5">食材</th>
+                                                <th class="col-md-5">分量</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="food-border">
+                                            @foreach ($ingredients as $index => $ingredient)
+                                            <tr class="ingredient">
+                                                <td class="col-md-5"><input type="text" class="form-control" name="ingredient-{{ $index }}" value="{{ old('ingredient-' . $index, $ingredient['ingredient']) }}"></td>
+                                                <td class="col-md-5"><input type="text" class="form-control" name="amount-{{ $index }}" value="{{ old('amount-' . $index, $ingredient['amount']) }}"></td>
+                                            </tr>
+                                            @endforeach
 
-                                    @endforeach
-                                </div>
-
-                                <div class="form-group">
-                                    <!-- Collapse ボタン -->
-                                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">追加する</button>
-                                    <a href="{{ url('/create-food') }}">食材の登録をする</a>
-
-                                    <!-- Collapse コンテンツ -->
-                                    <div class="collapse multi-collapse" id="multiCollapseExample2">
-                                        <div class="card card-body food-select-area">
-                                            <div class="row">
-                                                <p class="color-red">*10個まで選択可能</p>
-                                                @foreach($types as $type)
-                                                <b class="border-bottom pb-1 mb-1">{{$type}}</b>                                        
-                                                    @php $colCount = 0; @endphp
-                                                    @foreach($foods as $food)
-                                                    @if($type == $food->type)
-                                                        <div class="col-md-4">
-                                                            <label for="food_{{ $food->id }}" class="food-label font-weight-normal">{{ $food->name }}</label>
-                                                            <input type="checkbox" name="food[]" value="{{ $food->id }}" id="food_{{ $food->id }}">
-                                                        </div>
-
-                                                        <!-- 列が3列並んだ時、新しい行が作られる -->
-                                                        @php $colCount++; @endphp
-                                                        @if($colCount % 3 == 0)
-                                                            </div><div class="row">
-                                                        @endif
-                                                    @endif
-                                                    @endforeach
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
+                                            @for( $i = $ingredients->count() +1 ; $i <= 20; $i++)
+                                            <tr class="ingredient" style="display:none;">
+                                                <td class="col-md-5"><input type="text" class="form-control" name="ingredient-{{ $i }}" value="{{ old('ingredient-' . $i) }}"></td>
+                                                <td class="col-md-5"><input type="text" class="form-control" name="amount-{{ $i }}" value="{{ old('amount-' . $i) }}"></td>
+                                            </tr>
+                                            @endfor
+                                            <tr>
+                                                <td><button type="button" class="btn btn-success" id="addIngredientBtn">追加</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+
                         <div class="card-body table-responsive">
                             <div class="col-md-12 dot-border">
                                 <h4>作り方</h4>
@@ -133,21 +128,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @for ($i = 0; $i < 8; $i++)
-                                    @php
-                                        $heading = 'heading_' . $i;
-                                        $detail = 'detail_' . $i;
-                                    @endphp
-                                    @if(isset($recipe->{$heading}) || isset($recipe->{$detail}))
-                                        <tr>
-                                            <td class="col-md-2">{{$i+1}}</td>
-                                            <td class="col-md-4"><input type="text" class="form-control" value="{{ $recipe->{$heading} }}"></td>
-                                            <td class="col-md-6"><input type="textarea" class="form-control" value="{{ $recipe->{$detail} }}"></td>
+                                    <!-- 登録済みの手順データ -->
+                                    @foreach ($processes as $process)
+                                        @if(isset($process->process) || isset($process->detail))
+                                            <tr class="process">
+                                                <td class="col-md-2">{{$process->number}}</td>
+                                                <td class="col-md-4"><input type="text" class="form-control" name="'process-' . {{$process->number}}" value="{{ old('process-' . $process->number, $process->process) }}"></td>
+                                                <td class="col-md-6"><textarea class="form-control" name="'detail-' . {{$process->number}}">{{ old('detail-' . $process->number, $process->detail) }}</textarea></td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+
+                                    <!-- 新規登録の手順フォーム -->
+                                    @for ($i = $processes->count() + 1; $i <= 8; $i++)
+                                        <tr class="process" style="display:none;">
+                                            <td class="col-md-1"><input type="hidden" name="number-{{ $i }}" value="{{$i}}">{{$i}}</td>
+                                            <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" id="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
+                                            <td class="col-md-5"><textarea type="text" class="form-control" name="detail-{{ $i }}" id="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
                                         </tr>
-                                    @endif
-                                    </tbody>
                                     @endfor
-                                </table>                                        
+                                    </tbody>
+                                </table>
+                                <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">工程を追加</button>                                      
                             </div>
                         </div>
                         <div class="card-footer">
@@ -161,11 +163,6 @@
                 <button onclick="scrollToTop()" class="btn btn-scroll bottom"><img src="{{ asset('img/arrow-up-circle.svg') }}" alt="画面上へスクロールするアイコン"></button>
             </div>
         </div>
-    </div>
-
-
-    <div class="row">
-
     </div>
 @stop
 

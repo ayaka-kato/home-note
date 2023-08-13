@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoodRecordsTable extends Migration
+class CreateIngredientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateFoodRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('food_records', function (Blueprint $table) {
+        Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->string('ingredient');
-            $table->string('ideal-amount');
-            $table->integer('real-amount')->length(1);
-            $table->integer('waste-amount')->length(1);
-            $table->string('restock-amount');
+            // unsigned()：正の整数で登録する。idに使う。
+            $table->integer('recipe_id')->unsigned()->index();
+            $table->string('ingredient')->nullable();
+            $table->string('amount')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateFoodRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('food_records');
+        Schema::dropIfExists('ingredients');
     }
 }

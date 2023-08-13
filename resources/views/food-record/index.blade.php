@@ -15,7 +15,7 @@
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
-                                <a href="{{ url('/foodRecord/create') }}" class="btn btn-default">食材在庫データ登録</a>
+                                <a href="{{ url('/create-foodRecord') }}" class="btn btn-default">食材在庫データ登録</a>
                             </div>
                         </div>
                     </div>

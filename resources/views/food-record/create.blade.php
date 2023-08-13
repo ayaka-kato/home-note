@@ -48,33 +48,23 @@
                             @else
                             <tr id="food-record-{{ $i }}">                              
                                 <td class="form-group">
-                                    <div>
-                                        <input type="text" id="myInput-{{ $i }}" onkeyup="searchFood()" placeholder="食材を検索する">
-                                        <div id="mySelect">
-                                            @foreach($foods as $food)
-                                            <div class="checkbox-wrapper">
-                                                <input type="checkbox" value="{{ $food->id }}" class="food-checkbox" id="food-checkbox-{{ $food->id }}">
-                                                <label for="food-checkbox-{{ $food->id }}">{{ $food->name }}</label>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                    <input type="text" name="ingredient-{{ $i }}" class="form-control" placeholder="（例）人参" value="{{ old('ingredient') }}">
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control" id="ideal-amount-{{ $i }}" name="type" placeholder="（例）2本">
+                                    <input type="text" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('amount') }}">
                                 </td>
                                 <td class="form-group">
                                     <div class="form-control">
-                                        <input type="radio" name="real-amount-{{ $i }}" value="0">ない
-                                        <input type="radio" name="real-amount-{{ $i }}" value="1">少ない
-                                        <input type="radio" name="real-amount-{{ $i }}" value="2">多い
+                                        <input type="radio" name="real-amount-{{ $i }}" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>ない
+                                        <input type="radio" name="real-amount-{{ $i }}" value="1" {{ old('real-amount-' .$i ) == "1" ? "checked" : null }}>少ない
+                                        <input type="radio" name="real-amount-{{ $i }}" value="2" {{ old('real-amount-' .$i ) == "2" ? "checked" : null }}>多い
                                     </div>
                                 </td>
                                 <td class="form-group">
                                     <div class="form-control">
-                                        <input type="radio" name="waste-amount-{{ $i }}" value="0">ない
-                                        <input type="radio" name="waste-amount-{{ $i }}" value="1">少ない
-                                        <input type="radio" name="waste-amount-{{ $i }}" value="2">多い
+                                        <input type="radio" name="waste-amount-{{ $i }}" value="0" {{ old('waste-amount-' .$i ) == "0" ? "checked" : null }}>ない
+                                        <input type="radio" name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>少ない
+                                        <input type="radio" name="waste-amount-{{ $i }}" value="2" {{ old('waste-amount-' .$i ) == "2" ? "checked" : null }}>多い
                                     </div>
                                 </td>
                                 <td>
@@ -100,31 +90,5 @@
 @section('css')
 @stop
 
-<script>
-function searchFood() {
-    var input, filter, checkboxes, i, label, txtValue;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    checkboxes = document.querySelectorAll(".food-checkbox");
-
-    for (i = 0; i < checkboxes.length; i++) {
-        label = checkboxes[i].nextElementSibling; // 隣接する<label>要素を取得
-        txtValue = label.textContent || label.innerText;
-
-        // 各食材のIDを取得
-        var foodId = checkboxes[i].value;
-
-        // 対応する食材の検索結果を管理するための要素を取得
-        var foodCheckboxElement = document.getElementById('food-checkbox-' + foodId);
-
-        // 検索テキストと一致するか判定し、表示・非表示を設定
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            foodCheckboxElement.parentNode.style.display = "block";
-        } else {
-            foodCheckboxElement.parentNode.style.display = "none";
-        }
-    }
-}
-</script>
 @section('js')
 @stop

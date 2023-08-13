@@ -48,71 +48,52 @@ document.addEventListener('DOMContentLoaded', function(){
 // 入力項目の表示・非表示切替
 // -------------------------
 
-// 1.処理：きっかけとなる対象を取得
-let addBtns = document.querySelectorAll('.add-Btn');
-let deleteBtns = document.querySelectorAll('.delete-Btn');
-
-// 2.処理：styleのdisplayを変更する関数の設定
-let openElement = (el)=> {
-    if(el.style.display=='none'){
-        el.style.display='';
+// 共通して使用する関数の定義
+// -------------------------
+    // 要素を表示する関数
+    let openElement = (el)=> {
+        if(el.style.display=='none'){
+            el.style.display='';
+        }
     }
-}
-
-let closeElement = (el)=>{
-    if(el.style.display==''){
-    el.style.display='none'; 
+    // 要素を非表示にする関数
+    let closeElement = (el)=> {
+        if(el.style.display==''){
+            el.style.display='none';
+        }
     }
-}
 
-let clearElement = (el) => {
-    if (el !== null){
-    el.value = '';
+    // 項目追加ボタンを設定する関数
+    function setupAddBtn(btnObj, objs, objsLength){
+        btnObj.addEventListener('click', ()=> {
+            let openedObjs = Array.from(objs).filter(tr => tr.style.display=='');
+            let openedLength = openedObjs.length;
+
+            if(openedLength < objsLength ){
+                let tr = objs[openedLength];
+                openElement(tr);
+            }
+
+            if(openedLength +1 == objsLength){
+                closeElement(btnObj);
+            }
+        });
     }
-}
 
-// 追加ボタン
-// 3.ループ処理：
-addBtns.forEach(function(addBtn){
+// ボタンの引数取得・関数にセット
+// -------------------------
+    // 食材追加ボタン
+    let addIngredientBtn = document.getElementById('addIngredientBtn');
+    let ingredients = document.querySelectorAll('.ingredient');
+    let ingredientsLength = ingredients.length;
+    setupAddBtn(addIngredientBtn, ingredients, ingredientsLength);
 
-    // 3-1.発火設定
-    addBtn.addEventListener('click', ()=>{
+    // 手順追加ボタン
+    let addProcessBtn = document.getElementById('addProcessBtn');
+    let processes = document.querySelectorAll('.process');
+    let processesLength = processes.length;
+    setupAddBtn(addProcessBtn, processes, processesLength);
 
-        // 3-2.処理：次のidを設定する
-        let add_id = Number(addBtn.dataset.id) + 1;
-
-        // 3-3.処理：表示・非表示を切り替える要素を取得
-        let div = document.getElementById('addForm-'+add_id);
-
-        // 3-4.処理：ボタンに処理を付与する
-        closeElement(addBtn);
-        openElement(div);
-
-    }, false);
-});
-
-// 削除ボタン
-deleteBtns.forEach(function(deleteBtn){
-
-    deleteBtn.addEventListener('click', ()=>{
-
-        let delete_id = Number(deleteBtn.dataset.id) ;
-
-        // 入力していたデータの消去処理
-        var headingInput = document.getElementById('heading-' + delete_id);
-        var detailInput = document.getElementById('detail-' + delete_id);
-
-        clearElement(headingInput);
-        clearElement(detailInput);
-
-        let div = document.getElementById('addForm-'+delete_id);
-        let addBtn = document.getElementById('addBtn-'+ Number(delete_id-1));
-
-        // ボタンの表示・非表示
-        closeElement(div);   
-        openElement(addBtn);   
-    }, false);
-});
 
 // -------------------------
 // 食材登録を続けるか確認するアラート機能

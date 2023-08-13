@@ -23,16 +23,16 @@
                 <form method="POST" action="{{ url('/store-recipe') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
-                        <div class="form-group">
+
+                        <div class="form-group col-md-8">
                             <label for="name">レシピ名<span class="color-red">*必須</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="（例）肉じゃが" value="{{ old('name') }}" autofocus>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-8">
                             <label>カテゴリ</label>
                             <!-- Collapse ボタン -->
                             <a class="btn btn-success" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">選択する</a>
-
                             <!-- Collapse コンテンツ -->
                             <div class="collapse multi-collapse" id="multiCollapseExample1">
                                 <div class="card card-body food-select-area">
@@ -46,108 +46,97 @@
                                             <label for="type-5" class="mr-2"><input type="radio" name="category" id="type-5" value="主菜(魚)" {{ old('type') == "主菜(魚)" ? "checked": null}}>主菜(魚)</label>
                                             <label for="type-6" class="mr-2"><input type="radio" name="category" id="type-6" value="主菜(卵)" {{ old('type') == "主菜(卵)" ? "checked": null}}>主菜(卵)</label>
                                             <label for="type-7" class="mr-2"><input type="radio" name="category" id="type-7" value="副菜(野菜)" {{ old('type') == "副菜(野菜)" ? "checked": null}}>副菜(野菜)</label>
-                                            <label for="type-7" class="mr-2"><input type="radio" name="category" id="type-8" value="副菜(きのこ)" {{ old('type') == "副菜(きのこ)" ? "checked": null}}>副菜(きのこ)</label>
-                                            <label for="type-7" class="mr-2"><input type="radio" name="category" id="type-9" value="副菜(海藻)" {{ old('type') == "副菜(海藻)" ? "checked": null}}>副菜(海藻)</label>
-                                            <label for="type-7" class="mr-2"><input type="radio" name="category" id="type-10" value="副菜(その他)" {{ old('type') == "副菜(その他)" ? "checked": null}}>副菜(その他)</label>
-                                            <label for="type-7" class="mr-2"><input type="radio" name="category" id="type-11" value="スープ" {{ old('type') == "スープ" ? "checked": null}}>スープ</label>
-                                            <label for="type-7" class="mr-2"><input type="radio" name="category" id="type-12" value="デザート" {{ old('type') == "デザート" ? "checked": null}}>デザート</label>
-                                            <label for="type-8" class="mr-2"><input type="radio" name="category" id="type-13" value="その他" {{ old('type') == "その他" ? "checked": null}}>その他</label>
+                                            <label for="type-8" class="mr-2"><input type="radio" name="category" id="type-8" value="副菜(きのこ)" {{ old('type') == "副菜(きのこ)" ? "checked": null}}>副菜(きのこ)</label>
+                                            <label for="type-9" class="mr-2"><input type="radio" name="category" id="type-9" value="副菜(海藻)" {{ old('type') == "副菜(海藻)" ? "checked": null}}>副菜(海藻)</label>
+                                            <label for="type-10" class="mr-2"><input type="radio" name="category" id="type-10" value="副菜(その他)" {{ old('type') == "副菜(その他)" ? "checked": null}}>副菜(その他)</label>
+                                            <label for="type-11" class="mr-2"><input type="radio" name="category" id="type-11" value="スープ" {{ old('type') == "スープ" ? "checked": null}}>スープ</label>
+                                            <label for="type-12" class="mr-2"><input type="radio" name="category" id="type-12" value="デザート" {{ old('type') == "デザート" ? "checked": null}}>デザート</label>
+                                            <label for="type-13" class="mr-2"><input type="radio" name="category" id="type-13" value="その他" {{ old('type') == "その他" ? "checked": null}}>その他</label>
                                         </div>
                                         <p class="error-msg">{{ $errors->first('text') }}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>食材</label>
-                            <!-- Collapse ボタン -->
-                            <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">選択する</button>
-                            <a href="{{ url('/create-food') }}">食材の登録をする</a>
 
-                            <!-- Collapse コンテンツ -->
-                            <div class="collapse multi-collapse" id="multiCollapseExample2">
-                                <div class="card card-body food-select-area">
-                                    <div class="row">
-                                        <p class="color-red">*10個まで選択可能</p>
-                                        @foreach($types as $type)
-                                        <b class="border-bottom pb-1 mb-1">{{$type}}</b>                                        
-                                            @php $colCount = 0; @endphp
-                                            @foreach($foods as $food)
-                                            @if($type == $food->type)
-                                                <div class="col-md-4">
-                                                    <label for="food_{{ $food->id }}" class="food-label font-weight-normal">{{ $food->name }}</label>
-                                                    <input type="checkbox" name="food[]" value="{{ $food->id }}" id="food_{{ $food->id }}">
-                                                </div>
-
-                                                <!-- 列が3列並んだ時、新しい行が作られる -->
-                                                @php $colCount++; @endphp
-                                                @if($colCount % 3 == 0)
-                                                    </div><div class="row">
+                        <div class="form-group  col-md-10">
+                            <b>材料</b>
+                            <div class="d-flex">
+                                <div class="form-group col-md-3">
+                                    <label for="serving">何人前</label>
+                                    <input type="text" class="form-control" id="serving" name="serving" placeholder="（例）2人前" value="{{ old('serving')}}">                                            
+                                </div>
+                                <div class="form-group col-md-9">                                
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-6">名前</th>
+                                                <th class="col-md-6">分量</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                 
+                                            @for($i = 0; $i < 20; $i++)
+                                                @if($i < 5)
+                                                <tr class="ingredient">                                            
+                                                    <td class="col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
+                                                    <td class="col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
+                                                </tr>
+                                                @else
+                                                <tr class="ingredient" style="display:none;">   
+                                                    <td class="col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
+                                                    <td class="col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
+                                                </tr>
                                                 @endif
-                                            @endif
-                                            @endforeach
-                                        @endforeach
-                                    </div>
+                                            @endfor
+                                        </tbody>
+                                    </table>
+                                    <button type="button" id="addIngredientBtn" class="btn btn-success">食材を追加</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group  col-md-8">
                             <label for="link">参考リンク</label>
                             <input type="text" class="form-control" id="link" name="link" placeholder="（例）https//..." value="{{ old('link') }}">
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group  col-md-8">
                             <label for="image">画像</label>
                             <div id="previewImage"></div>
                             <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
                         </div>
 
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th class="col-md-2">順番</th>
-                                    <th class="col-md-4">工程</th>
-                                    <th class="col-md-6">詳細</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="col-md-2">1</td>
-                                    <td class="col-md-4">
-                                        <input type="text" class="form-control" name="heading-0" placeholder="（例）下準備" value="{{ old('heading-0') }}">
-                                    </td>
-                                    <td class="col-md-6">
-                                        <textarea type="text" class="form-control" name="detail-0" placeholder="（例）一口サイズに切る" value="{{ old('detail-0') }}"></textarea>
-                                    </td>
-                                    <td class="col-md-1">
-                                        <button type="button" class="btn btn-success add-Btn" id="addBtn-0" data-id="0">追加</button>
-                                    </td>
-                                </tr>
-                                @for ($i = 1; $i < 8; $i++)
-                                <tr id="addForm-{{ $i }}" class="addForm" style="display:none;">
-                                    <td class="col-md-1">{{$i+1}}</td>
-                                    <td class="col-md-4">
-                                        <input type="text" class="form-control" name="heading-{{ $i }}" id="heading-{{ $i }}" value="{{ old('heading-'. $i ) }}">
-                                    </td>
-                                    <td class="col-md-5">
-                                        <textarea type="text" class="form-control" name="detail-{{ $i }}" id="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea>
-                                    </td>
-
-                                    @if($i == 7)
-                                    <!-- <button type="button" class="btn add-Btn" id="addBtn-{{ $i }}" data-id="{{ $i }}">入力欄{{ $i + 2 }}を追加</button> -->
-                                    @else
-                                    <td class="col-md-1">
-                                        <button type="button" class="btn btn-success add-Btn" id="addBtn-{{ $i }}" data-id="{{ $i }}">追加</button>
-                                    </td>
-                                    <td class="col-md-1">
-                                        <button type="button" class="btn btn-danger delete-Btn" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
-                                    </td>
-                                    @endif
-                                </tr>
-                                @endfor
-                            </tbody>
-                        </table>   
+                        <div class="col-md-12 dot-border">
+                            <b>作り方</b>
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="col-md-1">順番</th>
+                                        <th class="col-md-4">工程</th>
+                                        <th class="col-md-6">詳細</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for ($i = 0; $i < 8; $i++)
+                                        @if($i < 4)
+                                        <tr class="process">
+                                            <td class="col-md-1"><input type="hidden" name="number-{{ $i }}" value="{{$i+1}}">{{$i+1}}</td>
+                                            <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
+                                            <td class="col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                        </tr>
+                                        @else
+                                        <tr class="process" style="display:none;">
+                                            <td class="col-md-1"><input type="hidden" name="number-{{ $i }}" value="{{$i+1}}">{{$i+1}}</td>
+                                            <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
+                                            <td class="col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                        </tr>
+                                        @endif
+                                    @endfor
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">工程を追加</button>
                     </div>
-
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">登録</button>
                     </div>

@@ -18,14 +18,9 @@ class CreateRecipesTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->string('name');
             $table->string('category')->nullable();
+            $table->string('serving')->nullable();
             $table->string('link')->nullable();
             $table->mediumText('image')->nullable();
-            
-            for($i=0; $i < 8; $i++){
-                $table->string('heading_'. $i)->nullable();
-                $table->string('detail_'. $i)->nullable();
-            }
-
             $table->timestamps();
         });
     }

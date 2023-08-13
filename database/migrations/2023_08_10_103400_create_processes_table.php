@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFoodsTable extends Migration
+class CreateProcessesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateFoodsTable extends Migration
      */
     public function up()
     {
-        Schema::create('foods', function (Blueprint $table) {
+        Schema::create('processes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique()->charset("utf8");
-            $table->string('read')->nullable();
-            $table->string('type');
-            $table->string('text')->nullable();
+            // unsignedBigInteger()：外部キーに使う
+            $table->unsignedBigInteger('recipe_id');
+            $table->integer('number');
+            $table->string('process')->nullable();;
+            $table->string('detail')->nullable();;
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateFoodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('foods');
+        Schema::dropIfExists('processes');
     }
 }

@@ -245,23 +245,9 @@ return [
             'text'    => '料理',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
-                ['header' => '食材'],
-                [
-                    'text' => '食材一覧',
-                    'url'  => 'index-foods',
-                ],
-                [
-                    'text'    => '食材登録',
-                    'url'     => 'create-food',
-                ],
-                ['header' => 'レシピ'],
                 [
                     'text' => 'レシピ一覧',
                     'url'  => 'index-recipes',
-                ],
-                [
-                    'text' => 'レシピ登録',
-                    'url'  => 'create-recipe',
                 ],
             ],
         ],
@@ -272,10 +258,6 @@ return [
                 [
                     'text' => '食材在庫データ一覧',
                     'url'  => 'index-foodRecords',
-                ],
-                [
-                    'text' => '食材在庫データ登録',
-                    'url'  => 'create-foodRecord',
                 ],
                 [
                     'text' => 'お買い物リスト',

@@ -58,9 +58,14 @@
                 <div class="col-md-4 food-ready-area ml-5">
                     <div class="row">
                         <h4 class="mt-2">材料</h4>
-                        @php $colCount = 0; @endphp
-                        @foreach ($recipe->foods as $food)
-                        <p class="food-border">・ {{ $food->name }}</p>
+                        @if( $recipe->serving )
+                            <p>{{ $recipe->serving }}</p>
+                        @endif
+                        @foreach ($ingredients as $ingredient)
+                            <p class="food-border">
+                                <span>・ {{ $ingredient->ingredient }}</span>
+                                <span>{{ $ingredient->amount }}</span>
+                            </p>
                         @endforeach
                     </div>
                 </div>
@@ -78,20 +83,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @for ($i = 0; $i < 8; $i++)
-                        @php
-                            $heading = 'heading_' . $i;
-                            $detail = 'detail_' . $i;
-                        @endphp
-                        @if(isset($recipe->{$heading}) || isset($recipe->{$detail}))
+                        @foreach ($processes as $process)
+                        @if(isset($process->process) || isset($process->detail))
                             <tr>
-                                <td class="col-md-2">{{$i+1}}</td>
-                                <td class="col-md-4"><p class="m-0">{{ $recipe->{$heading} }}</p></td>
-                                <td class="col-md-6"><p class="m-0">{{ $recipe->{$detail} }}</p></td>
+                                <td class="col-md-2">{{$process->number}}</td>
+                                <td class="col-md-4"><p class="m-0">{{ $process->process }}</p></td>
+                                <td class="col-md-6"><p class="m-0">{{ $process->detail }}</p></td>
                             </tr>
                         @endif
+                        @endforeach
                         </tbody>
-                        @endfor
                     </table>   
                 </div>
             </div>
