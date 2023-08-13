@@ -9,7 +9,7 @@ use App\Models\Recipe;
 use App\Models\Ingredient;
 use App\Models\Process;
 
-class recipeController extends Controller
+class RecipeController extends Controller
 {
     // TODO:後でミドルウェアに書き換える
     public function __construct()

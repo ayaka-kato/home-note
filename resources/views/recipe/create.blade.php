@@ -76,11 +76,13 @@
                                         </thead>
                                         <tbody>                                 
                                             @for($i = 0; $i < 20; $i++)
+                                                <!-- 初期表示 -->
                                                 @if($i < 5)
                                                 <tr class="ingredient">                                            
                                                     <td class="col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
                                                     <td class="col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
                                                 </tr>
+                                                <!-- 追加ボタン押下で表示 -->
                                                 @else
                                                 <tr class="ingredient" style="display:none;">   
                                                     <td class="col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
