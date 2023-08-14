@@ -56,9 +56,9 @@
                                 <td>
                                     <div class="row">
                                         @php $colCount = 0; @endphp
-                                        @foreach ($recipe->foods as $food)
+                                        @foreach ($recipe->ingredients as $ingredient)
                                             <div class="col-md-2">
-                                                <p>{{ $food->name }}</p>
+                                                <p>{{ $ingredient->ingredient }}</p>
                                                 
                                                 <!-- 列が5列並んだ時、新しい行が作られる -->
                                                 @php $colCount++; @endphp

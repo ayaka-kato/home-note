@@ -166,7 +166,7 @@ class RecipeController extends Controller
         $query = Recipe::query();
         
         // 関連する食材も一緒にロード(Foodモデルのリレーションをロードする)
-        $query->with('foods');
+        $query->with('ingredients');
 
         // もしキーワードがあったら
         if(!empty($keyword))
@@ -174,9 +174,9 @@ class RecipeController extends Controller
             $query->where('name','like','%'.$keyword.'%');
             $query->orWhere('category','like','%'.$keyword.'%');
 
-            // orWhereHas():RecipeモデルがリレーションしているFoodモデルの中で条件を満たすレシピを探す
-            $query->orWhereHas('foods',function($subQuery) use ($keyword){
-                $subQuery->where('name', 'like', '%' . $keyword . '%');
+            // orWhereHas():RecipeモデルがリレーションしているIngredientモデルの中で条件を満たすレシピを探す
+            $query->orWhereHas('ingredients',function($subQuery) use ($keyword){
+                $subQuery->where('ingredient', 'like', '%' . $keyword . '%');
             });
         }
 
