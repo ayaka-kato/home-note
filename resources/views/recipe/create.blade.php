@@ -122,13 +122,13 @@
                                     @for ($i = 0; $i < 8; $i++)
                                         @if($i < 4)
                                         <tr class="process">
-                                            <td class="col-md-1"><input type="hidden" name="number-{{ $i }}" value="{{$i+1}}">{{$i+1}}</td>
+                                            <td class="col-md-1">{{$i+1}}</td>
                                             <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
                                             <td class="col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
                                         </tr>
                                         @else
                                         <tr class="process" style="display:none;">
-                                            <td class="col-md-1"><input type="hidden" name="number-{{ $i }}" value="{{$i+1}}">{{$i+1}}</td>
+                                            <td class="col-md-1">{{$i+1}}</td>
                                             <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
                                             <td class="col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
                                         </tr>

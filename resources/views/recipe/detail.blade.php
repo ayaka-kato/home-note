@@ -83,10 +83,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach ($processes as $process)
+                        @foreach ($processes as $index => $process)
                         @if(isset($process->process) || isset($process->detail))
                             <tr>
-                                <td class="col-md-2">{{$process->number}}</td>
+                                <td class="col-md-2">{{$index + 1}}</td>
                                 <td class="col-md-4"><p class="m-0">{{ $process->process }}</p></td>
                                 <td class="col-md-6"><p class="m-0">{{ $process->detail }}</p></td>
                             </tr>

@@ -14,7 +14,6 @@ class Process extends Model
     // ---------------------------
     // ※リレーションで繋ぐカラムは記述しなくてよい
     protected $fillable = [
-        'number',
         'process',
         'detail',
     ];

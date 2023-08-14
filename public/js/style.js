@@ -45,6 +45,35 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 // -------------------------
+// クリアボタン
+// -------------------------
+// クリアボタン取得
+let clearIngredientBtns = document.querySelectorAll('.clearIngredientBtn');
+let clearProcessBtns = document.querySelectorAll('.clearProcessBtn');
+
+// クリア関数
+let clearElement = (el)=>{
+    el.value = '';
+};
+
+// ボタンにクリア関数付与する関数
+function setClearBtn(btnObjs,firstColumn, secondColumn ){
+    btnObjs.forEach((btn) => {
+        btn.addEventListener('click', ()=>{
+            let id = btn.dataset.id;
+            let firstColumnInput = document.getElementById(firstColumn + '-' + id);
+            let secondColumnInput = document.getElementById(secondColumn + '-' + id); 
+            
+            clearElement(firstColumnInput);
+            clearElement(secondColumnInput);
+        });
+    });
+};
+
+setClearBtn(clearIngredientBtns, 'ingredient', 'amount');
+setClearBtn(clearProcessBtns, 'process', 'detail');
+
+// -------------------------
 // 入力項目の表示・非表示切替
 // -------------------------
 
@@ -65,19 +94,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // 項目追加ボタンを設定する関数
     function setupAddBtn(btnObj, objs, objsLength){
-        btnObj.addEventListener('click', ()=> {
-            let openedObjs = Array.from(objs).filter(tr => tr.style.display=='');
-            let openedLength = openedObjs.length;
+        if(btnObj){
+            btnObj.addEventListener('click', ()=> {
+                let openedObjs = Array.from(objs).filter(tr => tr.style.display=='');
+                let openedLength = openedObjs.length;
 
-            if(openedLength < objsLength ){
-                let tr = objs[openedLength];
-                openElement(tr);
-            }
+                if(openedLength < objsLength ){
+                    let tr = objs[openedLength];
+                    openElement(tr);
+                }
 
-            if(openedLength +1 == objsLength){
-                closeElement(btnObj);
-            }
-        });
+                if(openedLength +1 == objsLength){
+                    closeElement(btnObj);
+                }
+            });
+        }
     }
 
 // ボタンの引数取得・関数にセット

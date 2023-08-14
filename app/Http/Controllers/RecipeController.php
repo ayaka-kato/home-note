@@ -33,19 +33,17 @@ class RecipeController extends Controller
      * Request $request
      * 
      * レシピ登録画面表示
-    -------------------------------------------------------- */
+     * ------------------------------------------------------ */
     public function viewCreate()
     {
         return view('recipe.create');
     }
 
-
-    /**
-     * Request $request
-     * 
-     * レシピ新規登録
-     */
-    public function store(Request $request)
+    /** ------------------------------------------------------
+     * @param Request $request
+     * レシピ登録・編集時のバリデーション
+     * ------------------------------------------------------*/
+    public function recipeValidate(Request $request)
     {
         // バリデーションするデータを$rulesに格納
         $rules = [
@@ -60,13 +58,43 @@ class RecipeController extends Controller
             $rules["amount-$i"] = "string|max:255|nullable";
         }
         for ($j = 0; $j < 8; $j++) {
-            $rules["number-$j"] = "integer|nullable";
             $rules["process-$j"] = "string|max:255|nullable";
             $rules["detail-$j"] = "string|max:255|nullable";
         }
-
         // バリデーション
         $this->validate($request, $rules);
+    }
+
+    /** ------------------------------------------------------
+     * @
+     * 関連テーブルへの新規登録
+     * ------------------------------------------------------*/
+    public function relatedTableStore($request, $count, $firstColumn, $secondColumn, $table, $Table, $recipe){
+        for($i = 0; $i < $count; $i++){
+            $firstColumnKey = $firstColumn . '-' . $i;
+            $secondColumnKey = $secondColumn . '-' . $i;
+
+            if ($request->input($firstColumnKey) !== null || $request->input($secondColumnKey) !== null){
+                $newData = new $Table([
+                    $firstColumn => $request->input($firstColumnKey),
+                    $secondColumn => $request->input($secondColumnKey),
+                ]);
+                $recipe->$table()->save($newData);
+            }
+        }
+    }
+
+    /** ------------------------------------------------------
+     * Request $request
+     * 
+     * recipeValidate()
+     * relatedTableStore()
+     * レシピ新規登録
+     * ------------------------------------------------------*/
+    public function store(Request $request)
+    {
+        // バリデーション
+        $this->recipeValidate($request);
 
         // 画像ファイルの処理
         $encodedBase64Str = null;
@@ -76,8 +104,10 @@ class RecipeController extends Controller
             $encodedBase64Str = base64_encode(file_get_contents($file));
         }
 
+        // ユーザー情報の取得
         $user = $request->user();
 
+        // recipeテーブル登録
         $recipe = new Recipe([
             'name' => $request->name,
             'category' => $request->category,
@@ -85,49 +115,28 @@ class RecipeController extends Controller
             'link' => $request->link,
             'image' => $encodedBase64Str,
         ]);
-
         $user->recipes()->save($recipe);
 
-        // ingredientsテーブルへのデータの登録
-        for ($i = 0; $i < 20; $i++) {
-            $ingredientKey = "ingredient-$i";
-            $amountKey = "amount-$i";
+        // ingredientテーブル・processテーブルに登録
+        $configs = [
+            ['count' => 20, 'firstColumn' => 'ingredient', 'secondColumn' => 'amount', 'table' => 'ingredients', 'Table' => Ingredient::class],
+            ['count' => 8, 'firstColumn' => 'process', 'secondColumn' => 'detail', 'table' => 'processes', 'Table' => Process::class],
+        ];
 
-            if ($request->input($ingredientKey) !== null || $request->input($amountKey) !== null) {
-                $ingredient = new Ingredient([
-                    'ingredient' => $request->input($ingredientKey),
-                    'amount' => $request->input($amountKey),
-                ]);
-                $recipe->ingredients()->save($ingredient);
-            }
+        foreach ($configs as $config) {
+            $this->relatedTableStore($request, $config['count'], $config['firstColumn'], $config['secondColumn'], $config['table'], $config['Table'], $recipe);
         }
-
-        // processesテーブルへのデータの登録
-        for ($j = 0; $j < 8; $j++) {
-            $numberKey = "number-$j";
-            $processKey = "process-$j";
-            $detailKey = "detail-$j";
-
-            if ($request->input($numberKey) !== null && ($request->input($processKey) !== null || $request->input($detailKey) !== null)) {
-                $process = new Process([
-                    'number' => $request->input($numberKey),
-                    'process' => $request->input($processKey),
-                    'detail' => $request->input($detailKey),
-                ]);
-                $recipe->processes()->save($process);
-            }
-        }
+        
         return redirect('/index-recipes');
     }
 
-
-    /**
+    /** ------------------------------------------------------
      * Request $request
      * 
      * レシピ一件表示
      * ※呼び出し元によって表示先を変える。
      * ※一覧→詳細 / 詳細→編集
-     */
+     * ------------------------------------------------------*/
     public function getRecipe(Request $request, $id)
     {
         $recipe = Recipe::find($id);
@@ -144,11 +153,11 @@ class RecipeController extends Controller
         }
     }
 
-    /**
+    /** ------------------------------------------------------
      * Request $request
      * 
      * レシピ検索
-     */
+     * ------------------------------------------------------*/
     public function searchRecipes(Request $request)
     {
         // キーワード受け取り
@@ -176,39 +185,62 @@ class RecipeController extends Controller
         return view('recipe.searchResult', compact('keyword','recipes'));
     }
 
+    /** ------------------------------------------------------
+     * 
+     * 関連テーブルの更新・削除・登録
+     * ------------------------------------------------------*/
+    public function relatedTableUpdate($recipe, $count, $firstColumn, $secondColumn, $table, $Table, $request)
+    {
+        // 最初に各テーブルのデータを取得する。(for文の中で取得するとずれる)
+        $tableArray = $recipe->$table()->get(); 
 
-    /**
-     * TODO:
+        for ($i = 0; $i < $count; $i++){
+            $firstColumnKey = $firstColumn. '-' . $i; 
+            $secondColumnKey = $secondColumn. '-' .$i; 
+
+            // DBに登録がある場合(編集・削除)
+            if(isset($tableArray[$i])){
+                $arrayToUpdate = $tableArray[$i];
+
+                // 編集：入力値がある
+                if($request->input($firstColumnKey) !== null || $request->input($secondColumnKey) !== null){
+                    $arrayToUpdate->update([
+                        $firstColumn => $request->input($firstColumnKey),
+                        $secondColumn => $request->input($secondColumnKey),
+                    ]);
+
+                // 削除：入力値がない
+                }else {
+                    $arrayToUpdate->delete();
+                }
+
+            // DBに登録がない場合（新規登録）
+            }else {
+                if ($request->input($firstColumnKey) !== null || $request->input($secondColumnKey) !== null) {
+                    $addData = new $Table([
+                        $firstColumn => $request->input($firstColumnKey),
+                        $secondColumn => $request->input($secondColumnKey),
+                    ]);
+                    $recipe->$table()->save($addData);
+                }
+            }
+        }
+    }
+    
+    /** ------------------------------------------------------
      * Request $request
      * 
+     * recipeValidate()
+     * relatedTableUpdate()
      * レシピ編集
-     */
+     * ------------------------------------------------------*/
     public function update(Request $request, $id)
     {
-        // バリデーションするデータを$rulesに格納
-        $rules = [
-            'name' => 'required|string|max:30',
-            'category' => 'string|nullable',
-            'serving' => 'string|max:255|nullable',
-            'link' => 'string|max:255|nullable',
-        ];
-        
-        for ($i = 0; $i < 20; $i++) {
-            $rules["ingredient-$i"] = "string|max:255|nullable";
-            $rules["amount-$i"] = "string|max:255|nullable";
-        }
-        for ($j = 0; $j < 8; $j++) {
-            $rules["number-$j"] = "integer|nullable";
-            $rules["process-$j"] = "string|max:255|nullable";
-            $rules["detail-$j"] = "string|max:255|nullable";
-        }
-
         // バリデーション
-        $this->validate($request, $rules);
+        $this->recipeValidate($request);
 
+        TODO:
         // 画像ファイルの処理
-        $encodedBase64Str = null;
-
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $encodedBase64Str = base64_encode(file_get_contents($file));
@@ -225,48 +257,29 @@ class RecipeController extends Controller
             'link' => $request->link,
         ]);
 
-        // ingredientsテーブルの更新
-        for ($i = 0; $i < 20; $i++) {
-            $ingredientKey = "ingredient-$i";
-            $amountKey = "amount-$i";
-
-            if ($request->filled($ingredientKey) || $request->filled($amountKey) ) {
-                $recipe->ingredients()->where('id', $id)->update([
-                    'ingredient' => $request->input($ingredientKey),
-                    'amount' => $request->input($amountKey),
-                ]);
-                $recipe->ingredients()->save($ingredient);
-            }
+        // 画像ファイルの変更があれば更新する。
+        if($request->hasFile('image')){
+            $recipe->update([
+                'image' =>  $encodedBase64Str
+            ]);
         }
 
-        // processesテーブルの更新
-        for ($j = 0; $j < 8; $j++) {
-            $processKey = "process-$j";
-            $detailKey = "detail-$j";
+        // ingredientsテーブル・processテーブルの更新
+        $this->relatedTableUpdate($recipe, 20, 'ingredient', 'amount', 'ingredients', Ingredient::class, $request);
+        $this->relatedTableUpdate($recipe, 8, 'process', 'detail', 'processes', Process::class, $request);
 
-            if ($request->input($processKey) !== null || $request->input($detailKey) !== null) {
-                $recipe->processes()->where('id', $id)->update([
-                    'process' => $request->input($processKey),
-                    'detail' => $request->input($detailKey),
-                ]);
-                $recipe->processes()->save($process);
-            }
-        }
-
-        return redirect('detail-recipe');
+        return redirect('/detail-recipe/'. $recipe->id);
     }
 
-    /**
+    /** ------------------------------------------------------
      * Request $request
      * 
      * レシピ削除
-     */
+     * ------------------------------------------------------*/
     public function destroy($id)
     {
         $recipe = Recipe::find($id);
         $recipe->delete();
         return redirect('index-recipes');
     }
-
-
 }

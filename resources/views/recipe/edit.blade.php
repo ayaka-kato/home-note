@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('/update-recipe'. $recipe->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/update-recipe/'. $recipe->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="card-body d-flex">
 
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <!-- リンク・共有 -->
-                                <p class="my-1">参考リンク：<input type="text" name="link" id="link" class="form-control" value="{{ $recipe->link }}"></p>
+                                <p class="my-1">参考リンク：<input type="text" name="link" id="link" class="form-control" value="{{ old('link', $recipe->link) }}"></p>
 
                             </div>
         
@@ -82,10 +82,10 @@
                             <div class="col-md-4 food-ready-area ml-5">
                                 <div class="row">
                                     <h4 class="mt-2">材料</h4>
-                                    @if( $recipe->serving )
-                                        <p>{{ $recipe->serving }}</p>
-                                    @endif
-                                    <!-- 登録済みの食材データ -->
+                                    <div class="col-md-10 d-flex">
+                                        <label for="serving" class="w-50">何人前：</label>
+                                        <input type="text" class="form-control" name="serving" id="serving" value="{{ old('serving', $recipe->serving)}}">
+                                    </div>
                                     <table>
                                         <thead>
                                             <tr>
@@ -94,17 +94,21 @@
                                             </tr>
                                         </thead>
                                         <tbody class="food-border">
+                                            <!-- 登録済みの食材データ -->
                                             @foreach ($ingredients as $index => $ingredient)
                                             <tr class="ingredient">
-                                                <td class="col-md-5"><input type="text" class="form-control" name="ingredient-{{ $index }}" value="{{ old('ingredient-' . $index, $ingredient['ingredient']) }}"></td>
-                                                <td class="col-md-5"><input type="text" class="form-control" name="amount-{{ $index }}" value="{{ old('amount-' . $index, $ingredient['amount']) }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form-control" id="ingredient-{{ $index }}" name="ingredient-{{ $index }}" value="{{ old('ingredient-' . $index, $ingredient['ingredient']) }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form-control" id="amount-{{ $index }}" name="amount-{{ $index }}" value="{{ old('amount-' . $index, $ingredient['amount']) }}"></td>
+                                                <td class="col-md-2"><button type="button" class="btn clearIngredientBtn" data-id="{{ $index }}">×</button></td>
                                             </tr>
                                             @endforeach
 
-                                            @for( $i = $ingredients->count() +1 ; $i <= 20; $i++)
+                                            <!-- 新規登録の食材フォーム -->
+                                            @for( $i = $ingredients->count() ; $i < 20; $i++)
                                             <tr class="ingredient" style="display:none;">
-                                                <td class="col-md-5"><input type="text" class="form-control" name="ingredient-{{ $i }}" value="{{ old('ingredient-' . $i) }}"></td>
-                                                <td class="col-md-5"><input type="text" class="form-control" name="amount-{{ $i }}" value="{{ old('amount-' . $i) }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form-control" id="ingredient-{{ $i }}" name="ingredient-{{ $i }}" value="{{ old('ingredient-' . $i) }}"></td>
+                                                <td class="col-md-4"><input type="text" class="form-control" id="amount-{{ $i }}" name="amount-{{ $i }}" value="{{ old('amount-' . $i) }}"></td>
+                                                <td class="col-md-2"><button type="button" class="btn clearIngredientBtn" data-id="{{ $i }}">×</button></td>
                                             </tr>
                                             @endfor
                                             <tr>
@@ -129,12 +133,13 @@
                                     </thead>
                                     <tbody>
                                     <!-- 登録済みの手順データ -->
-                                    @foreach ($processes as $process)
+                                    @foreach ($processes as $index => $process)
                                         @if(isset($process->process) || isset($process->detail))
                                             <tr class="process">
-                                                <td class="col-md-2">{{$process->number}}</td>
-                                                <td class="col-md-4"><input type="text" class="form-control" name="'process-' . {{$process->number}}" value="{{ old('process-' . $process->number, $process->process) }}"></td>
-                                                <td class="col-md-6"><textarea class="form-control" name="'detail-' . {{$process->number}}">{{ old('detail-' . $process->number, $process->detail) }}</textarea></td>
+                                                <td class="col-md-1">{{$index +1}}</td>
+                                                <td class="col-md-4"><input type="text" class="form-control" id="process-{{ $index }}" name="process-{{$index}}" value="{{ old('process-' . $index, $process->process) }}"></td>
+                                                <td class="col-md-6"><textarea class="form-control" id="detail-{{ $index }}" name="detail-{{$index}}">{{ old('detail-' . $index, $process->detail) }}</textarea></td>
+                                                <td class="col-md-1"><button type="button" class="btn clearProcessBtn" data-id="{{ $index }}">×</button></td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -142,9 +147,10 @@
                                     <!-- 新規登録の手順フォーム -->
                                     @for ($i = $processes->count() + 1; $i <= 8; $i++)
                                         <tr class="process" style="display:none;">
-                                            <td class="col-md-1"><input type="hidden" name="number-{{ $i }}" value="{{$i}}">{{$i}}</td>
-                                            <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" id="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-md-5"><textarea type="text" class="form-control" name="detail-{{ $i }}" id="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-md-1">{{$i}}</td>
+                                            <td class="col-md-4"><input type="text" class="form-control" id="process-{{ $i }}" name="process-{{ $i }}" id="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
+                                            <td class="col-md-5"><textarea type="text" class="form-control" id="process-{{ $i }}" name="detail-{{ $i }}" id="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-md-1"><button type="button" class="btn clearProcessBtn" data-id="{{ $i }}">×</button></td>
                                         </tr>
                                     @endfor
                                     </tbody>
