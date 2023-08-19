@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', '冷蔵庫チェックリスト')
+@section('title', '冷蔵庫チェックリスト編集')
 
 @section('content_header')
-    <h1>冷蔵庫チェックリスト</h1>
+    <h1>冷蔵庫チェックリスト編集</h1>
 @stop
 
 @section('content')
@@ -20,11 +20,15 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST" action="{{ url('/store-foodRecord') }}">
+                <form method="POST" action="{{ url('/update-foodRecord/' . $date ) }}">
                     @csrf
                     <div class="card-body">
+                    <button type="button" id="exe-btn">反映する</button>
                     <table class="table table-hover text-nowrap record-table">
                         <thead>
+                            @if(session('message'))
+                                <p>{{ session('message') }}</p>
+                            @endif
                             <tr>
                                 <th class="form-group">
                                     <p>食材</p>
@@ -45,35 +49,39 @@
                             </tr>
                         </thead>
                         <tbody id="records-container">
-                            @for($i = 0; $i < 5; $i++)
-                            <tr id="food-record-{{ $i }}" class="food-record">                              
+                            <!-- DBに登録がある場合 -->
+                            @foreach($foodRecords as $index=>$foodRecord)
+                            <tr id="food-record-{{ $index }}" class="food-record">                              
                                 <td class="form-group ingredient-name">
-                                    <input type="text" name="ingredient-{{ $i }}" class="form-control" placeholder="（例）人参" value="{{ old('ingredient') }}">
+                                    <input type="text" name="ingredient-{{ $index }}" class="form-control" value="{{ old('ingredient-' . $index , $foodRecord->ingredient ) }}">
                                 </td>
-                                <td class="form-group">
-                                    <input type="text" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount') }}">
+                                <td class="form-group ideal-amount">
+                                    <input type="text" name="ideal-amount-{{ $index }}" class="form-control" value="{{ old('ideal-amount-' . $index , $foodRecord->ideal_amount) }}">
                                 </td>
-                                <td class="form-group">
+                                <td class="form-group real-amount">
                                     <div class="form-control">
-                                        <input type="radio" name="real-amount-{{ $i }}" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>ない
-                                        <input type="radio" name="real-amount-{{ $i }}" value="1" {{ old('real-amount-' .$i ) == "1" ? "checked" : null }}>少ない
-                                        <input type="radio" name="real-amount-{{ $i }}" value="2" {{ old('real-amount-' .$i ) == "2" ? "checked" : null }}>多い
+                                        <input type="radio" name="real-amount-{{ $index }}" value="0" {{ (old('real-amount-' . $index) === "0" || $foodRecord->real_amount === 0) ? "checked" : "" }}>ない
+                                        <input type="radio" name="real-amount-{{ $index }}" value="1" {{ (old('real-amount-' . $index) === "1" || $foodRecord->real_amount === 1) ? "checked" : "" }}>少ない
+                                        <input type="radio" name="real-amount-{{ $index }}" value="2" {{ (old('real-amount-' . $index) === "2" || $foodRecord->real_amount === 2) ? "checked" : "" }}>多い
                                     </div>
                                 </td>
                                 <td class="form-group waste-amount">
                                     <div class="form-control">
-                                        <input type="radio" name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>少ない
-                                        <input type="radio" name="waste-amount-{{ $i }}" value="2" {{ old('waste-amount-' .$i ) == "2" ? "checked" : null }}>多い
+                                        <input type="radio" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" || $foodRecord->waste_amount === 1) ? "checked" : "" }}>少ない
+                                        <input type="radio" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" || $foodRecord->waste_amount === 2) ? "checked" : "" }}>多い
                                     </div>
                                 </td>
                                 <td class="form-group restock-amount">
-                                    <input type="text" name="restock-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('restock-amount-' . $i) }}">
+                                    <input type="text" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index , $foodRecord->restock_amount) }}">
                                 </td>
                                 <td class="form-group delete-record">
-                                    <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
+                                    <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}">削除</button>
                                 </td>                                
                             </tr>
-                            @endfor
+                            @endforeach
+
+                            <!-- 新規登録をする場合 -->
+
                         </tbody>
                     </table>
                     <button type="button" class="btn btn-success" id="addRecordBtn">追加</button>

@@ -12,10 +12,11 @@ class FoodRecord extends Model
     // protected $guarded = ['id'];
 
     protected $fillable = [
-        'ideal-amount',
-        'real-amount',
-        'waste-amount',
-        'restock-amount',
+        'ingredient',
+        'ideal_amount',
+        'real_amount',
+        'waste_amount',
+        'restock_amount',
     ];
 
     // ---------------------------

@@ -16,10 +16,10 @@ class CreateFoodRecordsTable extends Migration
         Schema::create('food_records', function (Blueprint $table) {
             $table->id();
             $table->string('ingredient');
-            $table->string('ideal-amount');
-            $table->integer('real-amount')->length(1);
-            $table->integer('waste-amount')->length(1);
-            $table->string('restock-amount');
+            $table->string('ideal_amount')->nullable();
+            $table->integer('real_amount')->length(1)->nullable();
+            $table->integer('waste_amount')->length(1)->nullable();
+            $table->string('restock_amount')->nullable();
             $table->timestamps();
         });
     }

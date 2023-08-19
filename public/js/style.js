@@ -73,9 +73,9 @@ function setClearBtn(btnObjs,firstColumn, secondColumn ){
 setClearBtn(clearIngredientBtns, 'ingredient', 'amount');
 setClearBtn(clearProcessBtns, 'process', 'detail');
 
-// -------------------------
-// 入力項目の表示・非表示切替
-// -------------------------
+// --------------------------------------------
+// レシピ登録画面：入力項目の表示・非表示切替
+// --------------------------------------------
 
 // 共通して使用する関数の定義
 // -------------------------
@@ -126,18 +126,83 @@ setClearBtn(clearProcessBtns, 'process', 'detail');
     setupAddBtn(addProcessBtn, processes, processesLength);
 
 
-// -------------------------
-// 食材登録を続けるか確認するアラート機能
-// -------------------------
-function confirmSubmit(event) {
-    event.preventDefault();
-    if (confirm('続けて入力しますか？\n続けて入力する場合は、「OK」を押してください。\n\n続けて入力"しない"場合は、「キャンセル」を押してください。\n(食材登録後に一覧画面に移動します。)')) {
-        document.getElementById('foodForm').submit();
-    } else {
-        document.getElementsByName('continue_input')[0].value = 0;
-        document.getElementById('foodForm').submit();
-    }
+// --------------------------------------------
+// 食材在庫登録画面：入力項目の追加・削除
+// --------------------------------------------
+const addRecordBtn = document.getElementById('addRecordBtn');
+const recordsContainer = document.getElementById('records-container');
+let recordIndex = document.querySelectorAll('.food-record').length + 1;
+
+const createRecordRow = (index) => {
+    const newRow = document.createElement('tr');
+    newRow.id = 'food-record-' + recordIndex;
+    newRow.className = 'food-record';
+
+    // 新しい行の内容を設定
+    newRow.innerHTML = `
+        <td class="form-group ingredient-name">
+            <input type="text" name="ingredient-${recordIndex}" class="form-control" placeholder="（例）人参" value="">
+        </td>
+        <td class="form-group ideal-amount">
+            <input type="text" name="ideal-amount-${recordIndex}" class="form-control" placeholder="（例）2本"  value="">
+        </td>
+        <td class="form-group real-amount">
+            <div class="form-control">
+                <input type="radio" name="real-amount-${recordIndex}" value="0" {{ old('real-amount-' .${recordIndex} ) == "0" ? "checked" : null }}>ない
+                <input type="radio" name="real-amount-${recordIndex}" value="1" {{ old('real-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>少ない
+                <input type="radio" name="real-amount-${recordIndex}" value="2" {{ old('real-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>多い
+            </div>
+        </td>
+        <td class="form-group waste-amount">
+            <div class="form-control">
+                <input type="radio" name="waste-amount-${recordIndex}" value="1" {{ old('waste-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>少ない
+                <input type="radio" name="waste-amount-${recordIndex}" value="2" {{ old('waste-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>多い
+            </div>
+        </td>
+        <td class="form-group restock-amount">
+            <input type="text" name="restock-amount-${recordIndex}" class="form-control" placeholder="（例）2本"  value="{{ old('restock-amount-'.${recordIndex} ) }}">
+        </td>
+        <td class="form-group delete-record">
+            <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
+        </td>`;
+
+    return newRow;
+};
+
+// 関数を作成して削除ボタンのイベントを設定
+function setupDeleteBtn(deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+        let id = deleteBtn.dataset.id;
+        deleteRow = document.getElementById('food-record-' + id);
+        recordsContainer.removeChild(deleteRow);
+        recordIndex--;
+
+        if(addRecordBtn.style.display="none"){
+            openElement(addRecordBtn);
+        }
+    });
 }
+
+addRecordBtn.addEventListener('click', () => {
+    const newRow = createRecordRow(recordIndex);
+    recordsContainer.appendChild(newRow);
+    recordIndex++;
+
+    if (recordIndex > 50) {
+        closeElement(addRecordBtn);
+    }
+
+    // 新しい行に対応する削除ボタンを取得してイベントを設定
+    const newDeleteBtn = newRow.querySelector('.delete-Btn');
+    setupDeleteBtn(newDeleteBtn);
+});
+
+// 初期の削除ボタンにイベントを設定
+const deleteRecordBtns = document.querySelectorAll('.delete-Btn');
+deleteRecordBtns.forEach(deleteRecordBtn => {
+    setupDeleteBtn(deleteRecordBtn);
+});
+
 
 // -------------------------
 // ページ一番上にスクロールする機能
@@ -153,3 +218,49 @@ function scrollToBottom() {
     window.scrollTo(0, document.body.scrollHeight);
 }
 
+// -------------------------
+// 補充数量を反映する機能
+// -------------------------
+let exeBtn = document.getElementById('exe-btn');
+
+exeBtn.addEventListener('click', () => {
+    let rows = document.querySelectorAll('.food-record');
+
+    rows.forEach((row, index) => {
+        let realAmountRadios = row.querySelectorAll('.real-amount input[type="radio"]');
+        let restockAmountInput = row.querySelector('.restock-amount input[type="text"]');
+        let idealAmountInput = row.querySelector('.ideal-amount input[type="text"]');
+        
+        realAmountRadios.forEach(radio => {
+            if (radio.checked && (radio.value === "0" || radio.value === "1")) {
+                restockAmountInput.value = idealAmountInput.value;
+            }
+        });
+    });
+});
+
+// // -------------------------
+// // 買い物リスト送信確認機能
+// // -------------------------
+// let shoppingListBtn = document.getElementById('shopping-list-btn');
+// let modalBody = document.getElementById('modal-body');
+
+// shoppingListBtn.addEventListener('click', () => {
+//     modalBody.innerHTML = '';
+//     let rows = document.querySelectorAll('.food-record');
+//     console.log(rows);
+
+//     rows.forEach((row, index) => {
+//         let ingredientInput = row.querySelector('.ingredient input[type="text"]').value;
+//         let restockAmountInput = row.querySelector('.restock-amount input[type="text"]').value;
+
+
+//         let div = document.createElement(div);
+//         div.innerHTML = `
+//             <span>${ ingredientInput }</span>
+//             <span>${ restockAmountInput }</span>
+//         `;
+    
+//         modalBody.appendChild(div);
+//     });
+// });

@@ -57,11 +57,14 @@ Route::delete('/delete-recipe/{id}', [App\Http\Controllers\RecipeController::cla
 Route::get('/index-foodRecords', [App\Http\Controllers\FoodRecordController::class, 'index']);
 // 食材在庫データ登録画面
 Route::get('/create-foodRecord',  [App\Http\Controllers\FoodRecordController::class, 'viewCreate']);
-// // 食材在庫データ編集画面
-// Route::get('/edit-food/{id}', [App\Http\Controllers\FoodRecordController::class, 'getFood']);
-// // 食材在庫データ登録
-// Route::post('/store-food', [App\Http\Controllers\FoodRecordController::class, 'store']);
-// // 食材編集
-// Route::post('/update-food/{id}', [App\Http\Controllers\FoodRecordController::class, 'update']);
+// 食材在庫データ編集画面
+Route::get('/edit-foodRecord/{id}',  [App\Http\Controllers\FoodRecordController::class, 'viewEdit']);
+// 買い物リスト画面
+Route::get('/create-restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList']);
+
+// 食材在庫データ登録
+Route::post('/store-foodRecord', [App\Http\Controllers\FoodRecordController::class, 'store']);
+// 食材編集
+Route::post('/update-foodRecord/{date}', [App\Http\Controllers\FoodRecordController::class, 'update']);
 // // 食材削除
-// Route::delete('/delete-food/{id}', [App\Http\Controllers\FoodRecordController::class, 'destroy']);
+// Route::delete('/delete-foodRecord/{id}', [App\Http\Controllers\FoodRecordController::class, 'destroy']);

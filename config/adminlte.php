@@ -226,21 +226,21 @@ return [
 
     'menu' => [
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
+        // [
+        //     'type' => 'sidebar-menu-search',
+        //     'text' => 'search',
+        // ],
         [
             // 'text' => 'blog',
             // 'url'  => 'admin/blog',
             // 'can'  => 'manage-blog',
         ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
+        // ['header' => 'account_settings'],
+        // [
+        //     'text' => 'profile',
+        //     'url'  => 'admin/settings',
+        //     'icon' => 'fas fa-fw fa-user',
+        // ],
         [
             'text'    => '料理',
             'icon'    => 'fas fa-fw fa-share',
@@ -261,24 +261,8 @@ return [
                 ],
                 [
                     'text' => 'お買い物リスト',
-                    'url'  => '',
+                    'url'  => 'create-restockList',
                 ],
-            ],
-        ],
-        [   
-            'text'    => '家計簿',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                'text' => '収支入力',
-                'url'  => '',
-            ],
-            [
-                'text' => '分析',
-                'url'  => '',
-            ],
-            [
-                'text' => '目標設定',
-                'url'  => '',
             ],
         ],
         [

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-
+use Illuminate\Support\Facades\DB;
 use App\Models\FoodRecord;
-use App\Models\Food;
 use App\Models\User;
+use Carbon\Carbon;
 
 class FoodRecordController extends Controller
 {
@@ -17,9 +17,13 @@ class FoodRecordController extends Controller
      */
     public function index()
     {
-        $foodRecords = FoodRecord::all();
+        $dates = FoodRecord::select(DB::raw('DATE(created_at) as date'))
+            ->addSelect(DB::raw('MAX(updated_at) as latest_update'))
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('latest_update', 'desc') 
+            ->get();
 
-        return view('food-record.index',compact('foodRecords'));
+        return view('food-record.index', compact('dates'));
     }
 
     /**
@@ -31,12 +35,26 @@ class FoodRecordController extends Controller
         return view('food-record.create');
     }
 
-        /**
+    
+    /**
+     * 
+     * 食材データ編集画面表示
+     */
+    public function viewEdit($date)
+    {
+        $foodRecords = FoodRecord::whereDate('created_at', $date)
+        ->get();
+
+    return view('food-record.edit', compact('foodRecords','date'));
+    }
+
+
+    /**
      * Request $request
      * 
-     * 新規登録
+     * バリデーション
      */
-    public function store(Request $request)
+    public function recordValidate(Request $request)
     {
         $rules = [];
         
@@ -45,68 +63,114 @@ class FoodRecordController extends Controller
             $rules["ideal-amount-$i"] = "string|max:30|nullable";
             $rules["real-amount-$i"] = "integer|max:5|nullable";
             $rules["waste-amount-$i"] = "integer|max:5|nullable";
+            $rules["restock-amount-$i"] = "string|max:100|nullable";
         }
 
         $this->validate($request, $rules);
-
-
-        // Food::create([
-        //     'name' => $request->name,
-        //     'read' => $request->read,
-        //     'text' => $request->text,
-        // ]);
-
-        // // 上のやり方でダメな時は(tableが見つからないなどのエラーが出る)
-        // $food = new Food();
-        // $food->name = $request->name;
-        // $food->read = $request->read;
-        // $food->type = $request->type;
-        // $food->text = $request->text;
-        // $food->save();
-
-        TODO:
-        $record = new FoodRecord([
-
-        ]);
-
-
-        // 続けて入力するか確認するためのJavaScriptで設定した値を判定
-        if ($request->input('continue_input') == 1) {
-            return redirect('/create-food');
-        } else {
-            return redirect('/index-foods');
-        }
     }
 
-        /**
+    /**
      * Request $request
      * 
-     * 食材編集
+     * 新規登録
      */
-    public function update(Request $request, $id)
+    public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => [
-                'required',
-                'string',
-                'max:30',
-                Rule::unique('foods')->ignore($request->id),
-            ],
-            'read' => 'nullable|string|max:30',
-            'type' => 'required|string',
-            'text' => 'nullable|string|max:100',
-        ]);
+        $this->recordValidate($request);
 
-        $food = Food::where('id', $id)->first();
-        $food->update([
-            'name' => $request->name,
-            'read' => $request->read,
-            'type' => $request->type,
-            'text' => $request->text,
-        ]);
+        for($i = 0; $i < 50; $i++){
+            $ingredientKey =  'ingredient-' . $i;
+            $idealAmountKey =  'ideal-amount-' . $i;
+            $realAmountKey =  'real-amount-' . $i;
+            $wasteAmountKey =  'waste-amount-' . $i;
+            $restockAmountKey =  'restock-amount-' . $i;
 
-        return redirect()->to('/index-foods');
+            if($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
+                FoodRecord::create([
+                    'ingredient' => $request->input($ingredientKey),
+                    'ideal_amount' => $request->input($idealAmountKey),
+                    'real_amount' => $request->input($realAmountKey),
+                    'waste_amount' => $request->input($wasteAmountKey),
+                    'restock_amount' => $request->input($restockAmountKey),
+                ]);
+            }
+        }
+        return redirect('/index-foodRecords');
     }
+
+    /**
+     * Request $request
+     * 
+     * 編集
+     */
+    public function update(Request $request, $date)
+    {
+        // バリデーション
+        $this->recordValidate($request);
+
+        // 日付部分だけで絞るためにwhereDate()を使う
+        $foodRecords = FoodRecord::whereDate('created_at', $date)->get();
+        
+        foreach ($foodRecords as $index => $record) {
+            $ingredientKey =  'ingredient-' . $index;
+            $idealAmountKey =  'ideal-amount-' . $index;
+            $realAmountKey =  'real-amount-' . $index;
+            $wasteAmountKey =  'waste-amount-' . $index;
+            $restockAmountKey =  'restock-amount-' . $index;
+    
+            // 更新する時
+            if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
+                $record->update([
+                    'ingredient' => $request->input($ingredientKey),
+                    'ideal_amount' => $request->input($idealAmountKey),
+                    'real_amount' => $request->input($realAmountKey),
+                    'waste_amount' => $request->input($wasteAmountKey),
+                    'restock_amount' => $request->input($wasteAmountKey),
+                ]);
+
+            // 削除する時
+            } else {
+                $record->delete();
+            }
+        }
+
+        // DBに登録済みのデータがない場合
+        for($i = $foodRecords->count(); $i < 50; $i++ ){
+            $ingredientKey =  'ingredient-' . $i;
+            $idealAmountKey =  'ideal-amount-' . $i;
+            $realAmountKey =  'real-amount-' . $i;
+            $wasteAmountKey =  'waste-amount-' . $i;
+            $restockAmountKey =  'restock-amount-' . $i;
+
+            if($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null){
+                FoodRecord::create([
+                    'ingredient' => $request->input($ingredientKey),
+                    'ideal_amount' => $request->input($idealAmountKey),
+                    'real_amount' => $request->input($realAmountKey),
+                    'waste_amount' => $request->input($wasteAmountKey),
+                    'restock_amount' => $request->input($restockAmountKey),
+                ]);
+            }
+        }
+        return redirect('/index-foodRecords');
+    }
+
+    /**
+     * Request $request
+     * 
+     * 買い物リスト更新
+     */
+    public function viewRestockList() {
+        $today = Carbon::now()->format('Y-m-d');
+        $foodRecords = FoodRecord::whereDate('created_at',$today)
+            ->where(function($query){
+                $query->where('real_amount', '0')
+                      ->orWhere('real_amount', '1');
+            })
+            ->get();
+
+        return view('food-record.restockList', compact('foodRecords'));
+    }   
 
     /**
      * Request $request

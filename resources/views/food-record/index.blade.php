@@ -24,15 +24,31 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>登録日</th>
+                                <th>更新日時</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($foodRecords as $foodRecord)
+                            @foreach ($dates as $date)
                                 <tr>
-                                    <td>{{ $foodRecord->id }}</td>
-                                    <td>{{ $foodRecord->created_at }}</td>
+                                    <td>{{ $date->date }}</td>
+                                    <td>{{ $date->latest_update }}</td>
+                                    <td>
+                                        @if(Carbon\Carbon::now()->format('Y-m-d') == $date->date)
+                                        <div class="d-flex">
+                                            <a href="{{ url('/edit-foodRecord/' . $date->date ) }}">編集</a>
+                                            <!-- 印刷ボタン -->
+                                            <form class="print-area mr-1">                            
+                                                <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
+                                                <input type="button" id="print" onclick="window.print();">
+                                            </form>
+                                            <!-- Lineボタン -->
+                                            <div class="line-it-button" data-lang="ja" data-type="share-b" data-env="REAL" data-url="http://127.0.0.1:8000/detail-recipe/3" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
+                                        </div>
+                                        @else
+                                        <a href="{{ url('/detail-foodRecord/' . $date->date ) }}">詳細</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
