@@ -5,10 +5,6 @@
     box-sizing: border-box;
 }
 
-main {
-    height:92vh;
-}
-
 /* ---------------------------------
 ログイン・会員登録画面
 --------------------------------- */
@@ -17,7 +13,7 @@ main {
 }
 
 .container.welcome-area {
-    height:100%; 
+    height:calc(100vh - 55px);
 
     /* ボーダーの実装 */
     background-color: #8be4f0;
