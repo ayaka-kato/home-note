@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -34,7 +34,7 @@
                     <div class="card-body">
                     <button type="button" id="sort-button">並び替える</button>
                     <button type="button" id="exe-btn">反映する</button>                    
-                    <table class="table table-hover text-nowrap record-table">
+                    <table class="table table-hover text-nowrap record-table col-12">
                         <thead>
                             @if(session('message'))
                                 <p>{{ session('message') }}</p>
@@ -82,16 +82,31 @@
                                     <input type="text" name="ideal-amount-{{ $index }}" class="form-control" value="{{ old('ideal-amount-' . $index , $foodRecord->ideal_amount) }}">
                                 </td>
                                 <td class="form-group real-amount">
-                                    <div class="form-control">
-                                        <input type="radio" name="real-amount-{{ $index }}" value="0" {{ (old('real-amount-' . $index) === "0" || $foodRecord->real_amount === 0) ? "checked" : "" }}>ない
-                                        <input type="radio" name="real-amount-{{ $index }}" value="1" {{ (old('real-amount-' . $index) === "1" || $foodRecord->real_amount === 1) ? "checked" : "" }}>少ない
-                                        <input type="radio" name="real-amount-{{ $index }}" value="2" {{ (old('real-amount-' . $index) === "2" || $foodRecord->real_amount === 2) ? "checked" : "" }}>多い
+                                    <div class="form-control d-flex">
+                                        <div>
+                                            <input type="radio" id="real-left-{{ $index }}" name="real-amount-{{ $index }}" value="0" {{ (old('real-amount-' . $index) === "0" || $foodRecord->real_amount === 0) ? "checked" : "" }}>
+                                            <label for="real-left-{{ $index }}">ない</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="real-center-{{ $index }}" name="real-amount-{{ $index }}" value="1" {{ (old('real-amount-' . $index) === "1" || $foodRecord->real_amount === 1) ? "checked" : "" }}>
+                                            <label for="real-center-{{ $index }}">少ない</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="real-right-{{ $index }}" name="real-amount-{{ $index }}" value="2" {{ (old('real-amount-' . $index) === "2" || $foodRecord->real_amount === 2) ? "checked" : "" }}>
+                                            <label for="real-right-{{ $index }}">多い</label>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="form-group waste-amount">
-                                    <div class="form-control">
-                                        <input type="radio" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" || $foodRecord->waste_amount === 1) ? "checked" : "" }}>少ない
-                                        <input type="radio" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" || $foodRecord->waste_amount === 2) ? "checked" : "" }}>多い
+                                    <div class="form-control d-flex">
+                                        <div>
+                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" || $foodRecord->waste_amount === 1) ? "checked" : "" }}>
+                                            <label for="waste-left-{{ $index }}">少ない</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="waste-right-{{ $index }}" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" || $foodRecord->waste_amount === 2) ? "checked" : "" }}>
+                                            <label for="waste-right-{{ $index }}">多い</label>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="form-group restock-amount">

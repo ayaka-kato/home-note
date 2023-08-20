@@ -498,3 +498,41 @@ td {
     background-color: rgb(249, 220, 165);
 }
 
+/* 在庫登録画面のラジオボタン */
+#records-container .food-record td div {
+    padding:0px
+}
+
+#records-container .food-record td div input {
+    display:none;
+}
+
+#records-container .food-record td div label{
+    height:100%;
+    width:50px;
+    text-align: center;
+    padding:5px 0;
+    font-weight: normal;
+}
+
+#records-container .food-record td div label.radio-left {
+    border-top-left-radius:3px;
+    border-bottom-left-radius:3px;
+    border-right:solid 0.5px #ddd;
+}
+
+#records-container .food-record td div label.radio-center {
+    padding: 5px 3px;
+    border-right:solid 0.5px #ddd;
+}
+
+#records-container .food-record td div label.radio-right {
+    border-top-right-radius:3px;
+    border-bottom-right-radius:3px;
+}
+
+#records-container .food-record td div input:checked + label {
+    background-color: gray;
+    color:white;
+    }
+

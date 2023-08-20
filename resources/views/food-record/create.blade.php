@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-12">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -69,17 +69,32 @@
                                     <td class="form-group ideal-amount">
                                         <input type="text" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount') }}">
                                     </td>
-                                    <td class="form-group">
-                                        <div class="form-control real-amount">
-                                            <input type="radio" name="real-amount-{{ $i }}" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>ない
-                                            <input type="radio" name="real-amount-{{ $i }}" value="1" {{ old('real-amount-' .$i ) == "1" ? "checked" : null }}>少ない
-                                            <input type="radio" name="real-amount-{{ $i }}" value="2" {{ old('real-amount-' .$i ) == "2" ? "checked" : null }}>多い
+                                    <td class="form-group real-amount">
+                                        <div class="form-control d-flex">
+                                            <div>
+                                                <input type="radio" id="real-left-{{ $i }}" name="real-amount-{{ $i }}" class="zero" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>
+                                                <label class="radio-left" for="real-left-{{ $i }}">ない</label>                                            
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="real-center-{{ $i }}" name="real-amount-{{ $i }}" class="one" value="1" {{ old('real-amount-' .$i ) == "1" ? "checked" : null }}>
+                                                <label class="radio-center" for="real-center-{{ $i }}">少ない</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="real-right-{{ $i }}" name="real-amount-{{ $i }}" class="two" value="2" {{ old('real-amount-' .$i ) == "2" ? "checked" : null }}>                                            
+                                                <label class="radio-right" for="real-right-{{ $i }}">多い</label>
+                                            </div>                                            
                                         </div>
                                     </td>
                                     <td class="form-group waste-amount">
-                                        <div class="form-control">
-                                            <input type="radio" name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>少ない
-                                            <input type="radio" name="waste-amount-{{ $i }}" value="2" {{ old('waste-amount-' .$i ) == "2" ? "checked" : null }}>多い
+                                        <div class="form-control d-flex">
+                                            <div>
+                                                <input type="radio" id="waste-left-{{ $i }}"name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>
+                                                <label class="radio-left" for="waste-left-{{ $i }}">少ない</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="waste-right-{{ $i }}"name="waste-amount-{{ $i }}" value="2" {{ old('waste-amount-' .$i ) == "2" ? "checked" : null }}>
+                                                <label class="radio-right" for="waste-right-{{ $i }}">多い</label>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="form-group restock-amount">
