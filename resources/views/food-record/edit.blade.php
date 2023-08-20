@@ -18,18 +18,29 @@
                     </ul>
                 </div>
             @endif
-
+<div class="d-flex">
+    <!-- 印刷ボタン -->
+    <form class="print-area mr-1">                            
+        <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
+        <input type="button" id="print" onclick="window.print();">
+    </form>
+    <!-- Lineボタン -->
+    <div class="line-it-button" data-lang="ja" data-type="share-b" data-env="REAL" data-url="http://127.0.0.1:8000/edit-foodRecord/.{{$date}}" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
+    
+</div>
             <div class="card card-primary">
-                <form method="POST" action="{{ url('/update-foodRecord/' . $date ) }}">
+                <form method="POST" action="{{ url('/update-foodRecord/' . $date ) }}" id="record-form">
                     @csrf
                     <div class="card-body">
-                    <button type="button" id="exe-btn">反映する</button>
+                    <button type="button" id="sort-button">並び替える</button>
+                    <button type="button" id="exe-btn">反映する</button>                    
                     <table class="table table-hover text-nowrap record-table">
                         <thead>
                             @if(session('message'))
                                 <p>{{ session('message') }}</p>
                             @endif
                             <tr>
+                                <th>色</th>
                                 <th class="form-group">
                                     <p>食材</p>
                                 </th>
@@ -51,7 +62,19 @@
                         <tbody id="records-container">
                             <!-- DBに登録がある場合 -->
                             @foreach($foodRecords as $index=>$foodRecord)
-                            <tr id="food-record-{{ $index }}" class="food-record">                              
+                            <tr id="food-record-{{ $index }}" class="food-record" data-record-id="{{ $index }}"> 
+                                <td>
+                                    <select name="color-{{ $index }}" class="label-color-select">
+                                        <option class="color-label" value="" {{ (old('color-' . $index) === "" || $foodRecord->color === "") ? "selected" : "" }}></option>
+                                        <option class="color-label pink" value="pink" {{ (old('color-' . $index) === "pink" || $foodRecord->color === "pink") ? "selected" : "" }}>ピンク</option>
+                                        <option class="color-label purple" value="purple" {{ (old('color-' . $index) === "purple" || $foodRecord->color === "purple") ? "selected" : "" }}>紫</option>
+                                        <option class="color-label blue" value="blue" {{ (old('color-' . $index) === "blue" || $foodRecord->color === "blue") ? "selected" : "" }}>青</option>
+                                        <option class="color-label aqua" value="aqua" {{ (old('color-' . $index) === "aqua" || $foodRecord->color === "aqua") ? "selected" : "" }}>水色</option>
+                                        <option class="color-label green" value="green" {{ (old('color-' . $index) === "green" || $foodRecord->color === "green") ? "selected" : "" }}>緑</option>
+                                        <option class="color-label yellow" value="yellow" {{ (old('color-' . $index) === "yellow" || $foodRecord->color === "yellow") ? "selected" : "" }}>黄色</option>
+                                        <option class="color-label orange" value="orange" {{ (old('color-' . $index) === "orange" || $foodRecord->color === "orange") ? "selected" : "" }}>オレンジ</option>
+                                    </select>
+                                </td>                             
                                 <td class="form-group ingredient-name">
                                     <input type="text" name="ingredient-{{ $index }}" class="form-control" value="{{ old('ingredient-' . $index , $foodRecord->ingredient ) }}">
                                 </td>
@@ -87,7 +110,7 @@
                     <button type="button" class="btn btn-success" id="addRecordBtn">追加</button>
 
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">登録</button>
+                        <button type="button" class="btn btn-primary" id="record-submit-btn">登録</button>
                     </div>
                 </form>
             </div>

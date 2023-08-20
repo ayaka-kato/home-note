@@ -3,8 +3,8 @@
 @section('content')
 <div class="container welcome-area">
     <div class="row welcome-row align-items-center justify-content-center">
-        <div class="col-md-10 welcome-col d-flex">
-            <div class="welcome-image">
+        <div class="col-10 welcome-col flexbox">
+            <div class="welcome-image box1">
                 <img src="{{ asset('img/top-view.jpg') }}" alt="アプリイメージ画像">
                 <ul class="d-flex title-area">
                     <li class="deco">お</li>
@@ -15,7 +15,7 @@
                     <li class="deco">ト</li>
                 </ul>
             </div>
-            <div class="card">
+            <div class="card box2">
                 <div class="card-body text-center">
                     <a href="{{ url('/register') }}" class="color-pink flight">会員登録はこちらから</a>
                     <form method="POST" action="{{ route('login') }}">
@@ -43,11 +43,11 @@
                                 {{ __('Login') }}
                             </button>
 
-                            @if (Route::has('password.request'))
+                            <!-- @if (Route::has('password.request'))
                                 <a class="btn btn-link color-pink" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
-                            @endif
+                            @endif -->
                         </div>
                     </form>
                 </div>

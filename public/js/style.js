@@ -2,14 +2,11 @@
 // プレビュー機能
 // -------------------------
 document.addEventListener('DOMContentLoaded', function(){
-
   // 1.プレビュー画像を表示する場所(div)を取得
     const previewImage = document.getElementById('previewImage');
 
   // 対象がなければ、何もしない（プレビュー機能から抜ける）
     if (!previewImage) { return false;}
-
-  // --------------------------------------------------
 
   // 2.プレビュー画面を消去する関数
     function clearPreviewImage() {
@@ -21,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // 3.画像ファイルが選択されたら処理実行
     document.getElementById('image').addEventListener('change', function(e){
-
         const file = e.target.files[0];
 
         // fileオブジェクトをURLに変換させる処理
@@ -40,9 +36,9 @@ document.addEventListener('DOMContentLoaded', function(){
         // 5.親子紐づけ
         imageElement.appendChild(blobImage);
         previewImage.appendChild(imageElement);
-
     });
 });
+
 
 // -------------------------
 // クリアボタン
@@ -126,6 +122,32 @@ setClearBtn(clearProcessBtns, 'process', 'detail');
     setupAddBtn(addProcessBtn, processes, processesLength);
 
 
+// -------------------------
+// ラベル色変更
+// -------------------------
+// 関数で色を適用する処理を定義
+function applyColorToFoodRecord(selectColor) {
+    let selectedColor = selectColor.value; // 選択された色の値を取得
+    let foodRecord = selectColor.closest('.food-record'); // 親要素の.food-recordを取得
+
+    foodRecord.classList.remove('pink', 'purple', 'blue', 'aqua', 'green', 'yellow', 'orange'); // 一度すべての色のクラスを削除
+    if (selectedColor !== '') {
+        foodRecord.classList.add(selectedColor); // 選択された色のクラスを追加
+    }
+}
+
+// セレクト要素と対象の行を取得
+let selectColors = document.querySelectorAll('.label-color-select');
+let foodRecords = document.querySelectorAll('.food-record');
+
+// 初期の行に対して色を適用する
+selectColors.forEach((selectColor, index) => {
+    applyColorToFoodRecord(selectColor); // 初期表示時に色を適用
+    selectColor.addEventListener('change', () => {
+        applyColorToFoodRecord(selectColor); // セレクトボックスが変更されたときに色を適用
+    });
+});
+
 // --------------------------------------------
 // 食材在庫登録画面：入力項目の追加・削除
 // --------------------------------------------
@@ -140,6 +162,18 @@ const createRecordRow = (index) => {
 
     // 新しい行の内容を設定
     newRow.innerHTML = `
+        <td class="form-group">
+            <select name="color-${recordIndex}" class="label-color-select">
+                <option class="color-label" value="" {{ (old('color-' . ${recordIndex}) === "" ? "selected" : "" }}></option>
+                <option class="color-label pink" value="pink" {{ (old('color-' . ${recordIndex}) === "pink" ? "selected" : "" }}>ピンク</option>
+                <option class="color-label purple" value="purple" {{ (old('color-' . ${recordIndex}) === "purple" ? "selected" : "" }}>紫</option>
+                <option class="color-label blue" value="blue" {{ (old('color-' . ${recordIndex}) === "blue" ? "selected" : "" }}>青</option>
+                <option class="color-label aqua" value="aqua" {{ (old('color-' . ${recordIndex}) === "aqua" ? "selected" : "" }}>水色</option>
+                <option class="color-label green" value="green" {{ (old('color-' . ${recordIndex}) === "green" ? "selected" : "" }}>緑</option>
+                <option class="color-label yellow" value="yellow" {{ (old('color-' . ${recordIndex}) === "yellow" ? "selected" : "" }}>黄色</option>
+                <option class="color-label orange" value="orange" {{ (old('color-' . ${recordIndex}) === "orange" ? "selected" : "" }}>オレンジ</option>
+            </select>
+        </td> 
         <td class="form-group ingredient-name">
             <input type="text" name="ingredient-${recordIndex}" class="form-control" placeholder="（例）人参" value="">
         </td>
@@ -192,9 +226,15 @@ addRecordBtn.addEventListener('click', () => {
         closeElement(addRecordBtn);
     }
 
-    // 新しい行に対応する削除ボタンを取得してイベントを設定
+    // 新しい行に対応する[削除ボタン]を取得してイベントを設定
     const newDeleteBtn = newRow.querySelector('.delete-Btn');
     setupDeleteBtn(newDeleteBtn);
+
+    // 新しい行に対応する[セレクトボックスの変更]イベントを設定
+    const newSelectColor = newRow.querySelector('.label-color-select');
+    newSelectColor.addEventListener('change', () => {
+        applyColorToFoodRecord(newSelectColor);
+    });
 });
 
 // 初期の削除ボタンにイベントを設定
@@ -239,28 +279,77 @@ exeBtn.addEventListener('click', () => {
     });
 });
 
-// // -------------------------
-// // 買い物リスト送信確認機能
-// // -------------------------
-// let shoppingListBtn = document.getElementById('shopping-list-btn');
-// let modalBody = document.getElementById('modal-body');
 
-// shoppingListBtn.addEventListener('click', () => {
-//     modalBody.innerHTML = '';
-//     let rows = document.querySelectorAll('.food-record');
-//     console.log(rows);
+// -------------------------
+// ラベル色で並び替え
+// -------------------------
+// ソートボタンの要素を取得
+const sortButton = document.getElementById('sort-button');
 
-//     rows.forEach((row, index) => {
-//         let ingredientInput = row.querySelector('.ingredient input[type="text"]').value;
-//         let restockAmountInput = row.querySelector('.restock-amount input[type="text"]').value;
+// ソートボタンがクリックされたときの処理
+sortButton.addEventListener('click', () => {
+    // 色ごとに要素をグループ化
+    const colorGroups = {};
+    foodRecords.forEach((foodRecord) => {
+        const colorClass = foodRecord.querySelector('.label-color-select').value;
+        if (!colorGroups[colorClass]) {
+            colorGroups[colorClass] = [];
+        }
+        colorGroups[colorClass].push(foodRecord);
+    });
 
+    // 各グループを並び替えて新しい順序に要素を追加
+    const sortedFoodRecords = [];
+    ['pink', 'purple', 'blue', 'aqua', 'green', 'yellow', 'orange'].forEach((color) => {
+        if (colorGroups[color]) {
+            sortedFoodRecords.push(...colorGroups[color]);
+        }
+    });
 
-//         let div = document.createElement(div);
-//         div.innerHTML = `
-//             <span>${ ingredientInput }</span>
-//             <span>${ restockAmountInput }</span>
-//         `;
-    
-//         modalBody.appendChild(div);
-//     });
-// });
+    // ソート済みの要素をコンテナに追加
+    sortedFoodRecords.forEach((foodRecord) => {
+        recordsContainer.appendChild(foodRecord);
+    });
+});
+
+const form = document.getElementById('record-form');
+const submitButton = document.getElementById('record-submit-btn');
+
+submitButton.addEventListener('click', function(event) {
+    // データを保持する配列を定義
+    const data = [];
+
+    // 各行のデータを配列に格納
+    recordsContainer.querySelectorAll('.food-record').forEach(row => {
+        const recordId = row.dataset.recordID;
+        const rowData = {
+            color: row.querySelector('[name="color-${ recordId }"]').value,
+            ingredient: row.querySelector('[name="ingredient-${ recordId }"]').value,
+            idealAmount: row.querySelector('[name="ideal-amount-${ recordId }"]').value,
+            realAmount: row.querySelector('[name="real-amount-${ recordId }"]').value,
+            wasteAmount: row.querySelector('[name="waste-amount-${ recordId }"]').value,
+            restockAmount: row.querySelector('[name="restock-amount-${ recordId }"]').value,
+            // 他のデータも同様に追加
+        };
+        data.push(rowData);
+    });
+
+    // データを並び替え
+    data.sort((a, b) => {
+        // 並び替えの条件をここに記述
+    });
+
+    // データを元にフォームの input 要素に値を設定
+    data.forEach((rowData, index) => {
+        const row = recordsContainer.querySelector(`[data-record-id="${index}"]`);
+        row.querySelector(`[name="color-${index}"]`).value = rowData.color;
+        row.querySelector(`[name="ingredient-${index}"]`).value = rowData.ingredient;
+        row.querySelector(`[name="ideal-amount-${index}"]`).value = rowData.idealAmount;
+        row.querySelector(`[name="real-amount-${index}"]`).value = rowData.realAmount;
+        row.querySelector(`[name="waste-amount-${index}"]`).value = rowData.wasteAmount;
+        row.querySelector(`[name="restock-amount-${index}"]`).value = rowData.restockAmount;
+    });
+
+    // // フォームを送信
+    // form.submit();
+});

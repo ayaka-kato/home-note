@@ -12,6 +12,9 @@ main {
 /* ---------------------------------
 ログイン・会員登録画面
 --------------------------------- */
+.flexbox {
+    display:flex;
+}
 
 .container.welcome-area {
     height:100%; 
@@ -25,7 +28,7 @@ main {
 .welcome-area .welcome-row {
     height:100%;
     box-shadow: 2px;
-    min-width:500px;
+    min-width:340px;
     max-width:1080px;
     margin:0 auto;
 }
@@ -93,6 +96,7 @@ main {
     align-items: center;
     border-top-right-radius: 40px;
     border-bottom-right-radius: 40px;
+    padding:10px;
 }
 
 .welcome-col .card .card-body {
@@ -101,6 +105,7 @@ main {
     align-items: center;
     justify-content: center;
     height: 100%;
+    width:100%;
 }
 
 .welcome-col .card .flight {
@@ -109,6 +114,11 @@ main {
 
 .welcome-col .card form {
     margin-top:20px;
+    width:100%;
+}
+
+.welcome-col .card table, label {
+    margin:0 auto;
 }
 
 .welcome-col .card .form-group {
@@ -157,6 +167,97 @@ main {
     background-color:#454545;
     border-radius: 50%;
 }
+
+@media screen and (max-width: 570px) {
+    .flexbox {
+        display: block;
+    }
+    .flexbox .box1 {
+        height:50%;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .flexbox .box2 {
+        height:50%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .welcome-area .welcome-row .welcome-col {
+        height: 560px;
+        width:100%;
+    }
+
+    /* 画面上 */
+    .welcome-col .title-area {
+        position:absolute;
+            bottom:45px;
+        padding: 0 15px;
+        margin: 0;
+    }
+
+    .welcome-col .welcome-image img {
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        border-bottom-left-radius: 0;
+    }
+
+    .welcome-col .deco {
+        font-size: 24px;
+    }
+
+    /* 画面下 */
+    .welcome-col .card {
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .welcome-col .card .card-body {
+        height:100%;
+        width:100%;
+        font-size:12px;
+        margin-top:22px;
+    }
+
+    .welcome-col .card form {
+        width:95%;
+        margin-top:10px;
+    }
+
+    .welcome-col .card input{
+        font-size: 12px;
+    }
+
+    .welcome-col .card .btn {
+        font-size: 12px;
+    }
+
+    .pig-run-area {
+        position:relative;
+            bottom:48%;
+        padding:0 15px;
+    }
+}
+
+@media screen and (min-width: 571px) and (max-width: 780px) {
+    .welcome-area .welcome-row .welcome-col {
+        height:360px;
+    }
+
+    .welcome-col .deco {
+        font-size: 20px;
+    }
+
+    .welcome-col .card .card-body table {
+        font-size:10px;
+    }
+
+    .welcome-col .card input{
+        font-size: 10px;
+    }
+}
+
 
 /* ボタン */
 /* ------------------------------------- */
@@ -374,3 +475,30 @@ main {
   color: black; /* Add a black text color */
   display: block; /* Make it into a block element to fill the whole list */
 }
+
+
+td {
+    background-color: transparent;
+}
+.pink,.pink td{
+    background-color: rgb(254, 213, 220);
+}
+.purple, .purple td{
+    background-color: rgb(227, 195, 227);
+}
+.blue, .blue td{
+    background-color: rgb(217, 217, 248);
+}
+.aqua,.aqua td{
+    background-color:rgb(197, 247, 230);
+}
+.green,.green td{
+    background-color: rgb(224, 254, 179);
+}
+.yellow,.yellow td{
+    background-color: rgb(245, 245, 170);
+}
+.orange,.orange td{
+    background-color: rgb(249, 220, 165);
+}
+

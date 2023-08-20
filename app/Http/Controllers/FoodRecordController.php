@@ -59,6 +59,7 @@ class FoodRecordController extends Controller
         $rules = [];
         
         for ($i = 0; $i < 50; $i++) {
+            $rules["color-$i"] = "string|nullable";
             $rules["ingredient-$i"] = "string|max:30|nullable";
             $rules["ideal-amount-$i"] = "string|max:30|nullable";
             $rules["real-amount-$i"] = "integer|max:5|nullable";
@@ -79,6 +80,7 @@ class FoodRecordController extends Controller
         $this->recordValidate($request);
 
         for($i = 0; $i < 50; $i++){
+            $colorKey =  'color-' . $i;
             $ingredientKey =  'ingredient-' . $i;
             $idealAmountKey =  'ideal-amount-' . $i;
             $realAmountKey =  'real-amount-' . $i;
@@ -87,6 +89,7 @@ class FoodRecordController extends Controller
 
             if($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
                 FoodRecord::create([
+                    'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
                     'ideal_amount' => $request->input($idealAmountKey),
                     'real_amount' => $request->input($realAmountKey),
@@ -112,6 +115,7 @@ class FoodRecordController extends Controller
         $foodRecords = FoodRecord::whereDate('created_at', $date)->get();
         
         foreach ($foodRecords as $index => $record) {
+            $colorKey =  'color-' . $index;
             $ingredientKey =  'ingredient-' . $index;
             $idealAmountKey =  'ideal-amount-' . $index;
             $realAmountKey =  'real-amount-' . $index;
@@ -121,6 +125,7 @@ class FoodRecordController extends Controller
             // 更新する時
             if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
                 $record->update([
+                    'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
                     'ideal_amount' => $request->input($idealAmountKey),
                     'real_amount' => $request->input($realAmountKey),
@@ -136,6 +141,7 @@ class FoodRecordController extends Controller
 
         // DBに登録済みのデータがない場合
         for($i = $foodRecords->count(); $i < 50; $i++ ){
+            $colorKey =  'color-' . $i;
             $ingredientKey =  'ingredient-' . $i;
             $idealAmountKey =  'ideal-amount-' . $i;
             $realAmountKey =  'real-amount-' . $i;
@@ -144,6 +150,7 @@ class FoodRecordController extends Controller
 
             if($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null){
                 FoodRecord::create([
+                    'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
                     'ideal_amount' => $request->input($idealAmountKey),
                     'real_amount' => $request->input($realAmountKey),

@@ -3,8 +3,8 @@
 @section('content')
 <div class="container welcome-area">
     <div class="row welcome-row align-items-center justify-content-center">
-        <div class="col-md-10 welcome-col d-flex">
-            <div class="welcome-image">
+        <div class="col-10 welcome-col flexbox">
+            <div class="welcome-image box1">
                 <img src="{{ asset('img/top-view.jpg') }}" alt="アプリイメージ画像">
                 <ul class="d-flex title-area">
                     <li class="deco">お</li>
@@ -15,7 +15,7 @@
                     <li class="deco">ト</li>
                 </ul>
             </div>
-            <div class="card">
+            <div class="card box2">
                 <div class="card-body text-center p-0">
                     <a href="{{ url('/login') }}" class="color-orange flight">ログインはこちらから</a>
                     <form method="POST" action="{{ route('register') }}">
@@ -69,15 +69,10 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td class="text-center">
-                                    <button type="submit" class="btn btn-orange mt-2">
+                        </table>
+                        <button type="submit" class="btn btn-orange mt-2 w-50">
                                         {{ __('Register') }}
                                     </button>
-                                </td>
-                            </tr>
-                        </table>
                     </form>
                 </div>
             </div>

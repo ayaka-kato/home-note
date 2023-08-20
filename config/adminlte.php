@@ -46,7 +46,8 @@ return [
     */
 
     'logo' => '<b>おうちノート</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'img/white-pig.svg',
+    // 'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -188,7 +189,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    // 'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -241,29 +242,27 @@ return [
         //     'url'  => 'admin/settings',
         //     'icon' => 'fas fa-fw fa-user',
         // ],
+        [   'header' => '料理',        ],
         [
-            'text'    => '料理',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'レシピ一覧',
-                    'url'  => 'index-recipes',
-                ],
-            ],
+            'text'    => 'レシピ一覧',
+            'url'     => 'index-recipes',
         ],
         [
-            'text'    => '食材在庫データ管理',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => '食材在庫データ一覧',
-                    'url'  => 'index-foodRecords',
-                ],
-                [
-                    'text' => 'お買い物リスト',
-                    'url'  => 'create-restockList',
-                ],
-            ],
+            'text'    => 'レシピ登録',
+            'url'     => 'create-recipe',
+        ],
+        ['header' => '在庫管理'],
+        [
+            'text'    => '在庫データ一覧',
+            'url'     => 'index-foodRecords',
+        ],
+        [
+            'text'    => '在庫データ登録',
+            'url'     => 'create-foodRecord',
+        ],
+        [
+            'text'    => '買い物リスト',
+            'url'     => '',
         ],
         [
             // 'text'    => 'multilevel',

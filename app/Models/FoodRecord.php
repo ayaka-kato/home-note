@@ -12,6 +12,7 @@ class FoodRecord extends Model
     // protected $guarded = ['id'];
 
     protected $fillable = [
+        'color',
         'ingredient',
         'ideal_amount',
         'real_amount',
