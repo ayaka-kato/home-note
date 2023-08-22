@@ -20,7 +20,7 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST" action="{{ url('/store-foodRecord') }}" id="record-form">
+                <form method="POST" action="{{ route('storeRecord') }}" id="record-form">
                     @csrf
                     <div class="card-body">
                         <button type="button" id="exe-btn">反映する</button>

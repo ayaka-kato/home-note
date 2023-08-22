@@ -245,24 +245,24 @@ return [
         [   'header' => '料理',        ],
         [
             'text'    => 'レシピ一覧',
-            'url'     => 'index-recipes',
+            'url'     => 'recipes/index',
         ],
         [
             'text'    => 'レシピ登録',
-            'url'     => 'create-recipe',
+            'url'     => 'recipes/create',
         ],
         ['header' => '在庫管理'],
         [
             'text'    => '在庫データ一覧',
-            'url'     => 'index-foodRecords',
+            'url'     => 'food-records/index',
         ],
         [
             'text'    => '在庫データ登録',
-            'url'     => 'create-foodRecord',
+            'url'     => 'food-records/create',
         ],
         [
             'text'    => '買い物リスト',
-            'url'     => '',
+            'url'     => 'food-records/restockList',
         ],
         [
             // 'text'    => 'multilevel',

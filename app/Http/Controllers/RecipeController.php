@@ -17,17 +17,17 @@ class RecipeController extends Controller
         $this->middleware('auth');
     }
 
-    /**--------------------------------------------------------
-     * Request $request
-     * 
-     * レシピ一覧画面表示
-    -------------------------------------------------------- */
-    public function index()
-    {
-        // with()でrecipe_idに紐づくingredientsを取得
-        $recipes = Recipe::with('ingredients')->orderBy('created_at', 'desc')->get();
-        return view('recipe.index', compact('recipes'));
-    }
+    // /**--------------------------------------------------------
+    //  * Request $request
+    //  * 
+    //  * レシピ一覧画面表示
+    // -------------------------------------------------------- */
+    // public function index()
+    // {
+    //     // with()でrecipe_idに紐づくingredientsを取得
+    //     $recipes = Recipe::with('ingredients')->orderBy('created_at', 'desc')->get();
+    //     return view('recipes.index', compact('recipes'));
+    // }
 
     /**--------------------------------------------------------
      * Request $request
@@ -36,7 +36,7 @@ class RecipeController extends Controller
      * ------------------------------------------------------ */
     public function viewCreate()
     {
-        return view('recipe.create');
+        return view('recipes.create');
     }
 
     /** ------------------------------------------------------
@@ -127,7 +127,7 @@ class RecipeController extends Controller
             $this->relatedTableStore($request, $config['count'], $config['firstColumn'], $config['secondColumn'], $config['table'], $config['Table'], $recipe);
         }
         
-        return redirect('/index-recipes');
+        return redirect()->route('indexRecipes');
     }
 
     /** ------------------------------------------------------
@@ -143,14 +143,23 @@ class RecipeController extends Controller
         $ingredients = $recipe->ingredients;
         $processes = $recipe->processes;
 
-        // 遷移先が編集ページなら
-        $toEditPage = request()->input('toEditPage');
+        return view('recipes.detail', compact('recipe','ingredients','processes'));        
+    }
 
-        if($toEditPage){
-            return view('recipe.edit', compact('recipe','ingredients','processes'));
-        }else {
-            return view('recipe.detail', compact('recipe','ingredients','processes'));
-        }
+    /** ------------------------------------------------------
+     * Request $request
+     * 
+     * レシピ一件表示
+     * ※呼び出し元によって表示先を変える。
+     * ※一覧→詳細 / 詳細→編集
+     * ------------------------------------------------------*/
+    public function editRecipe(Request $request, $id)
+    {
+        $recipe = Recipe::find($id);
+        $ingredients = $recipe->ingredients;
+        $processes = $recipe->processes;
+
+        return view('recipes.edit', compact('recipe','ingredients','processes'));       
     }
 
     /** ------------------------------------------------------
@@ -182,11 +191,10 @@ class RecipeController extends Controller
 
         // 全件取得
         $recipes = $query->orderBy('created_at','desc')->get();
-        return view('recipe.searchResult', compact('keyword','recipes'));
+        return view('recipes.index', compact('keyword','recipes'));
     }
 
     /** ------------------------------------------------------
-     * 
      * 関連テーブルの更新・削除・登録
      * ------------------------------------------------------*/
     public function relatedTableUpdate($recipe, $count, $firstColumn, $secondColumn, $table, $Table, $request)
@@ -239,7 +247,6 @@ class RecipeController extends Controller
         // バリデーション
         $this->recipeValidate($request);
 
-        TODO:
         // 画像ファイルの処理
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -268,7 +275,7 @@ class RecipeController extends Controller
         $this->relatedTableUpdate($recipe, 20, 'ingredient', 'amount', 'ingredients', Ingredient::class, $request);
         $this->relatedTableUpdate($recipe, 8, 'process', 'detail', 'processes', Process::class, $request);
 
-        return redirect('/detail-recipe/'. $recipe->id);
+        return redirect()->route('getRecipe', ['id' => $recipe->id ] );
     }
 
     /** ------------------------------------------------------
@@ -280,6 +287,6 @@ class RecipeController extends Controller
     {
         $recipe = Recipe::find($id);
         $recipe->delete();
-        return redirect('index-recipes');
+        return redirect()->route('indexRecipes');
     }
 }

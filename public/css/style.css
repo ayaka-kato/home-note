@@ -293,8 +293,8 @@
 
 .btn-orange:hover {
     color:white;
-    transition: all 0.3s;
-    transform: scale(1.1, 1.1);
+    transition: all 0.5s;
+    transform: scale(1.2, 1.2);
 }
 
 /* 検索バー */

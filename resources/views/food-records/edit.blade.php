@@ -19,6 +19,8 @@
                 </div>
             @endif
 <div class="d-flex">
+
+<!-- TODO: -->
     <!-- 印刷ボタン -->
     <form class="print-area mr-1">                            
         <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
@@ -29,7 +31,7 @@
     
 </div>
             <div class="card card-primary">
-                <form method="POST" action="{{ url('/update-foodRecord/' . $date ) }}" id="record-form">
+                <form method="POST" action="{{ route('updateRecord', [ 'date' => $date ] ) }}" id="record-form">
                     @csrf
                     <div class="card-body">
                     <button type="button" id="sort-button">並び替える</button>

@@ -20,7 +20,7 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST" action="{{ url('/store-recipe') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('storeRecipe') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
 

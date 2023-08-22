@@ -181,16 +181,31 @@ const createRecordRow = (index) => {
             <input type="text" name="ideal-amount-${recordIndex}" class="form-control" placeholder="（例）2本"  value="">
         </td>
         <td class="form-group real-amount">
-            <div class="form-control">
-                <input type="radio" name="real-amount-${recordIndex}" value="0" {{ old('real-amount-' .${recordIndex} ) == "0" ? "checked" : null }}>ない
-                <input type="radio" name="real-amount-${recordIndex}" value="1" {{ old('real-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>少ない
-                <input type="radio" name="real-amount-${recordIndex}" value="2" {{ old('real-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>多い
+            <div class="form-control d-flex">
+                <div>
+                    <input type="radio" id="real-left-${recordIndex}" name="real-amount-${recordIndex}" value="0" {{ old('real-amount-' .${recordIndex} ) == "0" ? "checked" : null }}>
+                    <label class="radio-left" for="real-left-${recordIndex}">ない</label>
+                </div>
+                <div>
+                    <input type="radio" id="real-center-${recordIndex}" name="real-amount-${recordIndex}" value="1" {{ old('real-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>
+                    <label class="radio-center" for="real-center-${recordIndex}">少ない</label>
+                </div>
+                <div>
+                    <input type="radio" id="real-right-${recordIndex}" name="real-amount-${recordIndex}" value="2" {{ old('real-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>
+                    <label class="radio-right" for="real-right-${recordIndex}">多い</label>
+                </div>
             </div>
         </td>
         <td class="form-group waste-amount">
-            <div class="form-control">
-                <input type="radio" name="waste-amount-${recordIndex}" value="1" {{ old('waste-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>少ない
-                <input type="radio" name="waste-amount-${recordIndex}" value="2" {{ old('waste-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>多い
+            <div class="form-control d-flex">
+                <div>
+                    <input type="radio" id="waste-left-${recordIndex}" name="waste-amount-${recordIndex}" value="1" {{ old('waste-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>
+                    <label class="radio-left" for="waste-left-${recordIndex}">少ない</label>
+                </div>
+                <div>
+                    <input type="radio" id="waste-right-${recordIndex}" name="waste-amount-${recordIndex}" value="2" {{ old('waste-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>
+                    <label class="radio-right" for="waste-right-${recordIndex}">多い</label>
+                </div>
             </div>
         </td>
         <td class="form-group restock-amount">
@@ -312,44 +327,44 @@ sortButton.addEventListener('click', () => {
     });
 });
 
-const form = document.getElementById('record-form');
-const submitButton = document.getElementById('record-submit-btn');
+// const form = document.getElementById('record-form');
+// const submitButton = document.getElementById('record-submit-btn');
 
-submitButton.addEventListener('click', function(event) {
-    // データを保持する配列を定義
-    const data = [];
+// submitButton.addEventListener('click', function(event) {
+//     // データを保持する配列を定義
+//     const data = [];
 
-    // 各行のデータを配列に格納
-    recordsContainer.querySelectorAll('.food-record').forEach(row => {
-        const recordId = row.dataset.recordID;
-        const rowData = {
-            color: row.querySelector('[name="color-${ recordId }"]').value,
-            ingredient: row.querySelector('[name="ingredient-${ recordId }"]').value,
-            idealAmount: row.querySelector('[name="ideal-amount-${ recordId }"]').value,
-            realAmount: row.querySelector('[name="real-amount-${ recordId }"]').value,
-            wasteAmount: row.querySelector('[name="waste-amount-${ recordId }"]').value,
-            restockAmount: row.querySelector('[name="restock-amount-${ recordId }"]').value,
-            // 他のデータも同様に追加
-        };
-        data.push(rowData);
-    });
+//     // 各行のデータを配列に格納
+//     recordsContainer.querySelectorAll('.food-record').forEach(row => {
+//         const recordId = row.dataset.recordID;
+//         const rowData = {
+//             color: row.querySelector('[name="color-${ recordId }"]').value,
+//             ingredient: row.querySelector('[name="ingredient-${ recordId }"]').value,
+//             idealAmount: row.querySelector('[name="ideal-amount-${ recordId }"]').value,
+//             realAmount: row.querySelector('[name="real-amount-${ recordId }"]').value,
+//             wasteAmount: row.querySelector('[name="waste-amount-${ recordId }"]').value,
+//             restockAmount: row.querySelector('[name="restock-amount-${ recordId }"]').value,
+//             // 他のデータも同様に追加
+//         };
+//         data.push(rowData);
+//     });
 
-    // データを並び替え
-    data.sort((a, b) => {
-        // 並び替えの条件をここに記述
-    });
+//     // データを並び替え
+//     data.sort((a, b) => {
+//         // 並び替えの条件をここに記述
+//     });
 
-    // データを元にフォームの input 要素に値を設定
-    data.forEach((rowData, index) => {
-        const row = recordsContainer.querySelector(`[data-record-id="${index}"]`);
-        row.querySelector(`[name="color-${index}"]`).value = rowData.color;
-        row.querySelector(`[name="ingredient-${index}"]`).value = rowData.ingredient;
-        row.querySelector(`[name="ideal-amount-${index}"]`).value = rowData.idealAmount;
-        row.querySelector(`[name="real-amount-${index}"]`).value = rowData.realAmount;
-        row.querySelector(`[name="waste-amount-${index}"]`).value = rowData.wasteAmount;
-        row.querySelector(`[name="restock-amount-${index}"]`).value = rowData.restockAmount;
-    });
+//     // データを元にフォームの input 要素に値を設定
+//     data.forEach((rowData, index) => {
+//         const row = recordsContainer.querySelector(`[data-record-id="${index}"]`);
+//         row.querySelector(`[name="color-${index}"]`).value = rowData.color;
+//         row.querySelector(`[name="ingredient-${index}"]`).value = rowData.ingredient;
+//         row.querySelector(`[name="ideal-amount-${index}"]`).value = rowData.idealAmount;
+//         row.querySelector(`[name="real-amount-${index}"]`).value = rowData.realAmount;
+//         row.querySelector(`[name="waste-amount-${index}"]`).value = rowData.wasteAmount;
+//         row.querySelector(`[name="restock-amount-${index}"]`).value = rowData.restockAmount;
+//     });
 
-    // // フォームを送信
-    // form.submit();
-});
+//     // // フォームを送信
+//     // form.submit();
+// });

@@ -15,7 +15,7 @@
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
-                                <form action=" {{ url('/delete-recipe/' . $recipe->id) }}" method="POST">
+                                <form action=" {{ route('deleteRecipe', [ 'id' => $recipe->id ] ) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除していいですか？')">レシピ削除</button>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('/update-recipe/'. $recipe->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('updateRecipe', [ 'id' => $recipe->id ] ) }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="card-body d-flex">
 
@@ -62,7 +62,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group"><div class="">レビュー</div></div>
 
                                 <!-- 画像 -->
                                 <div class="form-group">

@@ -4,27 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\DB;
-use App\Models\FoodRecord;
 use App\Models\User;
+use App\Models\FoodRecord;
 use Carbon\Carbon;
 
 class FoodRecordController extends Controller
 {
+
+    // TODO:後でミドルウェアに書き換える
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * 
      * 一覧表示
      */
-    public function index()
+    public function index(Request $request)
     {
-        $dates = FoodRecord::select(DB::raw('DATE(created_at) as date'))
+        $user = $request->user();
+        
+        $foodRecords = $user->foodRecords()
+            ->select(DB::raw('DATE(created_at) as date'))
             ->addSelect(DB::raw('MAX(updated_at) as latest_update'))
             ->groupBy(DB::raw('DATE(created_at)'))
             ->orderBy('latest_update', 'desc') 
             ->get();
-
-        return view('food-record.index', compact('dates'));
+    
+        return view('food-records.index', compact('foodRecords'));
     }
+    
 
     /**
      * 
@@ -32,7 +44,7 @@ class FoodRecordController extends Controller
      */
     public function viewCreate()
     {
-        return view('food-record.create');
+        return view('food-records.create');
     }
 
     
@@ -45,7 +57,7 @@ class FoodRecordController extends Controller
         $foodRecords = FoodRecord::whereDate('created_at', $date)
         ->get();
 
-    return view('food-record.edit', compact('foodRecords','date'));
+    return view('food-records.edit', compact('foodRecords','date'));
     }
 
 
@@ -79,6 +91,8 @@ class FoodRecordController extends Controller
     {
         $this->recordValidate($request);
 
+        $userId = Auth::id(); 
+
         for($i = 0; $i < 50; $i++){
             $colorKey =  'color-' . $i;
             $ingredientKey =  'ingredient-' . $i;
@@ -89,6 +103,7 @@ class FoodRecordController extends Controller
 
             if($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
                 FoodRecord::create([
+                    'user_id' => $userId,
                     'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
                     'ideal_amount' => $request->input($idealAmountKey),
@@ -98,7 +113,7 @@ class FoodRecordController extends Controller
                 ]);
             }
         }
-        return redirect('/index-foodRecords');
+        return redirect()->route('indexRecords');
     }
 
     /**
@@ -159,7 +174,7 @@ class FoodRecordController extends Controller
                 ]);
             }
         }
-        return redirect('/index-foodRecords');
+        return redirect()->route('indexRecords');
     }
 
     /**
@@ -176,7 +191,7 @@ class FoodRecordController extends Controller
             })
             ->get();
 
-        return view('food-record.restockList', compact('foodRecords'));
+        return view('food-records.restockList', compact('foodRecords'));
     }   
 
     /**
@@ -188,8 +203,6 @@ class FoodRecordController extends Controller
     {
         $food = Food::find($id);
         $food->delete();
-        return redirect('index-foods');
+        return redirect()->route('indexRecords');
     }
-
-
 }

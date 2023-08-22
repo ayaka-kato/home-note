@@ -12,24 +12,21 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">レシピ詳細</h3>
+                @can('controlRecipe', $recipe)
                 <div class="card-tools">
                     <div class="input-group input-group-sm">
                         <div class="input-group-append">
-                            <form action="{{ url('/detail-recipe/'. $recipe->id ) }}" method="GET">
-                            @csrf
-                                <input type="hidden" name="toEditPage" value="true">
-                                <button type="submit" class="btn btn-success">レシピ編集</button>
-                            </form>
+                            <a href="{{ route('editRecipe', ['id' => $recipe->id ] ) }}" class="btn btn-success">レシピ編集</a>
                         </div>
                     </div>
                 </div>
+                @endcan
             </div>
             <div class="card-body d-flex">
                 <div class="col-md-7">
                     <h2 class="mb-1 recipe-name">{{ $recipe->name }}</h2>
                     <div class="mb-1">
                         <span class="mr-2">{{ $recipe->category }}</span>
-                        <span class="">レビュー</span>
                     </div>
 
                     <!-- 画像 -->
@@ -39,7 +36,10 @@
 
                     <!-- リンク・共有 -->
                     <p class="my-1">参考リンク：<a href="{{ $recipe->link }}">{{ $recipe->link }}</a></p>
-                    <p>作成日：{{ $recipe->created_at }}</p>
+                    <p class="mb-0">作成日：{{ $recipe->created_at }}</p>〖
+                    @if ( $recipe->created_at != $recipe->updated_at )
+                    <p>更新日：{{ $recipe->updated_at }}</p>
+                    @endif
                     <!-- TODO:印刷ボタン・共有ボタン・Herokuあげたらリンク先の設定する -->
                     <div class="d-flex">
                         <!-- 印刷ボタン -->
@@ -48,11 +48,11 @@
                             <input type="button" id="print" onclick="window.print();">
                         </form>
                         <!-- Lineボタン -->
-                        <div class="line-it-button" data-lang="ja" data-type="share-b" data-env="REAL" data-url="http://127.0.0.1:8000/detail-recipe/3" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
+                        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="http://{{ route('getRecipe', ['id' => $recipe->id ] ) }}" data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
                         <!-- twitterボタン -->
-                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="true" data-url="" data-size="large"></a>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="true" data-text="{{ '〖' . $recipe->name . '〗'}}" data-url="{{ route('getRecipe', ['id' => $recipe->id ] ) }}" data-size="large"></a>
                     </div>
-                </div>
+                </div>》
 
                 <!-- 材料 -->
                 <div class="col-md-4 food-ready-area ml-5">
