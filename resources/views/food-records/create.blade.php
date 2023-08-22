@@ -23,6 +23,7 @@
                 <form method="POST" action="{{ route('storeRecord') }}" id="record-form">
                     @csrf
                     <div class="card-body">
+                        <button type="button" id="sort-button">並び替える</button>
                         <button type="button" id="exe-btn">反映する</button>
                         <table class="table table-hover text-nowrap record-table">
                             <thead>
@@ -72,15 +73,15 @@
                                     <td class="form-group real-amount">
                                         <div class="form-control d-flex">
                                             <div>
-                                                <input type="radio" id="real-left-{{ $i }}" name="real-amount-{{ $i }}" class="zero" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>
+                                                <input type="radio" id="real-left-{{ $i }}" name="real-amount-{{ $i }}" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>
                                                 <label class="radio-left" for="real-left-{{ $i }}">ない</label>                                            
                                             </div>
                                             <div>
-                                                <input type="radio" id="real-center-{{ $i }}" name="real-amount-{{ $i }}" class="one" value="1" {{ old('real-amount-' .$i ) == "1" ? "checked" : null }}>
+                                                <input type="radio" id="real-center-{{ $i }}" name="real-amount-{{ $i }}" value="1" {{ old('real-amount-' .$i ) == "1" ? "checked" : null }}>
                                                 <label class="radio-center" for="real-center-{{ $i }}">少ない</label>
                                             </div>
                                             <div>
-                                                <input type="radio" id="real-right-{{ $i }}" name="real-amount-{{ $i }}" class="two" value="2" {{ old('real-amount-' .$i ) == "2" ? "checked" : null }}>                                            
+                                                <input type="radio" id="real-right-{{ $i }}" name="real-amount-{{ $i }}" value="2" {{ old('real-amount-' .$i ) == "2" ? "checked" : null }}>                                            
                                                 <label class="radio-right" for="real-right-{{ $i }}">多い</label>
                                             </div>                                            
                                         </div>

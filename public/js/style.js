@@ -298,12 +298,12 @@ exeBtn.addEventListener('click', () => {
 // -------------------------
 // ラベル色で並び替え
 // -------------------------
-// ソートボタンの要素を取得
+// 並び替えボタンの要素を取得
 const sortButton = document.getElementById('sort-button');
 
-// ソートボタンがクリックされたときの処理
+// 並び替えボタンがクリックされたときの処理
 sortButton.addEventListener('click', () => {
-    // 色ごとに要素をグループ化
+    // 各行を色ごとにグループ化
     const colorGroups = {};
     foodRecords.forEach((foodRecord) => {
         const colorClass = foodRecord.querySelector('.label-color-select').value;
@@ -313,7 +313,7 @@ sortButton.addEventListener('click', () => {
         colorGroups[colorClass].push(foodRecord);
     });
 
-    // 各グループを並び替えて新しい順序に要素を追加
+    // 各色グループを並び替え
     const sortedFoodRecords = [];
     ['pink', 'purple', 'blue', 'aqua', 'green', 'yellow', 'orange'].forEach((color) => {
         if (colorGroups[color]) {
@@ -321,7 +321,7 @@ sortButton.addEventListener('click', () => {
         }
     });
 
-    // ソート済みの要素をコンテナに追加
+    // 並び替えた要素をコンテナに追加
     sortedFoodRecords.forEach((foodRecord) => {
         recordsContainer.appendChild(foodRecord);
     });

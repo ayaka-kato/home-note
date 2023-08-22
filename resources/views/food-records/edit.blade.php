@@ -87,15 +87,15 @@
                                     <div class="form-control d-flex">
                                         <div>
                                             <input type="radio" id="real-left-{{ $index }}" name="real-amount-{{ $index }}" value="0" {{ (old('real-amount-' . $index) === "0" || $foodRecord->real_amount === 0) ? "checked" : "" }}>
-                                            <label for="real-left-{{ $index }}">ない</label>
+                                            <label class="radio-left" for="real-left-{{ $index }}">ない</label>
                                         </div>
                                         <div>
                                             <input type="radio" id="real-center-{{ $index }}" name="real-amount-{{ $index }}" value="1" {{ (old('real-amount-' . $index) === "1" || $foodRecord->real_amount === 1) ? "checked" : "" }}>
-                                            <label for="real-center-{{ $index }}">少ない</label>
+                                            <label class="radio-center" for="real-center-{{ $index }}">少ない</label>
                                         </div>
                                         <div>
                                             <input type="radio" id="real-right-{{ $index }}" name="real-amount-{{ $index }}" value="2" {{ (old('real-amount-' . $index) === "2" || $foodRecord->real_amount === 2) ? "checked" : "" }}>
-                                            <label for="real-right-{{ $index }}">多い</label>
+                                            <label class="radio-right" for="real-right-{{ $index }}">多い</label>
                                         </div>
                                     </div>
                                 </td>
@@ -103,11 +103,11 @@
                                     <div class="form-control d-flex">
                                         <div>
                                             <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" || $foodRecord->waste_amount === 1) ? "checked" : "" }}>
-                                            <label for="waste-left-{{ $index }}">少ない</label>
+                                            <label class="radio-left" for="waste-left-{{ $index }}">少ない</label>
                                         </div>
                                         <div>
                                             <input type="radio" id="waste-right-{{ $index }}" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" || $foodRecord->waste_amount === 2) ? "checked" : "" }}>
-                                            <label for="waste-right-{{ $index }}">多い</label>
+                                            <label class="radio-right" for="waste-right-{{ $index }}">多い</label>
                                         </div>
                                     </div>
                                 </td>

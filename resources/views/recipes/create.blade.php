@@ -19,12 +19,12 @@
                 </div>
             @endif
 
-            <div class="card card-primary">
+            <div class="card card-primary" id="create-recipe">
                 <form method="POST" action="{{ route('storeRecipe') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
 
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-12 col-sm-8 col-md-8">
                             <label for="name">レシピ名<span class="color-red">*必須</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="（例）肉じゃが" value="{{ old('name') }}" autofocus>
                         </div>
@@ -59,19 +59,19 @@
                             </div>
                         </div>
 
-                        <div class="form-group  col-md-10">
+                        <div class="form-group col-sm-12 col-md-10">
                             <b>材料</b>
-                            <div class="d-flex">
-                                <div class="form-group col-md-3">
+                            <div class="d-flex" id="ingredient-table">
+                                <div class="form-group col-5 col-sm-3 col-md-3">
                                     <label for="serving">何人前</label>
                                     <input type="text" class="form-control" id="serving" name="serving" placeholder="（例）2人前" value="{{ old('serving')}}">                                            
                                 </div>
-                                <div class="form-group col-md-9">                                
-                                    <table class="table table-hover text-nowrap">
+                                <div class="form-group col-12 col-sm-9 col-md-9" >                                
+                                    <table class="table table-hover text-nowrap" id="amount-table">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-6">名前</th>
-                                                <th class="col-md-6">分量</th>
+                                                <th class="col-6 col-md-6">名前</th>
+                                                <th class="col-6 col-md-6">分量</th>
                                             </tr>
                                         </thead>
                                         <tbody>                                 
@@ -79,20 +79,20 @@
                                                 <!-- 初期表示 -->
                                                 @if($i < 5)
                                                 <tr class="ingredient">                                            
-                                                    <td class="col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
-                                                    <td class="col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
                                                 </tr>
                                                 <!-- 追加ボタン押下で表示 -->
                                                 @else
                                                 <tr class="ingredient" style="display:none;">   
-                                                    <td class="col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
-                                                    <td class="col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
                                                 </tr>
                                                 @endif
                                             @endfor
                                         </tbody>
                                     </table>
-                                    <button type="button" id="addIngredientBtn" class="btn btn-success">食材を追加</button>
+                                    <button type="button" id="addIngredientBtn" class="btn btn-success col-3 col-sm-4">食材を追加</button>
                                 </div>
                             </div>
                         </div>
@@ -113,24 +113,24 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th class="col-md-1">順番</th>
-                                        <th class="col-md-4">工程</th>
-                                        <th class="col-md-6">詳細</th>
+                                        <th class="col-1 col-md-1">順番</th>
+                                        <th class="col-4 col-md-4">工程</th>
+                                        <th class="col-6 col-md-6">詳細</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @for ($i = 0; $i < 8; $i++)
                                         @if($i < 4)
                                         <tr class="process">
-                                            <td class="col-md-1">{{$i+1}}</td>
-                                            <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-1 col-md-1">{{$i+1}}</td>
+                                            <td class="col-4 col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
+                                            <td class="col-6 col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
                                         </tr>
                                         @else
                                         <tr class="process" style="display:none;">
-                                            <td class="col-md-1">{{$i+1}}</td>
-                                            <td class="col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-1 col-md-1">{{$i+1}}</td>
+                                            <td class="col-4 col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
+                                            <td class="col-6 col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
                                         </tr>
                                         @endif
                                     @endfor
@@ -139,8 +139,8 @@
                         </div>
                         <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">工程を追加</button>
                     </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">登録</button>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary col-8 col-sm-6 m-auto">登録</button>
                     </div>
                 </form>
             </div>

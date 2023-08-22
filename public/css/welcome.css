@@ -1,0 +1,310 @@
+/* ---------------------------------
+大枠
+--------------------------------- */
+*{
+    box-sizing: border-box;
+}
+
+/* ---------------------------------
+ログイン・会員登録画面
+（PCサイズは横並び）
+--------------------------------- */
+.flexbox {
+    display:flex;
+}
+
+.container.welcome-area {
+    height:calc(100vh - 55px);
+
+    /* ボーダーの実装 */
+    background-color: #8be4f0;
+	background-image: linear-gradient(-90deg, #fff 50%, transparent 50%);
+	background-size: 14px 14px;
+}
+
+.welcome-area .welcome-row {
+    height:100%;
+    box-shadow: 2px;
+    min-width:340px;
+    max-width:1080px;
+    margin:0 auto;
+}
+
+.welcome-area .welcome-row .welcome-col {
+    position:relative;
+    height:400px;
+    width:100%;
+    align-items: center;
+    padding:0;
+    border-radius:40px;
+    box-shadow: 6px 6px 12px gray;
+}
+
+/* 画面左 */
+/* ------------------------------------- */
+.welcome-col .welcome-image {
+    height:100%;
+    width:50%;
+    position:relative;
+    z-index: 0;
+}
+
+.welcome-col .welcome-image img {
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    z-index:1;
+}
+
+.welcome-col .title-area {
+    position: absolute;
+        bottom:75px;
+    padding:0 15px;
+    margin:0;
+    width:100%;
+}
+
+.welcome-col .deco {
+    font-size: 32px;
+    border-radius: 50%;
+    background-color: rgba(230, 104, 129, 0.8);
+    border:2px solid white;
+    height:50%;
+    width:50%;
+    padding:3px;
+    color:white;
+    font-weight: bold;
+    list-style: none;
+    text-align: center;
+    z-index: 99;    
+}
+
+.welcome-col .deco:nth-child(even){
+    background-color: rgba(230, 156, 104, 0.8);
+}
+
+/* 画面右 */
+/* ------------------------------------- */
+.welcome-col .card {
+    width:50%;
+    height:100%;
+    align-items: center;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    padding:10px;
+}
+
+.welcome-col .card .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width:100%;
+}
+
+.welcome-col .card .flight {
+    display:inline-block;
+}
+
+.welcome-col .card form {
+    margin-top:20px;
+    width:100%;
+}
+
+.welcome-col .card table, label {
+    margin:0 auto;
+}
+
+.welcome-col .card .form-group {
+    margin:15px auto;
+    width:100%;
+}
+
+.welcome-col .card .form-group button {
+    width:80%;
+    text-align: center;
+    margin: 2px auto;
+}
+
+.welcome-col .card .form-group a {
+    text-align: center;
+    margin: 2px auto;
+}
+
+/* -------------------------------------
+豚の表示
+------------------------------------- */
+.pig-run-area {
+    position:absolute;
+        bottom:-20%; 
+    width:100%;
+    display: flex;
+    background-color: transparent;
+    align-items: center;
+    padding: 0;;
+}   
+
+.pig-run {
+    width:100%;
+    list-style: none;
+    text-align: center;
+}
+
+.pig-run img {
+    width:40%;
+}
+
+.pig-run div {
+    margin:0 auto;
+    width:10px;
+    height:10px;
+    background-color:#454545;
+    border-radius: 50%;
+}
+
+
+/* ボタン */
+/* ------------------------------------- */
+/* ログイン画面・会員登録画面 */
+.welcome-col .color-pink {
+    color:rgb(230, 104, 129);
+}
+
+.welcome-col .color-pink:hover {
+    color:rgb(230, 104, 129);
+}
+
+.welcome-col .btn-pink {
+    background-color:rgb(230, 104, 129);
+    color:white;
+}
+
+.welcome-col .btn-pink:hover {
+    color:white;
+    transition: all 0.5s;
+    transform: scale(1.2, 1.2);
+}
+
+.welcome-col .color-orange {
+    color:rgb(230, 156, 104);
+}
+
+.welcome-col .color-orange:hover {
+    color:rgb(230, 156, 104);
+}
+
+.welcome-col .btn-orange {
+    width:100%;
+    background-color:rgb(230, 156, 104);
+    color:white;
+}
+
+.welcome-col .btn-orange:hover {
+    color:white;
+    transition: all 0.5s;
+    transform: scale(1.2, 1.2);
+}
+
+/* --------------------------------------
+レスポンシブ・スマホ画面
+-------------------------------------- */
+@media screen and (max-width: 570px) {
+    .flexbox {
+        display: block;
+    }
+    .flexbox .box1 {
+        height:50%;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .flexbox .box2 {
+        height:50%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .welcome-area {
+        padding:0;
+    }
+
+    .welcome-area .welcome-row .welcome-col {
+        height: 610px;
+        width:100%;
+    }
+
+    /* 画面上 */
+    .welcome-col .title-area {
+        position:absolute;
+            bottom:45px;
+        padding: 0 15px;
+        margin: 0;
+    }
+
+    .welcome-col .welcome-image img {
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        border-bottom-left-radius: 0;
+    }
+
+    .welcome-col .deco {
+        font-size: 24px;
+    }
+
+    /* 画面下 */
+    .welcome-col .card {
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+    }
+
+    .welcome-col .card .card-body {
+        height:100%;
+        width:100%;
+        font-size:12px;
+        margin-top:22px;
+    }
+
+    .welcome-col .card form {
+        width:95%;
+        margin-top:10px;
+    }
+
+    .welcome-col .card table {
+        font-size: 12px;
+    }
+
+    .welcome-col .card input{
+        font-size: 12px;
+    }
+
+    .welcome-col .card .btn {
+        font-size: 12px;
+    }
+
+    .pig-run-area {
+        position:relative;
+            bottom:48%;
+        padding:0 15px;
+    }
+}
+
+@media screen and (min-width: 571px) and (max-width: 780px) {
+    .welcome-area .welcome-row .welcome-col {
+        height:360px;
+    }
+
+    .welcome-col .deco {
+        font-size: 20px;
+    }
+
+    .welcome-col .card .card-body table {
+        font-size:10px;
+    }
+
+    .welcome-col .card input{
+        font-size: 10px;
+    }
+}
