@@ -92,7 +92,7 @@
                                             @endfor
                                         </tbody>
                                     </table>
-                                    <button type="button" id="addIngredientBtn" class="btn btn-success col-3 col-sm-4">食材を追加</button>
+                                    <button type="button" id="addIngredientBtn" class="btn btn-success">食材を追加</button>
                                 </div>
                             </div>
                         </div>

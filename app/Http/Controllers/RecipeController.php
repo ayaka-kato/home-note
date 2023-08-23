@@ -133,9 +133,7 @@ class RecipeController extends Controller
     /** ------------------------------------------------------
      * Request $request
      * 
-     * レシピ一件表示
-     * ※呼び出し元によって表示先を変える。
-     * ※一覧→詳細 / 詳細→編集
+     * レシピ詳細画面
      * ------------------------------------------------------*/
     public function getRecipe(Request $request, $id)
     {
@@ -149,9 +147,7 @@ class RecipeController extends Controller
     /** ------------------------------------------------------
      * Request $request
      * 
-     * レシピ一件表示
-     * ※呼び出し元によって表示先を変える。
-     * ※一覧→詳細 / 詳細→編集
+     * レシピ編集画面
      * ------------------------------------------------------*/
     public function editRecipe(Request $request, $id)
     {

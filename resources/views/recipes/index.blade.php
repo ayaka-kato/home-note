@@ -8,17 +8,18 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-11">
+        <div class="col-12 col-sm-10 col-md-12 col-lg-12 col-xl-10">
             @if($keyword)
             <div class=" search-message">
                 検索ワード<b class="color-pink"> "{{ $keyword }}" </b>で検索したところ、<b class="color-pink"> "{{ $recipes->count() }}"</b>件 ヒットしました。
             </div>
             @endif
-            <div class="input-group d-flex">
-                <form action="{{ route('indexRecipes') }}" method="get" class="col-sm-10 col-md-6 col-lg-4 p-0">
+            <div class="input-group">
+                <form action="{{ route('indexRecipes') }}" method="get" class="p-0 d-flex">
+                    @csrf
                     <input type="text" name="keyword" class="form-control search-window" placeholder="キーワードを入力">
+                    <button class="btn btn-success search-btn" type="submit" id="button-addon2"><i class="fas fa-search"></i> 検索</button>
                 </form>
-                <button class="btn search-btn" type="submit" id="button-addon2"><i class="fas fa-search"></i> 検索</button>
             </div>
             <div class="card" id="index-recipe">
                 <div class="card-header">
@@ -46,14 +47,14 @@
                         <tbody>
                         @foreach ($recipes as $recipe)
                             <tr>
-                                <td class="responsive-img col-4">
+                                <td class="responsive-img col-4 col-sm-4">
                                     <div class="upload-image">
                                         @if ( $recipe->image != null )
                                         <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
                                         @endif
                                     </div>
                                 </td>
-                                <td class="responsive-td col-6">
+                                <td class="responsive-td col-6 col-sm-6">
                                     <form action="{{ route('getRecipe', [ 'id' => $recipe->id ] ) }}" method="GET">
                                     @csrf
                                         <input type="hidden">
@@ -62,8 +63,8 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td class="responsive-td col-6">{{ $recipe->category }}</td>
-                                <td class="responsive-td col-6">
+                                <td class="responsive-td col-6 col-sm-6">{{ $recipe->category }}</td>
+                                <td class="responsive-td col-6 col-sm-6">
                                     <div class="ingredients-row">
                                         @php $colCount = 0; @endphp
                                         @foreach($recipe->ingredients as $ingredient)
@@ -76,10 +77,10 @@
                                     </div>
                                 </td>
                                 @can('controlRecipe', $recipe)
-                                <td class="responsive-btn">
+                                <td class="responsive-btn col-1 col-sm-1">
                                     <a href="{{ route('editRecipe', ['id' => $recipe->id ] ) }}" class="btn btn-success">編集</a>
                                 </td>
-                                <td class="responsive-btn">
+                                <td class="responsive-btn col-1 col-sm-1">
                                     <form action=" {{ route('deleteRecipe', ['id' => $recipe->id])  }}" method="POST">
                                     @csrf
                                     @method('DELETE')

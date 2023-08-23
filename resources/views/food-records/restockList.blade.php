@@ -19,8 +19,22 @@
                 </div>
             @endif
 
-            <div class="card card-primary">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex float-right">
+                        <!-- 印刷ボタン -->
+                        <form class="print-area mr-1">                            
+                            <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
+                            <input type="button" id="print" onclick="window.print();">
+                        </form>
+                        <!-- Lineボタン -->
+                        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="http://{{ route('restockList') }}" data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
+                    </div>
+                </div>
                 <div class="card-body">
+                    @if(!$foodRecords)
+                    <p>在庫データの登録がまだありません。</p>
+                    @else
                     <table class="table table-hover text-nowrap record-table">
                         <thead>
                             @if(session('message'))
@@ -28,35 +42,31 @@
                             @endif
                             <tr>
                                 <th class="form-group">
+                                    <p>番号</p>
+                                </th>
+                                <th class="form-group">
                                     <p>食材</p>
                                 </th>
                                 <th class="form-group">
                                     <p>補充数量・コメント</p>
                                 </th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="records-container">
-                            <!-- DBに登録がある場合 -->
                             @foreach($foodRecords as $index=>$foodRecord)
-                            <tr id="food-record-{{ $index }}" class="food-record">                            
+                            <tr id="food-record-{{ $index }}" class="food-record">                       
+                                <td class="form-group">{{ $index+1 }}</td>
                                 <td class="form-group ingredient-name">
                                     {{ $foodRecord->ingredient }}
                                 </td>
                                 <td class="form-group restock-amount">
                                     <input type="text" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index , $foodRecord->restock_amount) }}">
-                                </td>
-                                <td class="form-group delete-record">
-                                    <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}">取消</button>
-                                </td>                                
+                                </td>                             
                             </tr>
                             @endforeach
                         </tbody>
-
-                        <!-- 新規登録がある場合 -->
-
                     </table>
-                    <button type="button" class="btn btn-success" id="addRecordBtn">追加</button>
+                    @endif
                 </div>
             </div>
         </div>

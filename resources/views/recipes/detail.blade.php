@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-10">
+    <div class="col-12 col-sm-12 col-md-10">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">レシピ詳細</h3>
@@ -23,7 +23,7 @@
                 @endcan
             </div>
             <div class="card-body d-flex">
-                <div class="col-md-7">
+                <div class="col-12 col-sm-12 col-md-7">
                     <h2 class="mb-1 recipe-name">{{ $recipe->name }}</h2>
                     <div class="mb-1">
                         <span class="mr-2">{{ $recipe->category }}</span>
@@ -36,7 +36,7 @@
 
                     <!-- リンク・共有 -->
                     <p class="my-1">参考リンク：<a href="{{ $recipe->link }}">{{ $recipe->link }}</a></p>
-                    <p class="mb-0">作成日：{{ $recipe->created_at }}</p>〖
+                    <p class="mb-0">作成日：{{ $recipe->created_at }}</p>
                     @if ( $recipe->created_at != $recipe->updated_at )
                     <p>更新日：{{ $recipe->updated_at }}</p>
                     @endif
@@ -52,10 +52,10 @@
                         <!-- twitterボタン -->
                         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="true" data-text="{{ '〖' . $recipe->name . '〗'}}" data-url="{{ route('getRecipe', ['id' => $recipe->id ] ) }}" data-size="large"></a>
                     </div>
-                </div>》
+                </div>
 
                 <!-- 材料 -->
-                <div class="col-md-4 food-ready-area ml-5">
+                <div class="food-ready-area col-12 col-sm-12 col-md-4 ml-5">
                     <div class="row">
                         <h4 class="mt-2">材料</h4>
                         @if( $recipe->serving )

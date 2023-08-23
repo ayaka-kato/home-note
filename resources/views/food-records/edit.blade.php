@@ -127,7 +127,7 @@
                     <button type="button" class="btn btn-success" id="addRecordBtn">追加</button>
 
                     <div class="card-footer">
-                        <button type="button" class="btn btn-primary" id="record-submit-btn">登録</button>
+                        <button type="submit" class="btn btn-primary" id="record-submit-btn">登録</button>
                     </div>
                 </form>
             </div>

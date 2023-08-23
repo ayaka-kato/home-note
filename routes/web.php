@@ -43,10 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('food-records')->group(function () {
         Route::get('/create',  [App\Http\Controllers\FoodRecordController::class, 'viewCreate'])->name('createRecord'); //在庫入力へ
         Route::post('/store', [App\Http\Controllers\FoodRecordController::class, 'store'])->name('storeRecord'); //在庫の登録
-        Route::get('/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList']); // 買い物リスト閲覧
+        Route::get('/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList'])->name('restockList'); // 買い物リスト閲覧
 
         // 自分の在庫データのみ操作できる。
-        // Route::group(['middleware'=> ['can:controlFoodRecord, foodRecord'], function() {
+        // Route::group(['middleware'=> ['can:controlFoodRecord, foodRecord']], function() {
             Route::get('/index', [App\Http\Controllers\FoodRecordController::class, 'index'])->name('indexRecords'); //在庫一覧へ
             Route::get('/edit/{id}',  [App\Http\Controllers\FoodRecordController::class, 'viewEdit'])->name('editRecord'); //在庫編集へ
             Route::post('/update/{date}', [App\Http\Controllers\FoodRecordController::class, 'update'])->name('updateRecord'); //在庫の更新

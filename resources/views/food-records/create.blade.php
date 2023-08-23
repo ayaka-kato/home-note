@@ -25,34 +25,34 @@
                     <div class="card-body">
                         <button type="button" id="sort-button">並び替える</button>
                         <button type="button" id="exe-btn">反映する</button>
-                        <table class="table table-hover text-nowrap record-table">
+                        <table class="table table-responsive table-hover text-nowrap record-table">
                             <thead>
                                 <tr>
-                                    <th class="form-group">
+                                    <th class="form-group col-1">
                                         <p>色</p>
                                     </th>
-                                    <th class="form-group">
+                                    <th class="form-group col-2">
                                         <p>食材</p>
                                     </th>
-                                    <th class="form-group">
+                                    <th class="form-group col-2">
                                         <p>理想在庫</p>
                                     </th>
-                                    <th class="form-group">
+                                    <th class="form-group col-2">
                                         <p>実在庫</p>
                                     </th>
-                                    <th class="form-group">
+                                    <th class="form-group col-2">
                                         <p>廃棄数</p>
                                     </th>
-                                    <th class="form-group">
+                                    <th class="form-group col-2">
                                         <p>補充数量・コメント</p>
                                     </th>
-                                    <th></th>
+                                    <th class="col-1"></th>
                                 </tr>
                             </thead>
                             <tbody id="records-container">
                                 @for($i = 0; $i < 5; $i++)
                                 <tr id="food-record-{{ $i }}" class="food-record">
-                                    <td>
+                                    <td class="col-1">
                                         <select name="color-{{ $i }}" class="label-color-select">
                                             <option class="color-label" value=""></option>
                                             <option class="color-label pink" value="pink" {{ old('color') == "pink" ? "selected" : null }}>ピンク</option>
@@ -64,13 +64,13 @@
                                             <option class="color-label orange" value="orange" {{ old('color') == "orange" ? "selected" : null }}>オレンジ</option>
                                         </select>
                                     </td>                               
-                                    <td class="form-group ingredient-name">
+                                    <td class="form-group ingredient-name col-2">
                                         <input type="text" name="ingredient-{{ $i }}" class="form-control" placeholder="（例）人参" value="{{ old('ingredient') }}">
                                     </td>
-                                    <td class="form-group ideal-amount">
+                                    <td class="form-group ideal-amount col-2">
                                         <input type="text" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount') }}">
                                     </td>
-                                    <td class="form-group real-amount">
+                                    <td class="form-group real-amount col-2">
                                         <div class="form-control d-flex">
                                             <div>
                                                 <input type="radio" id="real-left-{{ $i }}" name="real-amount-{{ $i }}" value="0" {{ old('real-amount-' .$i ) == "0" ? "checked" : null }}>
@@ -86,7 +86,7 @@
                                             </div>                                            
                                         </div>
                                     </td>
-                                    <td class="form-group waste-amount">
+                                    <td class="form-group waste-amount col-2">
                                         <div class="form-control d-flex">
                                             <div>
                                                 <input type="radio" id="waste-left-{{ $i }}"name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>
@@ -98,10 +98,10 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="form-group restock-amount">
+                                    <td class="form-group restock-amount col-2">
                                         <input type="text" name="restock-amount-{{ $i }}" class="form-control" value="{{ old('restock-amount-' . $i ) }}">
                                     </td>
-                                    <td class="form-group delete-record">
+                                    <td class="form-group delete-record col-1">
                                         <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
                                     </td>                                
                                 </tr>

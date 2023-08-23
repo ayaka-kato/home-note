@@ -209,7 +209,7 @@ const createRecordRow = (index) => {
             </div>
         </td>
         <td class="form-group restock-amount">
-            <input type="text" name="restock-amount-${recordIndex}" class="form-control" placeholder="（例）2本"  value="{{ old('restock-amount-'.${recordIndex} ) }}">
+            <input type="text" name="restock-amount-${recordIndex}" class="form-control" placeholder="（例）2本"  {{ value != null ? value="old('restock-amount-${recordIndex}'): value="null" }}">
         </td>
         <td class="form-group delete-record">
             <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
@@ -287,7 +287,7 @@ exeBtn.addEventListener('click', () => {
         let idealAmountInput = row.querySelector('.ideal-amount input[type="text"]');
         
         realAmountRadios.forEach(radio => {
-            if (radio.checked && (radio.value === "0" || radio.value === "1")) {
+            if (radio.checked && (radio.value === "0" || radio.value === "1") ) {
                 restockAmountInput.value = idealAmountInput.value;
             }
         });
@@ -304,7 +304,7 @@ const sortButton = document.getElementById('sort-button');
 // 並び替えボタンがクリックされたときの処理
 sortButton.addEventListener('click', () => {
     // 各行を色ごとにグループ化
-    const colorGroups = {};
+    const colorGroups = [];
     foodRecords.forEach((foodRecord) => {
         const colorClass = foodRecord.querySelector('.label-color-select').value;
         if (!colorGroups[colorClass]) {
@@ -326,6 +326,7 @@ sortButton.addEventListener('click', () => {
         recordsContainer.appendChild(foodRecord);
     });
 });
+
 
 // const form = document.getElementById('record-form');
 // const submitButton = document.getElementById('record-submit-btn');

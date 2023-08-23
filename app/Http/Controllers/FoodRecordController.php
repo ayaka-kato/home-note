@@ -183,15 +183,18 @@ class FoodRecordController extends Controller
      * 買い物リスト更新
      */
     public function viewRestockList() {
-        $today = Carbon::now()->format('Y-m-d');
-        $foodRecords = FoodRecord::whereDate('created_at',$today)
+        $latestRecord = FoodRecord::latest('created_at')->first();
+        $latestDate = $latestRecord->created_at->format('Y-m-d');
+
+        $foodRecords = FoodRecord::whereDate('created_at', $latestDate)
             ->where(function($query){
                 $query->where('real_amount', '0')
-                      ->orWhere('real_amount', '1');
+                        ->orWhere('real_amount', '1');
             })
             ->get();
 
         return view('food-records.restockList', compact('foodRecords'));
+
     }   
 
     /**
