@@ -141,7 +141,7 @@ class FoodRecordController extends Controller
     
             // 更新する時
             if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
-                $record->update([
+                $foodRecord->update([
                     'user_id' => $userId,
                     'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
@@ -153,7 +153,7 @@ class FoodRecordController extends Controller
 
             // 削除する時
             } else {
-                $record->delete();
+                $foodRecord->delete();
             }
         }
 
