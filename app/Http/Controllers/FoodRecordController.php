@@ -188,13 +188,11 @@ class FoodRecordController extends Controller
 
         $foodRecords = FoodRecord::whereDate('created_at', $latestDate)
             ->where(function($query){
-                $query->where('real_amount', '0')
-                        ->orWhere('real_amount', '1');
+                $query->whereNotNull('restock_amount');
             })
             ->get();
 
         return view('food-records.restockList', compact('foodRecords'));
-
     }   
 
     /**

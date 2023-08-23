@@ -56,12 +56,8 @@
                             @foreach($foodRecords as $index=>$foodRecord)
                             <tr id="food-record-{{ $index }}" class="food-record">                       
                                 <td class="form-group">{{ $index+1 }}</td>
-                                <td class="form-group ingredient-name">
-                                    {{ $foodRecord->ingredient }}
-                                </td>
-                                <td class="form-group restock-amount">
-                                    <input type="text" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index , $foodRecord->restock_amount) }}">
-                                </td>                             
+                                <td class="form-group ingredient-name">{{ $foodRecord->ingredient }}</td>
+                                <td class="form-group restock-amount">{{ $foodRecord->restock_amount }}</td>                             
                             </tr>
                             @endforeach
                         </tbody>
