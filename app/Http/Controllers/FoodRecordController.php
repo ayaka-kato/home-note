@@ -126,6 +126,8 @@ class FoodRecordController extends Controller
         // バリデーション
         $this->recordValidate($request);
 
+        $userId = Auth::id(); 
+
         // 日付部分だけで絞るためにwhereDate()を使う
         $foodRecords = FoodRecord::whereDate('created_at', $date)->get();
         
@@ -140,6 +142,7 @@ class FoodRecordController extends Controller
             // 更新する時
             if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
                 $record->update([
+                    'user_id' => $userId,
                     'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
                     'ideal_amount' => $request->input($idealAmountKey),
@@ -165,6 +168,7 @@ class FoodRecordController extends Controller
 
             if($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null){
                 FoodRecord::create([
+                    'user_id' => $userId,
                     'color' => $request->input($colorKey),
                     'ingredient' => $request->input($ingredientKey),
                     'ideal_amount' => $request->input($idealAmountKey),
