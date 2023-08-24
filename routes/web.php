@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
         // 自分の在庫データのみ操作できる。
         // Route::group(['middleware'=> ['can:controlFoodRecord, foodRecord']], function() {
-            Route::get('/index', [App\Http\Controllers\FoodRecordController::class, 'index'])->name('indexRecords'); //在庫一覧へ
+            Route::get('/index', [App\Http\Controllers\DateController::class, 'index'])->name('indexRecords'); //在庫一覧へ
             Route::get('/edit/{id}',  [App\Http\Controllers\FoodRecordController::class, 'viewEdit'])->name('editRecord'); //在庫編集へ
             Route::post('/update/{date}', [App\Http\Controllers\FoodRecordController::class, 'update'])->name('updateRecord'); //在庫の更新
             // Route::delete('/delete/{id}', [App\Http\Controllers\FoodRecordController::class, 'destroy'])->name('deleteRecord');

@@ -281,11 +281,12 @@ let exeBtn = document.getElementById('exe-btn');
 exeBtn.addEventListener('click', () => {
     let rows = document.querySelectorAll('.food-record');
 
-    rows.forEach((row, index) => {
+    rows.forEach(row => {
+        let id = row.dataset.id;
         let realAmountRadios = row.querySelectorAll('.real-amount input[type="radio"]');
-        let restockAmountInput = row.querySelector('.restock-amount input[type="text"]');
-        let idealAmountInput = row.querySelector('.ideal-amount input[type="text"]');
-        
+        let restockAmountInput = document.getElementById('restock-amount-' + id);
+        let idealAmountInput = document.getElementById('ideal-amount-' + id);
+
         realAmountRadios.forEach(radio => {
             if (radio.checked && (radio.value === "0" || radio.value === "1") ) {
                 restockAmountInput.value = idealAmountInput.value;

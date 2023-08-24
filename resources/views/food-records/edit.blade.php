@@ -18,18 +18,17 @@
                     </ul>
                 </div>
             @endif
-<div class="d-flex">
-
-<!-- TODO: -->
-    <!-- 印刷ボタン -->
-    <form class="print-area mr-1">                            
-        <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
-        <input type="button" id="print" onclick="window.print();">
-    </form>
-    <!-- Lineボタン -->
-    <div class="line-it-button" data-lang="ja" data-type="share-b" data-env="REAL" data-url="http://127.0.0.1:8000/edit-foodRecord/.{{$date}}" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
-    
-</div>
+            <div class="d-flex">
+            <!-- TODO: -->
+                <!-- 印刷ボタン -->
+                <form class="print-area mr-1">                            
+                    <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
+                    <input type="button" id="print" onclick="window.print();">
+                </form>
+                <!-- Lineボタン -->
+                <div class="line-it-button" data-lang="ja" data-type="share-b" data-env="REAL" data-url="http://127.0.0.1:8000/edit-foodRecord/.{{ $date->id }}" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
+                
+            </div>
             <div class="card card-primary">
                 <form method="POST" action="{{ route('updateRecord', [ 'date' => $date ] ) }}" id="record-form">
                     @csrf
@@ -64,7 +63,7 @@
                         <tbody id="records-container">
                             <!-- DBに登録がある場合 -->
                             @foreach($foodRecords as $index=>$foodRecord)
-                            <tr id="food-record-{{ $index }}" class="food-record" data-record-id="{{ $index }}"> 
+                            <tr id="food-record-{{ $index }}" class="food-record" data-id="{{ $index }}"> 
                                 <td>
                                     <select name="color-{{ $index }}" class="label-color-select">
                                         <option class="color-label" value="" {{ (old('color-' . $index) === "" || $foodRecord->color === "") ? "selected" : "" }}></option>
@@ -81,7 +80,7 @@
                                     <input type="text" name="ingredient-{{ $index }}" class="form-control" value="{{ old('ingredient-' . $index , $foodRecord->ingredient ) }}">
                                 </td>
                                 <td class="form-group ideal-amount">
-                                    <input type="text" name="ideal-amount-{{ $index }}" class="form-control" value="{{ old('ideal-amount-' . $index , $foodRecord->ideal_amount) }}">
+                                    <input type="text" id="ideal-amount-{{ $index }}" name="ideal-amount-{{ $index }}" class="form-control" value="{{ old('ideal-amount-' . $index , $foodRecord->ideal_amount) }}">
                                 </td>
                                 <td class="form-group real-amount">
                                     <div class="form-control d-flex">
@@ -112,7 +111,7 @@
                                     </div>
                                 </td>
                                 <td class="form-group restock-amount">
-                                    <input type="text" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index , $foodRecord->restock_amount) }}">
+                                    <input type="text" id="restock-amount-{{ $index }}" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index , $foodRecord->restock_amount) }}">
                                 </td>
                                 <td class="form-group delete-record">
                                     <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}">削除</button>

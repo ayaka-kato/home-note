@@ -9,10 +9,8 @@ class FoodRecord extends Model
 {
     use HasFactory;
 
-    // protected $guarded = ['id'];
-
     protected $fillable = [
-        'user_id',
+        'date_id',
         'color',
         'ingredient',
         'ideal_amount',
@@ -21,12 +19,31 @@ class FoodRecord extends Model
         'restock_amount',
     ];
 
+    // 更新イベントリスナーの登録
+    // モデルが保存・更新される前後の処理を追加するために使う
+    protected static function boot()
+    {
+        // 親クラス(Model)のbootメソッドを呼び出す
+        parent::boot();
+
+        static::updating(function ($foodRecord) {
+            // 関連するdateレコードを取得
+            $date = $foodRecord->date;
+
+            // dateレコードのupdated_atを更新
+            if ($date) {
+                // touch():updated_atを現在の日時に更新するための関数
+                $date->touch(); // updated_atを現在時刻に更新
+            }
+        });
+    }
+
     // ---------------------------
     // リレーション
     // ---------------------------
-    // ユーザーとレコードは一対多の関係
-    public function user()
+    // 日付とレコードは一対多の関係
+    public function date()
     {
-        return $this->belongTo(User::class);
+        return $this->belongsTo(Date::class);
     }
 }

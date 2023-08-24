@@ -13,10 +13,14 @@
                 <div class="card-header">
                     <h3 class="card-title">食材在庫データ一覧</h3>
                     <div class="card-tools">
+                        @php $currentDate = Carbon\Carbon::now()->format('Y-m-d'); @endphp
                         <div class="input-group input-group-sm">
                             <div class="input-group-append">
-                                <a href="{{ route('createRecord') }}" class="btn btn-default">食材在庫データ登録</a>
-                            </div>
+                                @if ($dates->contains('date', $currentDate))
+                                @else
+                                    <a href="{{ route('createRecord') }}" class="btn btn-default">食材在庫データ登録</a>
+                                @endif
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -29,16 +33,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($foodRecords as $record)
+                            @foreach ($dates as $date)
                                 <tr>
-                                    <td>{{ $record->date }}</td>
-                                    <td>{{ $record->latest_update }}</td>
+                                    <td>{{ $date->date }}</td>
+                                    <td>{{ $date->updated_at }}</td>
                                     <td>
-                                        @if(Carbon\Carbon::now()->format('Y-m-d') == $record->date)
-                                        <a href="{{ route('editRecord', [ 'id' => $record->date ] ) }}">編集</a>
+                                        @if($date->date == $currentDate)
+                                        <a href="{{ route('editRecord', [ 'id' => $date->id ] ) }}">編集</a>
                                         @else
                                         <!-- TODO: -->
-                                        <a href="{{ url('/detail-foodRecord/' . $record->date ) }}">詳細</a>
+                                        <a href="{{ url('/detail-foodRecord/' . $date->id ) }}">詳細</a>
                                         @endif
                                     </td>
                                 </tr>

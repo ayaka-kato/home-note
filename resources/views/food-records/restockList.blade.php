@@ -28,7 +28,7 @@
                             <input type="button" id="print" onclick="window.print();">
                         </form>
                         <!-- Lineボタン -->
-                        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="{{ route('restockList') }}" data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
+                        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="http://home-note-080ff2fd6a87.herokuapp.com/food-records/restockList" data-color="default" data-size="small" style="display: none;"></div>
                     </div>
                 </div>
                 <div class="card-body">

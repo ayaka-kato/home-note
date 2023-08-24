@@ -25,6 +25,7 @@
                     <div class="card-body">
                         <button type="button" id="sort-button">並び替える</button>
                         <button type="button" id="exe-btn">反映する</button>
+                        <button type="button" id="clear-btn">初期化する</button>
                         <table class="table table-responsive table-hover text-nowrap record-table">
                             <thead>
                                 <tr>
