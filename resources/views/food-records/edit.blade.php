@@ -132,4 +132,51 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <script src="{{ asset('js/food-record.js') }}"></script>
+<script>
+// -----------------------------------------------------------------------------------------------------------
+// ドラッグ＆ドロップ並び替え
+// -----------------------------------------------------------------------------------------------------------
+var el = document.getElementById('records-container');
+var sortable = Sortable.create(el, {
+    // ドラッグできる範囲の指定
+    handle: '.handle',
+    onSort: function(evt) {
+        // 並び順が変わる度に順番を更新
+        var items = evt.from.querySelectorAll('.food-record');
+        for (var i = 0; i < items.length; i++) {
+            // 表示順を更新する
+            var item = items[i];
+            item.querySelector('.order').value = i ;
+
+            // 順番の値も更新する
+            var index = Number(item.getAttribute('data-id')); 
+            var hiddenInput = item.querySelector('input[name="order-' + index +'"]');
+            hiddenInput.value = parseInt(i); // i を新しい順番として設定
+        }
+    },
+    
+    // -------------------------------------------------------------------
+    // （二つのコードを一つにまとめたのが↑）
+    // -------------------------------------------------------------------
+    // onSort: function(evt) {
+
+    //     // 表示順を更新する------------------------------------
+    //     var items = evt.from.querySelectorAll('.food-record');
+    //     for (var i = 0; i < items.length; i++) {
+    //         items[i].querySelector('.order').value = i ;
+    //     }
+
+    //     // 順番の値を更新する----------------------------------
+    //     // 並び替えた後の並び
+    //     var order = sortable.toArray();
+
+    //     // 最初の並び（index）の値をデータ属性から取得
+    //     var index = Number(evt.item.getAttribute('data-id')); 
+    //     var hiddenInput = document.querySelector('input[name="order-' + index +'"]');
+
+    //     // 最初の並びの値を、並び替えた後に値に更新する
+    //     hiddenInput.value = parseInt(order);
+    // },
+});
+</script>
 @stop

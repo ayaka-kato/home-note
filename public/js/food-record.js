@@ -19,52 +19,6 @@ let hiddenElement = (el)=> {
     }
 }
 
-// 在庫データ追加ボタン
-addRecordBtn.addEventListener('click', () => {
-    const newRow = createRecordRow(recordIndex);
-    recordsContainer.appendChild(newRow);
-    recordIndex++;
-
-    if (recordIndex > 50) {
-        closeElement(addRecordBtn);
-    }
-
-    // 新しい行に対応する[削除ボタン]を取得してイベントを設定
-    const newDeleteBtn = newRow.querySelector('.delete-Btn');
-    setupDeleteBtn(newDeleteBtn);
-
-    // 新しい行に対応する[セレクトボックスの変更]イベントを設定
-    const newSelectColor = newRow.querySelector('.label-color-select');
-    newSelectColor.addEventListener('change', () => {
-        applyColorToFoodRecord(newSelectColor);
-    });
-});
-
-// 関数を作成して削除ボタンのイベントを設定
-function setupDeleteBtn(deleteBtn) {
-    deleteBtn.addEventListener('click', () => {
-        let id = deleteBtn.dataset.id;
-        deleteRow = document.getElementById('food-record-' + id);
-
-        // 削除するレコードのフラグを1(消去)に変え、非表示にする。
-        deleteFrag = document.getElementById('dlt-frag-' + id);
-        deleteFrag.value = 1;
-        hiddenElement(deleteRow);
-
-        // recordsContainer.removeChild(deleteRow);
-        recordIndex--;
-
-        if(addRecordBtn.style.display="none"){
-            openElement(addRecordBtn);
-        }
-    });
-}
-
-// 初期の削除ボタンにイベントを設定
-const deleteRecordBtns = document.querySelectorAll('.delete-Btn');
-deleteRecordBtns.forEach(deleteRecordBtn => {
-    setupDeleteBtn(deleteRecordBtn);
-});
 
 // --------------------------------------------
 // 食材在庫登録画面：入力項目の追加・削除
@@ -140,6 +94,54 @@ const createRecordRow = (index) => {
     return newRow;
 };
 
+// 在庫データ追加ボタン
+addRecordBtn.addEventListener('click', () => {
+    const newRow = createRecordRow(recordIndex);
+    recordsContainer.appendChild(newRow);
+    recordIndex++;
+
+    if (recordIndex > 50) {
+        closeElement(addRecordBtn);
+    }
+
+    // 新しい行に対応する[削除ボタン]を取得してイベントを設定
+    const newDeleteBtn = newRow.querySelector('.delete-Btn');
+    setupDeleteBtn(newDeleteBtn);
+
+    // 新しい行に対応する[セレクトボックスの変更]イベントを設定
+    const newSelectColor = newRow.querySelector('.label-color-select');
+    newSelectColor.addEventListener('change', () => {
+        applyColorToFoodRecord(newSelectColor);
+    });
+});
+
+// 関数を作成して削除ボタンのイベントを設定
+function setupDeleteBtn(deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+        let id = deleteBtn.dataset.id;
+        deleteRow = document.getElementById('food-record-' + id);
+
+        // 削除するレコードのフラグを1(消去)に変え、非表示にする。
+        deleteFrag = document.getElementById('dlt-frag-' + id);
+        deleteFrag.value = 1;
+        hiddenElement(deleteRow);
+
+        // recordsContainer.removeChild(deleteRow);
+        recordIndex--;
+
+        if(addRecordBtn.style.display="none"){
+            openElement(addRecordBtn);
+        }
+    });
+}
+
+// 初期の削除ボタンにイベントを設定
+const deleteRecordBtns = document.querySelectorAll('.delete-Btn');
+deleteRecordBtns.forEach(deleteRecordBtn => {
+    setupDeleteBtn(deleteRecordBtn);
+});
+
+
 // ------------------------------------------------------------------------------------------------------------
 // ラベル色変更
 // ------------------------------------------------------------------------------------------------------------
@@ -199,8 +201,6 @@ selectColors.forEach((selectColor, index) => {
 //     });
 // });
 
-
-
 // ------------------------------------------------------------------------------------------------------------
 // 補充数量を反映する機能
 // ------------------------------------------------------------------------------------------------------------
@@ -223,52 +223,3 @@ exeBtn.addEventListener('click', () => {
     });
 });
 
-
-// -----------------------------------------------------------------------------------------------------------
-// ドラッグ＆ドロップ並び替え
-// -----------------------------------------------------------------------------------------------------------
-var el = document.getElementById('records-container');
-var sortable = Sortable.create(el, {
-    // ドラッグできる範囲の指定
-    handle: '.handle',
-    onSort: function(evt) {
-        // 並び順が変わる度に順番を更新
-        var items = evt.from.querySelectorAll('.food-record');
-        for (var i = 0; i < items.length; i++) {
-            // 表示順を更新する
-            var item = items[i];
-            item.querySelector('.order').value = i ;
-
-            // 順番の値も更新する
-            var index = Number(item.getAttribute('data-id')); 
-            var hiddenInput = item.querySelector('input[name="order-' + index +'"]');
-            hiddenInput.value = parseInt(i); // i を新しい順番として設定
-
-            console.log(items);
-            console.log(hiddenInput.value);
-        }
-    },
-    
-    // -------------------------------------------------------------------
-    // （二つのコードを一つにまとめたのが↑）
-    // -------------------------------------------------------------------
-    // onSort: function(evt) {
-
-    //     // 表示順を更新する------------------------------------
-    //     var items = evt.from.querySelectorAll('.food-record');
-    //     for (var i = 0; i < items.length; i++) {
-    //         items[i].querySelector('.order').value = i ;
-    //     }
-
-    //     // 順番の値を更新する----------------------------------
-    //     // 並び替えた後の並び
-    //     var order = sortable.toArray();
-
-    //     // 最初の並び（index）の値をデータ属性から取得
-    //     var index = Number(evt.item.getAttribute('data-id')); 
-    //     var hiddenInput = document.querySelector('input[name="order-' + index +'"]');
-
-    //     // 最初の並びの値を、並び替えた後に値に更新する
-    //     hiddenInput.value = parseInt(order);
-    // },
-});
