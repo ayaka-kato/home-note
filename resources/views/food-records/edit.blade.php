@@ -30,7 +30,7 @@
                 
             </div>
             <div class="card card-primary">
-                <form method="POST" action="{{ route('updateRecord', [ 'date' => $date ] ) }}" id="record-form">
+                <form method="POST" action="{{ route('updateRecord', [ 'date' => $date->id ] ) }}" id="record-form">
                     @csrf
                     <div class="card-body">
                     <button type="button" id="sort-button">並び替える</button>
@@ -58,13 +58,14 @@
                                     <p>補充数量・コメント</p>
                                 </th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="records-container">
                             <!-- DBに登録がある場合 -->
                             @foreach($foodRecords as $index=>$foodRecord)
-                            <tr id="food-record-{{ $index }}" class="food-record" data-id="{{ $index }}"> 
-                                <td>
+                            <tr id="food-record-{{ $index }}" class="food-record" data-id="{{ $index }}">
+                                <td class="form-group">
                                     <select name="color-{{ $index }}" class="label-color-select">
                                         <option class="color-label" value="" {{ (old('color-' . $index) === "" || $foodRecord->color === "") ? "selected" : "" }}></option>
                                         <option class="color-label pink" value="pink" {{ (old('color-' . $index) === "pink" || $foodRecord->color === "pink") ? "selected" : "" }}>ピンク</option>
@@ -115,10 +116,11 @@
                                 </td>
                                 <td class="form-group delete-record">
                                     <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}">削除</button>
-                                </td>                                
+                                </td>
+                                <td><input type="hidden" name="order-{{ $index }}" value="{{ $index }}" id="order-{{ $index }}" class="order"></td>
+                                <td class="handle">ここで移動</td>                                
                             </tr>
                             @endforeach
-
                             <!-- 新規登録をする場合 -->
 
                         </tbody>
@@ -138,4 +140,49 @@
 @stop
 
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script>
+    var el = document.getElementById('records-container');
+    var sortable = Sortable.create(el, {
+        // ドラッグできる範囲の指定
+        handle: '.handle',
+        onSort: function(evt) {
+            // 並び順が変わる度に順番を更新
+            var items = evt.from.querySelectorAll('.food-record');
+            for (var i = 0; i < items.length; i++) {
+                // 表示順を更新する
+                var item = items[i];
+                item.querySelector('.order').value = i ;
+
+                // 順番の値も更新する
+                var index = Number(item.getAttribute('data-id')); 
+                var hiddenInput = item.querySelector('input[name="order-' + index +'"]');
+                hiddenInput.value = parseInt(i); // i を新しい順番として設定
+
+                console.log(items);
+                console.log(hiddenInput.value);
+            }
+        },
+        
+        // onSort: function(evt) {
+
+        //     // 表示順を更新する------------------------------------
+        //     var items = evt.from.querySelectorAll('.food-record');
+        //     for (var i = 0; i < items.length; i++) {
+        //         items[i].querySelector('.order').value = i ;
+        //     }
+
+        //     // 順番の値を更新する----------------------------------
+        //     // 並び替えた後の並び
+        //     var order = sortable.toArray();
+
+        //     // 最初の並び（index）の値をデータ属性から取得
+        //     var index = Number(evt.item.getAttribute('data-id')); 
+        //     var hiddenInput = document.querySelector('input[name="order-' + index +'"]');
+
+        //     // 最初の並びの値を、並び替えた後に値に更新する
+        //     hiddenInput.value = parseInt(order);
+        // },
+    });
+</script>
 @stop

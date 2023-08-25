@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', function(){
         imageElement.appendChild(blobImage);
         previewImage.appendChild(imageElement);
     });
+
+
+
 });
 
 
@@ -92,14 +95,17 @@ setClearBtn(clearProcessBtns, 'process', 'detail');
     function setupAddBtn(btnObj, objs, objsLength){
         if(btnObj){
             btnObj.addEventListener('click', ()=> {
+                // 表示中のレコードの数を取得
                 let openedObjs = Array.from(objs).filter(tr => tr.style.display=='');
                 let openedLength = openedObjs.length;
 
+                // 表示中のレコードの数が用意したレコード数よりも少なければ、新しいレコードを表示
                 if(openedLength < objsLength ){
                     let tr = objs[openedLength];
                     openElement(tr);
                 }
 
+                // 表示中のレコードの数が用意したレコードの数に達したら、追加ボタンを非表示
                 if(openedLength +1 == objsLength){
                     closeElement(btnObj);
                 }
@@ -153,11 +159,12 @@ selectColors.forEach((selectColor, index) => {
 // --------------------------------------------
 const addRecordBtn = document.getElementById('addRecordBtn');
 const recordsContainer = document.getElementById('records-container');
-let recordIndex = document.querySelectorAll('.food-record').length + 1;
+let recordIndex = document.querySelectorAll('.food-record').length;
 
 const createRecordRow = (index) => {
     const newRow = document.createElement('tr');
     newRow.id = 'food-record-' + recordIndex;
+    newRow.dataset.id = recordIndex;
     newRow.className = 'food-record';
 
     // 新しい行の内容を設定
@@ -213,7 +220,9 @@ const createRecordRow = (index) => {
         </td>
         <td class="form-group delete-record">
             <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
-        </td>`;
+        </td>
+        <td><input type="hidden" name="order-${ recordIndex }" value="${ recordIndex }" id="order-${ recordIndex }" class="order"></td>  
+        <td class="handle">ここで移動</td>`;
 
     return newRow;
 };
@@ -370,3 +379,5 @@ sortButton.addEventListener('click', () => {
 //     // // フォームを送信
 //     // form.submit();
 // });
+
+

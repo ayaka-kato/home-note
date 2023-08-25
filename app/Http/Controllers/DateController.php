@@ -14,7 +14,7 @@ class DateController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $dates = $user->dates()->orderBy('created_at','DESC')->get();
+        $dates = $user->dates()->orderBy('id','DESC')->get();
     
         return view('food-records.index', compact('dates'));
     }

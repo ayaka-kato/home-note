@@ -16,6 +16,7 @@ class CreateFoodRecordsTable extends Migration
         Schema::create('food_records', function (Blueprint $table) {
             $table->id();
             $table->integer('date_id')->unsigned()->index();
+            $table->integer('order')->unsigned()->index();
             $table->string('color')->nullable();
             $table->string('ingredient');
             $table->string('ideal_amount')->nullable();

@@ -11,6 +11,7 @@ class FoodRecord extends Model
 
     protected $fillable = [
         'date_id',
+        'order',
         'color',
         'ingredient',
         'ideal_amount',

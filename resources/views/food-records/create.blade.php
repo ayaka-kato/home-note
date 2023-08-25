@@ -104,7 +104,9 @@
                                     </td>
                                     <td class="form-group delete-record col-1">
                                         <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
-                                    </td>                                
+                                    </td>
+                                    <td><input type="hidden" name="order-{{ $i }}" value="{{ $i }}" id="order-{{ $i }}" class="order"></td>
+                                    <td class="handle">ここで移動</td>                                 
                                 </tr>
                                 @endfor
                             </tbody>
