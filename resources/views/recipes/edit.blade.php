@@ -148,7 +148,7 @@
                                         <tr class="process" style="display:none;">
                                             <td class="col-md-1">{{$i}}</td>
                                             <td class="col-md-4"><input type="text" class="form-control" id="process-{{ $i }}" name="process-{{ $i }}" id="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-md-5"><textarea type="text" class="form-control" id="process-{{ $i }}" name="detail-{{ $i }}" id="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-md-5"><textarea class="form-control" id="detail-{{ $i }}" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
                                             <td class="col-md-1"><button type="button" class="btn clearProcessBtn" data-id="{{ $i }}">×</button></td>
                                         </tr>
                                     @endfor

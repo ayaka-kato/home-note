@@ -90,7 +90,18 @@ class FoodRecordController extends Controller
         }
         return redirect()->route('indexRecords');
     }  
-    
+
+    /**
+     * 
+     * 食材データ詳細画面表示
+     */
+    public function getRecord($id)
+    {
+        $date = Date::find($id);
+        $foodRecords = FoodRecord::where('date_id', $id)->orderBy('order','asc')->get();
+        return view('food-records.detail', compact('foodRecords', 'date'));
+    }    
+
     /**
      * 
      * 食材データ編集画面表示

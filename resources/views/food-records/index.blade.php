@@ -41,8 +41,7 @@
                                         @if($date->date == $currentDate)
                                         <a href="{{ route('editRecord', [ 'id' => $date->id ] ) }}">編集</a>
                                         @else
-                                        <!-- TODO: -->
-                                        <a href="{{ url('/detail-foodRecord/' . $date->id ) }}">詳細</a>
+                                        <a href="{{ route('getRecord', [ 'id' => $date->id ] ) }}">詳細</a>
                                         @endif
                                     </td>
                                 </tr>
