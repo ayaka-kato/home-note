@@ -84,6 +84,7 @@ class FoodRecordController extends Controller
                     'restock_amount' => $request->input($restockAmountKey),
                 ]);
 
+                // リレーション登録
                 $dateModel->foodRecords()->save($record);
             }
         }
@@ -132,6 +133,7 @@ class FoodRecordController extends Controller
             // DBにレコードがある場合（更新・削除）
             if (isset($foodRecords[$index])){
                 $record = $foodRecords[$index];
+                $dltFrag = $request->input('dlt-frag-' . $index);
 
                 $orderKey =  'order-' . $index;
                 $colorKey =  'color-' . $index;
@@ -142,20 +144,22 @@ class FoodRecordController extends Controller
                 $restockAmountKey =  'restock-amount-' . $index;
 
                 
-                // リクエストに値があれば更新
-                if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
-                    // fillメソッドを使用して更新
-                    $record->fill([
-                        'order' => $request->input($orderKey),
-                        'color' => $request->input($colorKey),
-                        'ingredient' => $request->input($ingredientKey),
-                        'ideal_amount' => $request->input($idealAmountKey),
-                        'real_amount' => $request->input($realAmountKey),
-                        'waste_amount' => $request->input($wasteAmountKey),
-                        'restock_amount' => $request->input($restockAmountKey),
-                    ])->save();
+                // delete-frag=0であれば更新
+                if($dltFrag == 0){
+                    if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
+                        // fillメソッドを使用して更新
+                        $record->fill([
+                            'order' => $request->input($orderKey),
+                            'color' => $request->input($colorKey),
+                            'ingredient' => $request->input($ingredientKey),
+                            'ideal_amount' => $request->input($idealAmountKey),
+                            'real_amount' => $request->input($realAmountKey),
+                            'waste_amount' => $request->input($wasteAmountKey),
+                            'restock_amount' => $request->input($restockAmountKey),
+                        ])->save();
+                    }
 
-                // リクエストに値が無ければ削除
+                // delete-frag=1であれば削除
                 }else {
                     $record->delete();
 

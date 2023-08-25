@@ -33,38 +33,28 @@
                 <form method="POST" action="{{ route('updateRecord', [ 'date' => $date->id ] ) }}" id="record-form">
                     @csrf
                     <div class="card-body">
-                    <button type="button" id="sort-button">並び替える</button>
-                    <button type="button" id="exe-btn">反映する</button>                    
+                    <!-- <button type="button" id="sort-button">色で並び替える</button> -->
+                    <button type="button" id="exe-btn">補充数量に反映する</button>                    
                     <table class="table table-hover text-nowrap record-table col-12">
                         <thead>
                             @if(session('message'))
                                 <p>{{ session('message') }}</p>
                             @endif
                             <tr>
-                                <th>色</th>
-                                <th class="form-group">
-                                    <p>食材</p>
-                                </th>
-                                <th class="form-group">
-                                    <p>理想在庫</p>
-                                </th>
-                                <th class="form-group">
-                                    <p>実在庫</p>
-                                </th>
-                                <th class="form-group">
-                                    <p>廃棄数</p>
-                                </th>
-                                <th class="form-group">
-                                    <p>補充数量・コメント</p>
-                                </th>
-                                <th></th>
-                                <th></th>
+                                <th><p>並び替え</p></th>
+                                <th><p>色</p></th>
+                                <th class="form-group"><p>食材</p></th>
+                                <th class="form-group"><p>理想在庫</p></th>
+                                <th class="form-group"><p>実在庫</p></th>
+                                <th class="form-group"><p>廃棄数</p></th>
+                                <th class="form-group"><p>補充数量・コメント</p></th>
                             </tr>
                         </thead>
                         <tbody id="records-container">
                             <!-- DBに登録がある場合 -->
                             @foreach($foodRecords as $index=>$foodRecord)
-                            <tr id="food-record-{{ $index }}" class="food-record" data-id="{{ $index }}">
+                            <tr id="food-record-{{ $index }}" class="food-record handle" data-id="{{ $index }}">
+                                <td><img src="{{ asset('img/arrows-expand.svg') }}" alt="並び替えアイコン" class="border mt-2 p-2 "></td>  
                                 <td class="form-group">
                                     <select name="color-{{ $index }}" class="label-color-select">
                                         <option class="color-label" value="" {{ (old('color-' . $index) === "" || $foodRecord->color === "") ? "selected" : "" }}></option>
@@ -118,7 +108,7 @@
                                     <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}">削除</button>
                                 </td>
                                 <td><input type="hidden" name="order-{{ $index }}" value="{{ $index }}" id="order-{{ $index }}" class="order"></td>
-                                <td class="handle">ここで移動</td>                                
+                                <td><input type="hidden" name="dlt-frag-{{ $index }}" value="0" id="dlt-frag-{{ $index }}" class="dlt-frag"></td>                              
                             </tr>
                             @endforeach
                             <!-- 新規登録をする場合 -->
@@ -141,48 +131,5 @@
 
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-<script>
-    var el = document.getElementById('records-container');
-    var sortable = Sortable.create(el, {
-        // ドラッグできる範囲の指定
-        handle: '.handle',
-        onSort: function(evt) {
-            // 並び順が変わる度に順番を更新
-            var items = evt.from.querySelectorAll('.food-record');
-            for (var i = 0; i < items.length; i++) {
-                // 表示順を更新する
-                var item = items[i];
-                item.querySelector('.order').value = i ;
-
-                // 順番の値も更新する
-                var index = Number(item.getAttribute('data-id')); 
-                var hiddenInput = item.querySelector('input[name="order-' + index +'"]');
-                hiddenInput.value = parseInt(i); // i を新しい順番として設定
-
-                console.log(items);
-                console.log(hiddenInput.value);
-            }
-        },
-        
-        // onSort: function(evt) {
-
-        //     // 表示順を更新する------------------------------------
-        //     var items = evt.from.querySelectorAll('.food-record');
-        //     for (var i = 0; i < items.length; i++) {
-        //         items[i].querySelector('.order').value = i ;
-        //     }
-
-        //     // 順番の値を更新する----------------------------------
-        //     // 並び替えた後の並び
-        //     var order = sortable.toArray();
-
-        //     // 最初の並び（index）の値をデータ属性から取得
-        //     var index = Number(evt.item.getAttribute('data-id')); 
-        //     var hiddenInput = document.querySelector('input[name="order-' + index +'"]');
-
-        //     // 最初の並びの値を、並び替えた後に値に更新する
-        //     hiddenInput.value = parseInt(order);
-        // },
-    });
-</script>
+<script src="{{ asset('js/food-record.js') }}"></script>
 @stop

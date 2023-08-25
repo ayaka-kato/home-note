@@ -156,4 +156,5 @@
 @stop
 
 @section('js')
+<script src="{{ asset('js/recipe.js') }}"></script>
 @stop

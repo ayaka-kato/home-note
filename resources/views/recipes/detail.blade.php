@@ -117,4 +117,6 @@
 @stop
 
 @section('js')
+<script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 @stop

@@ -23,36 +23,26 @@
                 <form method="POST" action="{{ route('storeRecord') }}" id="record-form">
                     @csrf
                     <div class="card-body">
-                        <button type="button" id="sort-button">並び替える</button>
-                        <button type="button" id="exe-btn">反映する</button>
+                        <!-- <button type="button" id="sort-button">並び替える</button> -->
+                        <button type="button" id="exe-btn">補充数量に反映する</button>
                         <button type="button" id="clear-btn">初期化する</button>
                         <table class="table table-responsive table-hover text-nowrap record-table">
                             <thead>
                                 <tr>
-                                    <th class="form-group col-1">
-                                        <p>色</p>
-                                    </th>
-                                    <th class="form-group col-2">
-                                        <p>食材</p>
-                                    </th>
-                                    <th class="form-group col-2">
-                                        <p>理想在庫</p>
-                                    </th>
-                                    <th class="form-group col-2">
-                                        <p>実在庫</p>
-                                    </th>
-                                    <th class="form-group col-2">
-                                        <p>廃棄数</p>
-                                    </th>
-                                    <th class="form-group col-2">
-                                        <p>補充数量・コメント</p>
-                                    </th>
+                                    <th><p>並び替え</p></th>
+                                    <th class="form-group col-1"><p>色</p></th>
+                                    <th class="form-group col-2"><p>食材<span class="color-red">必須</span></p></th>
+                                    <th class="form-group col-2"><p>理想在庫<span class="color-red">必須</span></p></th>
+                                    <th class="form-group col-2"><p>実在庫<span class="color-red">必須</span></p></th>
+                                    <th class="form-group col-2"><p>廃棄数</p></th>
+                                    <th class="form-group col-2"><p>補充数量・コメント</p></th>
                                     <th class="col-1"></th>
                                 </tr>
                             </thead>
                             <tbody id="records-container">
                                 @for($i = 0; $i < 5; $i++)
-                                <tr id="food-record-{{ $i }}" class="food-record">
+                                <tr id="food-record-{{ $i }}" class="food-record handle" data-id="{{ $i }}">
+                                    <td><img src="{{ asset('img/arrows-expand.svg') }}" alt="並び替えアイコン" class="border mt-2 p-2 "></td> 
                                     <td class="col-1">
                                         <select name="color-{{ $i }}" class="label-color-select">
                                             <option class="color-label" value=""></option>
@@ -105,8 +95,7 @@
                                     <td class="form-group delete-record col-1">
                                         <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
                                     </td>
-                                    <td><input type="hidden" name="order-{{ $i }}" value="{{ $i }}" id="order-{{ $i }}" class="order"></td>
-                                    <td class="handle">ここで移動</td>                                 
+                                    <td><input type="hidden" name="order-{{ $i }}" value="{{ $i }}" id="order-{{ $i }}" class="order"></td>                              
                                 </tr>
                                 @endfor
                             </tbody>
@@ -126,4 +115,6 @@
 @stop
 
 @section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+<script src="{{ asset('js/food-record.js') }}"></script>
 @stop
