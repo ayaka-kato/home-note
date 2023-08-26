@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>冷蔵庫チェックリスト</h1>
+    <p>（{{ Carbon\Carbon::now()->format('Y-m-d') }}）</p>
 @stop
 
 @section('content')
@@ -25,11 +26,10 @@
                     <div class="card-body">
                         <!-- <button type="button" id="sort-button">並び替える</button> -->
                         <button type="button" id="exe-btn">補充数量に反映する</button>
-                        <button type="button" id="clear-btn">初期化する</button>
                         <table class="table table-responsive table-hover text-nowrap record-table">
                             <thead>
                                 <tr>
-                                    <th><p>並び替え</p></th>
+                                    <th></th>
                                     <th class="form-group col-1"><p>色</p></th>
                                     <th class="form-group col-2"><p>食材<span class="color-red">必須</span></p></th>
                                     <th class="form-group col-2"><p>理想在庫<span class="color-red">必須</span></p></th>
@@ -42,7 +42,7 @@
                             <tbody id="records-container">
                                 @for($i = 0; $i < 5; $i++)
                                 <tr id="food-record-{{ $i }}" class="food-record handle" data-id="{{ $i }}">
-                                    <td><img src="{{ asset('img/arrows-expand.svg') }}" alt="並び替えアイコン" class="border mt-2 p-2 "></td> 
+                                    <td><span class="border p-1 px-2">⇅</span></td> 
                                     <td class="col-1">
                                         <select name="color-{{ $i }}" class="label-color-select">
                                             <option class="color-label" value=""></option>

@@ -1,14 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', '冷蔵庫チェックリスト編集')
+@section('title', '冷蔵庫チェックリスト')
 
 @section('content_header')
-    <h1>冷蔵庫チェックリスト編集</h1>
-    @if ($date)
-    <p>（{{ $date->date }}）</p>
-    @else
+    <h1>冷蔵庫チェックリスト</h1>
     <p>{{ $today }}</p>
-    @endif
 @stop
 
 @section('content')
@@ -25,15 +21,12 @@
             @endif
 
             <div class="card card-primary">
-                @if ($date)
-                <form method="POST" action="{{ route('updateRecord', [ 'date' => $date->id ] ) }}" id="record-form">
-                @else
                 <form method="POST" action="{{ route('storeRecord') }}" id="record-form">
-                @endif
                     @csrf
                     <div class="card-body">
                     <!-- <button type="button" id="sort-button">色で並び替える</button> -->
                     <button type="button" id="exe-btn">補充数量に反映する</button>
+                    <a href="{{ route('createNewRecord') }}" class="btn">クリア</a>
                                         
                     <table class="table table-hover text-nowrap record-table col-12">
                         <thead>
@@ -51,7 +44,7 @@
                             </tr>
                         </thead>
                         <tbody id="records-container">
-                            <!-- DBに登録がある場合 -->
+                            <!-- 前回のデータを引用 -->
                             @foreach($foodRecords as $index=>$foodRecord)
                             <tr id="food-record-{{ $index }}" class="food-record handle" data-id="{{ $index }}">
                                 <td><span class="border p-1 px-2">⇅</span></td> 
@@ -76,15 +69,15 @@
                                 <td class="form-group real-amount">
                                     <div class="form-control d-flex">
                                         <div>
-                                            <input type="radio" id="real-left-{{ $index }}" name="real-amount-{{ $index }}" value="0" {{ (old('real-amount-' . $index) === "0" || $foodRecord->real_amount === 0) ? "checked" : "" }}>
+                                            <input type="radio" id="real-left-{{ $index }}" name="real-amount-{{ $index }}" value="0" {{ (old('real-amount-' . $index) === "0" ? "checked" : "" )}}>
                                             <label class="radio-left" for="real-left-{{ $index }}">ない</label>
                                         </div>
                                         <div>
-                                            <input type="radio" id="real-center-{{ $index }}" name="real-amount-{{ $index }}" value="1" {{ (old('real-amount-' . $index) === "1" || $foodRecord->real_amount === 1) ? "checked" : "" }}>
+                                            <input type="radio" id="real-center-{{ $index }}" name="real-amount-{{ $index }}" value="1" {{ (old('real-amount-' . $index) === "1" ? "checked" : "" )}}>
                                             <label class="radio-center" for="real-center-{{ $index }}">少ない</label>
                                         </div>
                                         <div>
-                                            <input type="radio" id="real-right-{{ $index }}" name="real-amount-{{ $index }}" value="2" {{ (old('real-amount-' . $index) === "2" || $foodRecord->real_amount === 2) ? "checked" : "" }}>
+                                            <input type="radio" id="real-right-{{ $index }}" name="real-amount-{{ $index }}" value="2" {{ (old('real-amount-' . $index) === "2" ? "checked" : "" )}}>
                                             <label class="radio-right" for="real-right-{{ $index }}">多い</label>
                                         </div>
                                     </div>
@@ -92,17 +85,17 @@
                                 <td class="form-group waste-amount">
                                     <div class="form-control d-flex">
                                         <div>
-                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" || $foodRecord->waste_amount === 1) ? "checked" : "" }}>
+                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" ? "checked" : "" ) }}>
                                             <label class="radio-left" for="waste-left-{{ $index }}">少ない</label>
                                         </div>
                                         <div>
-                                            <input type="radio" id="waste-right-{{ $index }}" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" || $foodRecord->waste_amount === 2) ? "checked" : "" }}>
+                                            <input type="radio" id="waste-right-{{ $index }}" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" ? "checked" : "" ) }}>
                                             <label class="radio-right" for="waste-right-{{ $index }}">多い</label>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="form-group restock-amount">
-                                    <input type="text" id="restock-amount-{{ $index }}" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index , $foodRecord->restock_amount) }}">
+                                    <input type="text" id="restock-amount-{{ $index }}" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index ) }}">
                                 </td>
                                 <td class="form-group delete-record">
                                     <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}" onclick="return confirm('これまでの累計データも消去されてしまいますが、本当に削除していいですか？')">削除</button>
@@ -111,7 +104,7 @@
                                 <td><input type="hidden" name="dlt-frag-{{ $index }}" value="0" id="dlt-frag-{{ $index }}" class="dlt-frag"></td>                              
                             </tr>
                             @endforeach
-                            <!-- 新規登録をする場合 -->
+                            <!-- 追加する場合 -->
 
                         </tbody>
                     </table>
@@ -154,29 +147,6 @@ var sortable = Sortable.create(el, {
             hiddenInput.value = parseInt(i); // i を新しい順番として設定
         }
     },
-    
-    // -------------------------------------------------------------------
-    // （二つのコードを一つにまとめたのが↑）
-    // -------------------------------------------------------------------
-    // onSort: function(evt) {
-
-    //     // 表示順を更新する------------------------------------
-    //     var items = evt.from.querySelectorAll('.food-record');
-    //     for (var i = 0; i < items.length; i++) {
-    //         items[i].querySelector('.order').value = i ;
-    //     }
-
-    //     // 順番の値を更新する----------------------------------
-    //     // 並び替えた後の並び
-    //     var order = sortable.toArray();
-
-    //     // 最初の並び（index）の値をデータ属性から取得
-    //     var index = Number(evt.item.getAttribute('data-id')); 
-    //     var hiddenInput = document.querySelector('input[name="order-' + index +'"]');
-
-    //     // 最初の並びの値を、並び替えた後に値に更新する
-    //     hiddenInput.value = parseInt(order);
-    // },
 });
 </script>
 @stop

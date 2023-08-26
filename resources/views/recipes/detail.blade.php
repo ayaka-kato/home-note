@@ -101,9 +101,27 @@
                 <!-- TODO:おすすめレシピ -->
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="recommend-area">
-                            <img src="" alt="おすすめレシピ画像">
-                            <h4></h4>
+                        <div class="recommend-area d-flex">
+                        @foreach($recommendRecipes as $recipe)
+                            <div class="card w-50 mr-1">
+                                <a href="#">
+                                    <div class="card-body"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ画像"></div>
+                                    <div class="card-header"><p>{{ $recipe->name }}</p></div>
+                                </a>
+                            </div>
+                            <div class="card w-50 mr-1">
+                                <a href="#">
+                                    <div class="card-body"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ画像"></div>
+                                    <div class="card-header"><p>{{ $recipe->name }}</p></div>
+                                </a>
+                            </div>
+                            <div class="card w-50 mr-1">
+                                <a href="#">
+                                    <div class="card-body"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ画像"></div>
+                                    <div class="card-header"><p>{{ $recipe->name }}</p></div>
+                                </a>
+                            </div>
+                        @endforeach
                         </div>
                     </div>
                 </div>

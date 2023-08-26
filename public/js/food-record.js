@@ -12,12 +12,6 @@ let closeElement = (el)=> {
         el.style.display='none';
     }
 }
-// 要素を見えなくする関数
-let hiddenElement = (el)=> {
-    if(el.style.display==''){
-        el.style.display='none';
-    }
-}
 
 
 // --------------------------------------------
@@ -35,7 +29,7 @@ const createRecordRow = (index) => {
 
     // 新しい行の内容を設定
     newRow.innerHTML = `
-        <td class="handle"><img src="{{ asset('img/arrows-expand.svg') }}" alt="並び替えアイコン" class="border mt-2 p-2 "></td>
+        <td><span class="border p-1 px-2">⇅</span></td>
         <td class="form-group">
             <select name="color-${recordIndex}" class="label-color-select">
                 <option class="color-label" value="" {{ (old('color-' . ${recordIndex}) === "" ? "selected" : "" }}></option>
@@ -124,7 +118,7 @@ function setupDeleteBtn(deleteBtn) {
         // 削除するレコードのフラグを1(消去)に変え、非表示にする。
         deleteFrag = document.getElementById('dlt-frag-' + id);
         deleteFrag.value = 1;
-        hiddenElement(deleteRow);
+        closeElement(deleteRow);
 
         // recordsContainer.removeChild(deleteRow);
         recordIndex--;

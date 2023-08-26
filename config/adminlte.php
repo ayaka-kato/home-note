@@ -51,7 +51,7 @@ return [
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => '豚の貯金箱マーク',
 
     /*
     |--------------------------------------------------------------------------
@@ -189,7 +189,7 @@ return [
     */
 
     'use_route_url' => false,
-    // 'dashboard_url' => 'home',
+    'dashboard_url' => 'home',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',

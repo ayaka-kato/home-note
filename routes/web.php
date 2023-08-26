@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\FoodRecordController::class, 'showInfo'])->name('home');
 
     // 【レシピ関連】
     // -------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,8 @@ Route::middleware(['auth'])->group(function () {
     // 【食材在庫データ関連】
     // -------------------------------------------------------------------------------------------------------------
     Route::prefix('food-records')->group(function () {
-        Route::get('/create',  [App\Http\Controllers\FoodRecordController::class, 'viewCreate'])->name('createRecord'); //在庫入力へ
+        Route::get('/new-create',  [App\Http\Controllers\FoodRecordController::class, 'viewNewCreate'])->name('createNewRecord'); //在庫入力へ
+        Route::get('/create',  [App\Http\Controllers\FoodRecordController::class, 'viewReferenceCreate'])->name('createRecord'); //在庫入力へ
         Route::post('/store', [App\Http\Controllers\FoodRecordController::class, 'store'])->name('storeRecord'); //在庫の登録
         Route::get('/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList'])->name('restockList'); // 買い物リスト閲覧
 

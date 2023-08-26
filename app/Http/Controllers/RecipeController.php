@@ -66,7 +66,7 @@ class RecipeController extends Controller
     }
 
     /** ------------------------------------------------------
-     * @
+     * 
      * 関連テーブルへの新規登録
      * ------------------------------------------------------*/
     public function relatedTableStore($request, $count, $firstColumn, $secondColumn, $table, $Table, $recipe){
