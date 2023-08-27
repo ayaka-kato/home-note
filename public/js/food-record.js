@@ -67,8 +67,12 @@ const createRecordRow = (index) => {
         <td class="form-group waste-amount">
             <div class="form-control d-flex">
                 <div>
-                    <input type="radio" id="waste-left-${recordIndex}" name="waste-amount-${recordIndex}" value="1" {{ old('waste-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>
-                    <label class="radio-left" for="waste-left-${recordIndex}">少ない</label>
+                    <input type="radio" id="waste-left-${recordIndex}" name="waste-amount-${recordIndex}" value="0" {{ old('waste-amount-' .${recordIndex} ) == "0" ? "checked" : null }}>
+                    <label class="radio-left" for="waste-left-${recordIndex}">ない</label>
+                </div>
+                <div>
+                    <input type="radio" id="waste-center-${recordIndex}" name="waste-amount-${recordIndex}" value="1" {{ old('waste-amount-' .${recordIndex} ) == "1" ? "checked" : null }}>
+                    <label class="radio-center" for="waste-center-${recordIndex}">少ない</label>
                 </div>
                 <div>
                     <input type="radio" id="waste-right-${recordIndex}" name="waste-amount-${recordIndex}" value="2" {{ old('waste-amount-' .${recordIndex} ) == "2" ? "checked" : null }}>
@@ -77,7 +81,7 @@ const createRecordRow = (index) => {
             </div>
         </td>
         <td class="form-group restock-amount">
-            <input type="text" id="restock-amount-${recordIndex}" name="restock-amount-${recordIndex}" class="form-control" placeholder="（例）2本"  {{ value != null ? value="old('restock-amount-${recordIndex}'): value="null" }}">
+            <input type="text" id="restock-amount-${recordIndex}" name="restock-amount-${recordIndex}" class="form-control"  {{ value != null ? value="old('restock-amount-${recordIndex}'): value="null" }}">
         </td>
         <td class="form-group delete-record">
             <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
@@ -202,7 +206,7 @@ let exeBtn = document.getElementById('exe-btn');
 
 exeBtn.addEventListener('click', () => {
     let rows = document.querySelectorAll('.food-record');
-
+    
     rows.forEach(row => {
         let id = row.dataset.id;
         let realAmountRadios = row.querySelectorAll('.real-amount input[type="radio"]');
@@ -216,4 +220,3 @@ exeBtn.addEventListener('click', () => {
         });
     });
 });
-
