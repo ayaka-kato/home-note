@@ -119,7 +119,7 @@ class FoodRecordController extends Controller
 
         // 過去のレコードが無ければ
         }else {
-            return redirect()->route(createNewRecord);
+            return redirect()->route('createNewRecord');
         }
     }
 
@@ -302,18 +302,25 @@ class FoodRecordController extends Controller
      * 
      * 買い物リスト表示
      */
-    public function viewRestockList() {
+    public function viewRestockList() 
+    {
+        $user = Auth::user();
+        $latestDate = $user->dates()->latest('created_at')->first();
 
-        $latestRecord = FoodRecord::latest('created_at')->first();
-        $date = $latestRecord->created_at->format('Y-m-d');
-
-        $foodRecords = FoodRecord::whereDate('created_at', $date)
+        if ($latestDate){
+            $date = $latestDate->created_at->format('Y-m-d');
+            $foodRecords = $latestDate->foodRecords()
             ->where(function($query){
                 $query->whereNotNull('restock_amount');
             })
             ->get();
 
-        return view('food-records.restockList', compact('foodRecords', 'date'));
+            return view('food-records.restockList', compact('foodRecords', 'date'));
+        }else {
+            $date = date('Y-m-d');
+            $foodRecords = collect(); // 空のコレクションを代入
+            return view('food-records.restockList',compact('foodRecords', 'date'));
+        }
     }   
 
 }

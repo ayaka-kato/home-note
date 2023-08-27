@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->hasMany(Recipe::class);
     }
 
-    public function Dates()
+    public function dates()
     {
         return $this->hasMany(Date::class);
     }

@@ -33,8 +33,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @if(!$foodRecords)
-                    <p>補充が必要な食材はありません。</p>
+                    @if($foodRecords->isEmpty())
+                    <p>ストックデータの登録がされていません。</p>
                     @else
                     <table class="table table-hover text-nowrap record-table">
                         <thead>

@@ -14,6 +14,9 @@
             <p class="mb-1 slogan">＼ムダを知って貯金を増やす！！／</p>
             <h5 class="color-pink">捨てがち食材ランキング</h5>
             <div>
+                @if($rankings->isEmpty())
+                    <p>※データが未登録です。</p>
+                @else
                 <table class="table col-12 col-md-8 text-center mb-0">
                     <tr>
                         <td>1位</td>
@@ -27,11 +30,15 @@
                     </tr>
                 </table>
                 <p class="mb-0 sum-period">(集計期間：{{ $start_date }} ～ {{ $end_date }})</p>
+                @endif
             </div>
             <br>
             
             
             <div class="">
+                @if($rankings->isEmpty())
+                <h5 class="color-pink mb-3">おすすめメニュー</h5>
+                @else
                 <h5 class="color-pink mb-3">食材の使い切りにおすすめなメニュー♪</h5>
                 @foreach($useUpRecipes as $recipe)
                 <div class="card recommend-recipe">
@@ -49,6 +56,7 @@
                 @endforeach
 
                 <h5 class="color-pink">ストックを活かして作るおすすめレシピ♪</h5>
+                @endif
                 @foreach($recommendRecipes as $recipe)
                 <div class="card recommend-recipe">
                     <a href="{{ route('getRecipe', [ 'id' => $recipe->id ] ) }}">

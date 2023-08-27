@@ -20,10 +20,10 @@ class Date extends Model
     // 日付とレコードは一対多の関係
     public function user()
     {
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
     // レコードと日付は一対多の関係
-    public function FoodRecords()
+    public function foodRecords()
     {
         return $this->hasMany(FoodRecord::class);
     }

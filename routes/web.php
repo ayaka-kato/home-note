@@ -34,9 +34,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store',  [App\Http\Controllers\RecipeController::class, 'store'])->name('storeRecipe');           //レシピ新規登録
 
         // 作成者だけが操作できる。blade上で@canで制御
-        Route::get('/edit/{id}', [App\Http\Controllers\RecipeController::class, 'editRecipe'])->name('editRecipe');     //レシピ編集へ
-        Route::post('/update/{id}', [App\Http\Controllers\RecipeController::class, 'update'])->name('updateRecipe');    //レシピ編集
-        Route::delete('/delete/{id}', [App\Http\Controllers\RecipeController::class, 'destroy'])->name('deleteRecipe'); //レシピ削除
+        Route::group(['middleware'=> 'can:controlRecipe'], function() {
+            Route::get('/edit/{id}', [App\Http\Controllers\RecipeController::class, 'editRecipe'])->name('editRecipe');     //レシピ編集へ
+            Route::post('/update/{id}', [App\Http\Controllers\RecipeController::class, 'update'])->name('updateRecipe');    //レシピ編集
+            Route::delete('/delete/{id}', [App\Http\Controllers\RecipeController::class, 'destroy'])->name('deleteRecipe'); //レシピ削除
+        });
     });
 
     // 【食材在庫データ関連】
@@ -45,14 +47,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/new-create',  [App\Http\Controllers\FoodRecordController::class, 'viewNewCreate'])->name('createNewRecord'); //在庫入力へ
         Route::get('/create',  [App\Http\Controllers\FoodRecordController::class, 'viewReferenceCreate'])->name('createRecord'); //在庫入力へ
         Route::post('/store', [App\Http\Controllers\FoodRecordController::class, 'store'])->name('storeRecord'); //在庫の登録
-        Route::get('/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList'])->name('restockList'); // 買い物リスト閲覧
 
         // 自分の在庫データのみ操作できる。
-        // Route::group(['middleware'=> ['can:controlFoodRecord, foodRecord']], function() {
+        // Route::group(['middleware'=> 'can:controlFoodRecord, date'], function() {
             Route::get('/index', [App\Http\Controllers\DateController::class, 'index'])->name('indexRecords'); //在庫レコード一覧へ
             Route::get('/edit/{id}',  [App\Http\Controllers\FoodRecordController::class, 'viewEdit'])->name('editRecord'); //在庫編集へ
             Route::get('/detail/{id}',  [App\Http\Controllers\FoodRecordController::class, 'getRecord'])->name('getRecord'); //在庫詳細へ
             Route::post('/update/{date}', [App\Http\Controllers\FoodRecordController::class, 'update'])->name('updateRecord'); //在庫の更新
+            Route::get('/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList'])->name('restockList'); // 買い物リスト閲覧
             // Route::delete('/delete/{id}', [App\Http\Controllers\FoodRecordController::class, 'destroy'])->name('deleteRecord');
         // });
     });

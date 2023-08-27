@@ -28,15 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // 管理者ユーザーのゲート
-        Gate::define('isAdministrator',function($user){
-            return $user->role === 1;
-        });
+        // // 管理者ユーザーのゲート
+        // Gate::define('isAdministrator',function($user){
+        //     return $user->role === 1;
+        // });
 
-        // 一般ユーザーのゲート
-        Gate::define('isUser', function($user){
-            return $user->role === 1 || $user->role === 2;
-        });
+        // // 一般ユーザーのゲート
+        // Gate::define('isUser', function($user){
+        //     return $user->role === 1 || $user->role === 2;
+        // });
 
 
         // blade上でゲートを制御
@@ -46,8 +46,9 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id === $recipe->user_id;
         });
 
-        Gate::define('controlFoodRecord', function (User $user, FoodRecord $foodRecord) {
-            return $user->id === $foodRecord->user_id;
+        // 食材ストックの編集・閲覧のゲート
+        Gate::define('controlFoodRecord', function (User $user, Date $date) {
+            return $user->id === $date->user_id;
         });
         
     }
