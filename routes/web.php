@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/recipes/index', [App\Http\Controllers\RecipeController::class, 'searchRecipes'])->name('indexRecipes');    //レシピ一覧へ
+Route::get('/recipes/detail/{id}', [App\Http\Controllers\RecipeController::class, 'getRecipe'])->name('getRecipe');     //レシピ詳細へ
+Route::get('/food-records/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList'])->name('restockList'); // 買い物リスト閲覧
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [App\Http\Controllers\HomeController::class, 'showInfo'])->name('home');
@@ -28,9 +32,8 @@ Route::middleware(['auth'])->group(function () {
     // -------------------------------------------------------------------------------------------------------------
     Route::prefix('recipes')->group(function () {
     
-        Route::get('/index', [App\Http\Controllers\RecipeController::class, 'searchRecipes'])->name('indexRecipes');    //レシピ一覧へ
+
         Route::get('/create',  [App\Http\Controllers\RecipeController::class, 'viewCreate'])->name('createRecipe');     //レシピ登録へ
-        Route::get('/detail/{id}', [App\Http\Controllers\RecipeController::class, 'getRecipe'])->name('getRecipe');     //レシピ詳細へ
         Route::post('/store',  [App\Http\Controllers\RecipeController::class, 'store'])->name('storeRecipe');           //レシピ新規登録
 
         // 作成者だけが操作できる。blade上で@canで制御
@@ -54,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}',  [App\Http\Controllers\FoodRecordController::class, 'viewEdit'])->name('editRecord'); //在庫編集へ
             Route::get('/detail/{id}',  [App\Http\Controllers\FoodRecordController::class, 'getRecord'])->name('getRecord'); //在庫詳細へ
             Route::post('/update/{date}', [App\Http\Controllers\FoodRecordController::class, 'update'])->name('updateRecord'); //在庫の更新
-            Route::get('/restockList',  [App\Http\Controllers\FoodRecordController::class, 'viewRestockList'])->name('restockList'); // 買い物リスト閲覧
+
             // Route::delete('/delete/{id}', [App\Http\Controllers\FoodRecordController::class, 'destroy'])->name('deleteRecord');
         // });
     });
