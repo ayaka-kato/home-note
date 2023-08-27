@@ -21,8 +21,8 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', [App\Http\Controllers\FoodRecordController::class, 'showInfo'])->name('home');
-    // Route::get('/home', [App\Http\Controllers\FoodRecordController::class, 'showInfo'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'showInfo'])->name('home');
+    // Route::get('/home', [App\Http\Controllers\FoodRecordController::class, 'showInfo']);
 
     // 【レシピ関連】
     // -------------------------------------------------------------------------------------------------------------

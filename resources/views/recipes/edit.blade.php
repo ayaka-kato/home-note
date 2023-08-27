@@ -66,7 +66,13 @@
                                 <!-- 画像 -->
                                 <div class="form-group">
                                     <div class="recipe-image my-3">                                        
-                                        <div id="previewImage"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真"></div>
+                                        <div id="previewImage">
+                                            @if( $recipe->image)
+                                            <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
+                                            @else
+                                            <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
+                                            @endif
+                                        </div>
                                         <p class="my-1">画像：</p>
                                         <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">                                
                                     </div>

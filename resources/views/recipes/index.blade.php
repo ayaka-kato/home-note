@@ -49,9 +49,11 @@
                             <tr>
                                 <td class="responsive-img col-4 col-sm-4">
                                     <div class="upload-image">
-                                        @if ( $recipe->image != null )
-                                        <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
-                                        @endif
+                                    @if( $recipe->image)
+                                    <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
+                                    @else
+                                    <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
+                                    @endif
                                     </div>
                                 </td>
                                 <td class="responsive-td col-6 col-sm-6">

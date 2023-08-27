@@ -1,29 +1,29 @@
 @extends('adminlte::page')
 
-@section('title', '食材在庫データ一覧')
+@section('title', '冷蔵庫ストックデータ一覧')
 
 @section('content_header')
-    <h1>食材在庫データ一覧</h1>
+    <h1>冷蔵庫ストックデータ一覧</h1>
+    <div class="card-header">
+        <div class="card-tools">
+            @php $currentDate = Carbon\Carbon::now()->format('Y-m-d'); @endphp
+            <div class="input-group input-group-sm">
+                <div class="input-group-append">
+                    @if ($dates->contains('date', $currentDate))
+                    @else
+                        <a href="{{ route('createRecord') }}" class="btn btn-primary mt-2">ストックデータ登録</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">食材在庫データ一覧</h3>
-                    <div class="card-tools">
-                        @php $currentDate = Carbon\Carbon::now()->format('Y-m-d'); @endphp
-                        <div class="input-group input-group-sm">
-                            <div class="input-group-append">
-                                @if ($dates->contains('date', $currentDate))
-                                @else
-                                    <a href="{{ route('createRecord') }}" class="btn btn-default">食材在庫データ登録</a>
-                                @endif
-                                </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>

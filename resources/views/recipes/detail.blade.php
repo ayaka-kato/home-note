@@ -31,7 +31,11 @@
 
                     <!-- 画像 -->
                     <div class="recipe-image my-3">
+                        @if( $recipe->image)
                         <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
+                        @else
+                        <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
+                        @endif
                     </div>
 
                     <!-- リンク・共有 -->
@@ -94,36 +98,6 @@
                         @endforeach
                         </tbody>
                     </table>   
-                </div>
-            </div>
-
-            <div class="card-body">
-                <!-- TODO:おすすめレシピ -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="recommend-area d-flex">
-                        @foreach($recommendRecipes as $recipe)
-                            <div class="card w-50 mr-1">
-                                <a href="#">
-                                    <div class="card-body"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ画像"></div>
-                                    <div class="card-header"><p>{{ $recipe->name }}</p></div>
-                                </a>
-                            </div>
-                            <div class="card w-50 mr-1">
-                                <a href="#">
-                                    <div class="card-body"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ画像"></div>
-                                    <div class="card-header"><p>{{ $recipe->name }}</p></div>
-                                </a>
-                            </div>
-                            <div class="card w-50 mr-1">
-                                <a href="#">
-                                    <div class="card-body"><img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ画像"></div>
-                                    <div class="card-header"><p>{{ $recipe->name }}</p></div>
-                                </a>
-                            </div>
-                        @endforeach
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

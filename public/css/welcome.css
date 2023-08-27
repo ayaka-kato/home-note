@@ -38,6 +38,7 @@
     padding:0;
     border-radius:40px;
     box-shadow: 6px 6px 12px gray;
+    font-size:1rem;
 }
 
 /* 画面左 */
@@ -67,7 +68,7 @@
 }
 
 .welcome-col .deco {
-    font-size: 32px;
+    font-size: 2rem;
     border-radius: 50%;
     background-color: rgba(230, 104, 129, 0.8);
     border:2px solid white;
@@ -211,7 +212,7 @@
 /* --------------------------------------
 レスポンシブ・スマホ画面
 -------------------------------------- */
-@media screen and (max-width: 570px) {
+@media screen and (max-width: 700px) {
     .flexbox {
         display: block;
     }
@@ -249,10 +250,6 @@
         border-bottom-left-radius: 0;
     }
 
-    .welcome-col .deco {
-        font-size: 24px;
-    }
-
     /* 画面下 */
     .welcome-col .card {
         border-top-right-radius: 0;
@@ -263,7 +260,6 @@
     .welcome-col .card .card-body {
         height:100%;
         width:100%;
-        font-size:12px;
         margin-top:22px;
     }
 
@@ -272,39 +268,13 @@
         margin-top:10px;
     }
 
-    .welcome-col .card table {
-        font-size: 12px;
-    }
-
-    .welcome-col .card input{
-        font-size: 12px;
-    }
-
-    .welcome-col .card .btn {
-        font-size: 12px;
+    .welcome-col .card table, input, .btn {
+        font-size: 0.8rem;
     }
 
     .pig-run-area {
         position:relative;
-            bottom:48%;
+            bottom:47%;
         padding:0 15px;
-    }
-}
-
-@media screen and (min-width: 571px) and (max-width: 780px) {
-    .welcome-area .welcome-row .welcome-col {
-        height:360px;
-    }
-
-    .welcome-col .deco {
-        font-size: 20px;
-    }
-
-    .welcome-col .card .card-body table {
-        font-size:10px;
-    }
-
-    .welcome-col .card input{
-        font-size: 10px;
     }
 }

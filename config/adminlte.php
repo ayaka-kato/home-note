@@ -189,7 +189,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -251,17 +251,17 @@ return [
             'text'    => 'レシピ登録',
             'url'     => 'recipes/create',
         ],
-        ['header' => '在庫管理'],
+        ['header' => '冷蔵庫ストック管理'],
         [
-            'text'    => '在庫データ一覧',
+            'text'    => 'ストックデータ一覧',
             'url'     => 'food-records/index',
         ],
         [
-            'text'    => '在庫データ登録',
+            'text'    => 'ストックデータ登録',
             'url'     => 'food-records/create',
         ],
         [
-            'text'    => '買い物リスト',
+            'text'    => 'お買い物リスト',
             'url'     => 'food-records/restockList',
         ],
         [

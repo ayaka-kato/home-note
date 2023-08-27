@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', '冷蔵庫チェックリスト')
+@section('title', '冷蔵庫チェックリスト(前回データ引用)')
 
 @section('content_header')
-    <h1>冷蔵庫チェックリスト</h1>
-    <p>{{ $today }}</p>
+    <h1>冷蔵庫チェックリスト<span class="small-font">（前回データ引用）</span></h1>
+    <p>登録日：{{ $today }}</p>
 @stop
 
 @section('content')
@@ -26,40 +26,27 @@
                     <div class="card-body">
                     <!-- <button type="button" id="sort-button">色で並び替える</button> -->
                     <button type="button" id="exe-btn">補充数量に反映する</button>
-                    <a href="{{ route('createNewRecord') }}" class="btn">クリア</a>
+                    <a href="{{ route('createNewRecord') }}" class="btn btn-default">クリア</a>
                                         
-                    <table class="table table-hover text-nowrap record-table col-12">
+                    <table class="table table-hover table-responsive text-nowrap record-table col-12">
                         <thead>
                             @if(session('message'))
                                 <p>{{ session('message') }}</p>
                             @endif
                             <tr>
-                                <th></th>
+                                <th class="form-group col-2"><p>食材</p></th>
+                                <th class="form-group col-2"><p>理想在庫</p></th>
+                                <th class="form-group col-1"><p>実在庫</p></th>
+                                <th class="form-group col-1"><p>廃棄数</p></th>
+                                <th class="form-group col-2"><p>補充数量・コメント</p></th>
                                 <th><p>色</p></th>
-                                <th class="form-group"><p>食材</p></th>
-                                <th class="form-group"><p>理想在庫</p></th>
-                                <th class="form-group"><p>実在庫</p></th>
-                                <th class="form-group"><p>廃棄数</p></th>
-                                <th class="form-group"><p>補充数量・コメント</p></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="records-container">
                             <!-- 前回のデータを引用 -->
                             @foreach($foodRecords as $index=>$foodRecord)
                             <tr id="food-record-{{ $index }}" class="food-record handle" data-id="{{ $index }}">
-                                <td><span class="border p-1 px-2">⇅</span></td> 
-                                <td class="form-group">
-                                    <select name="color-{{ $index }}" class="label-color-select">
-                                        <option class="color-label" value="" {{ (old('color-' . $index) === "" || $foodRecord->color === "") ? "selected" : "" }}></option>
-                                        <option class="color-label pink" value="pink" {{ (old('color-' . $index) === "pink" || $foodRecord->color === "pink") ? "selected" : "" }}>ピンク</option>
-                                        <option class="color-label purple" value="purple" {{ (old('color-' . $index) === "purple" || $foodRecord->color === "purple") ? "selected" : "" }}>紫</option>
-                                        <option class="color-label blue" value="blue" {{ (old('color-' . $index) === "blue" || $foodRecord->color === "blue") ? "selected" : "" }}>青</option>
-                                        <option class="color-label aqua" value="aqua" {{ (old('color-' . $index) === "aqua" || $foodRecord->color === "aqua") ? "selected" : "" }}>水色</option>
-                                        <option class="color-label green" value="green" {{ (old('color-' . $index) === "green" || $foodRecord->color === "green") ? "selected" : "" }}>緑</option>
-                                        <option class="color-label yellow" value="yellow" {{ (old('color-' . $index) === "yellow" || $foodRecord->color === "yellow") ? "selected" : "" }}>黄色</option>
-                                        <option class="color-label orange" value="orange" {{ (old('color-' . $index) === "orange" || $foodRecord->color === "orange") ? "selected" : "" }}>オレンジ</option>
-                                    </select>
-                                </td>                             
                                 <td class="form-group ingredient-name">
                                     <input type="text" name="ingredient-{{ $index }}" class="form-control" value="{{ old('ingredient-' . $index , $foodRecord->ingredient ) }}">
                                 </td>
@@ -97,8 +84,21 @@
                                 <td class="form-group restock-amount">
                                     <input type="text" id="restock-amount-{{ $index }}" name="restock-amount-{{ $index }}" class="form-control" value="{{ old('restock-amount-' . $index ) }}">
                                 </td>
+                                <td class="form-group">
+                                    <select name="color-{{ $index }}" class="label-color-select">
+                                        <option class="color-label" value="" {{ (old('color-' . $index) === "" || $foodRecord->color === "") ? "selected" : "" }}></option>
+                                        <option class="color-label pink" value="pink" {{ (old('color-' . $index) === "pink" || $foodRecord->color === "pink") ? "selected" : "" }}>ピンク</option>
+                                        <option class="color-label purple" value="purple" {{ (old('color-' . $index) === "purple" || $foodRecord->color === "purple") ? "selected" : "" }}>紫</option>
+                                        <option class="color-label blue" value="blue" {{ (old('color-' . $index) === "blue" || $foodRecord->color === "blue") ? "selected" : "" }}>青</option>
+                                        <option class="color-label aqua" value="aqua" {{ (old('color-' . $index) === "aqua" || $foodRecord->color === "aqua") ? "selected" : "" }}>水色</option>
+                                        <option class="color-label green" value="green" {{ (old('color-' . $index) === "green" || $foodRecord->color === "green") ? "selected" : "" }}>緑</option>
+                                        <option class="color-label yellow" value="yellow" {{ (old('color-' . $index) === "yellow" || $foodRecord->color === "yellow") ? "selected" : "" }}>黄色</option>
+                                        <option class="color-label orange" value="orange" {{ (old('color-' . $index) === "orange" || $foodRecord->color === "orange") ? "selected" : "" }}>オレンジ</option>
+                                    </select>
+                                </td>   
                                 <td class="form-group delete-record">
                                     <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}" onclick="return confirm('これまでの累計データも消去されてしまいますが、本当に削除していいですか？')">削除</button>
+                                    <span class="border p-1 px-2">⇅</span>
                                 </td>
                                 <td><input type="hidden" name="order-{{ $index }}" value="{{ $index }}" id="order-{{ $index }}" class="order"></td>
                                 <td><input type="hidden" name="dlt-frag-{{ $index }}" value="0" id="dlt-frag-{{ $index }}" class="dlt-frag"></td>                              

@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1>冷蔵庫チェックリスト</h1>
-    <p>（{{ Carbon\Carbon::now()->format('Y-m-d') }}）</p>
+    <p>登録日：{{ Carbon\Carbon::now()->format('Y-m-d') }}</p>
 @stop
 
 @section('content')
