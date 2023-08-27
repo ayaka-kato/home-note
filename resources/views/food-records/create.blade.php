@@ -29,37 +29,23 @@
                         <table class="table table-responsive table-hover text-nowrap record-table">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th class="form-group col-1"><p>色</p></th>
                                     <th class="form-group col-2"><p>食材<span class="color-red">必須</span></p></th>
                                     <th class="form-group col-2"><p>理想在庫<span class="color-red">必須</span></p></th>
                                     <th class="form-group col-2"><p>実在庫<span class="color-red">必須</span></p></th>
                                     <th class="form-group col-2"><p>廃棄数</p></th>
                                     <th class="form-group col-2"><p>補充数量・コメント</p></th>
+                                    <th class="form-group col-1"><p>色</p></th>
                                     <th class="col-1"></th>
                                 </tr>
                             </thead>
                             <tbody id="records-container">
                                 @for($i = 0; $i < 5; $i++)
-                                <tr id="food-record-{{ $i }}" class="food-record handle" data-id="{{ $i }}">
-                                    <td><span class="border p-1 px-2">⇅</span></td> 
-                                    <td class="col-1">
-                                        <select name="color-{{ $i }}" class="label-color-select">
-                                            <option class="color-label" value=""></option>
-                                            <option class="color-label pink" value="pink" {{ old('color') == "pink" ? "selected" : null }}>ピンク</option>
-                                            <option class="color-label purple" value="purple" {{ old('color') == "purple" ? "selected" : null }}>紫</option>
-                                            <option class="color-label blue" value="blue" {{ old('color') == "blue" ? "selected" : null }}>青</option>
-                                            <option class="color-label aqua" value="aqua" {{ old('color') == "aqua" ? "selected" : null }}>水色</option>
-                                            <option class="color-label green" value="green" {{ old('color') == "green" ? "selected" : null }}>緑</option>
-                                            <option class="color-label yellow" value="yellow" {{ old('color') == "yellow" ? "selected" : null }}>黄色</option>
-                                            <option class="color-label orange" value="orange" {{ old('color') == "orange" ? "selected" : null }}>オレンジ</option>
-                                        </select>
-                                    </td>                               
+                                <tr id="food-record-{{ $i }}" class="food-record handle" data-id="{{ $i }}">                             
                                     <td class="form-group ingredient-name col-2">
                                         <input type="text" name="ingredient-{{ $i }}" class="form-control" placeholder="（例）人参" value="{{ old('ingredient') }}">
                                     </td>
                                     <td class="form-group ideal-amount col-2">
-                                        <input type="text" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount') }}">
+                                        <input type="text" id="ideal-amount-{{ $i }}" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount') }}">
                                     </td>
                                     <td class="form-group real-amount col-2">
                                         <div class="form-control d-flex">
@@ -80,8 +66,12 @@
                                     <td class="form-group waste-amount col-2">
                                         <div class="form-control d-flex">
                                             <div>
-                                                <input type="radio" id="waste-left-{{ $i }}"name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>
-                                                <label class="radio-left" for="waste-left-{{ $i }}">少ない</label>
+                                                <input type="radio" id="waste-left-{{ $i }}"name="waste-amount-{{ $i }}" value="0" {{ old('waste-amount-' .$i ) == "0" ? "checked" : null }}>
+                                                <label class="radio-left" for="waste-left-{{ $i }}">ない</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" id="waste-center-{{ $i }}"name="waste-amount-{{ $i }}" value="1" {{ old('waste-amount-' .$i ) == "1" ? "checked" : null }}>
+                                                <label class="radio-center" for="waste-center-{{ $i }}">少ない</label>
                                             </div>
                                             <div>
                                                 <input type="radio" id="waste-right-{{ $i }}"name="waste-amount-{{ $i }}" value="2" {{ old('waste-amount-' .$i ) == "2" ? "checked" : null }}>
@@ -90,11 +80,24 @@
                                         </div>
                                     </td>
                                     <td class="form-group restock-amount col-2">
-                                        <input type="text" name="restock-amount-{{ $i }}" class="form-control" value="{{ old('restock-amount-' . $i ) }}">
+                                        <input type="text" id="restock-amount-{{ $i }}" name="restock-amount-{{ $i }}" class="form-control" value="{{ old('restock-amount-' . $i ) }}">
                                     </td>
+                                    <td class="col-1">
+                                        <select name="color-{{ $i }}" class="label-color-select">
+                                            <option class="color-label" value=""></option>
+                                            <option class="color-label pink" value="pink" {{ old('color') == "pink" ? "selected" : null }}>ピンク</option>
+                                            <option class="color-label purple" value="purple" {{ old('color') == "purple" ? "selected" : null }}>紫</option>
+                                            <option class="color-label blue" value="blue" {{ old('color') == "blue" ? "selected" : null }}>青</option>
+                                            <option class="color-label aqua" value="aqua" {{ old('color') == "aqua" ? "selected" : null }}>水色</option>
+                                            <option class="color-label green" value="green" {{ old('color') == "green" ? "selected" : null }}>緑</option>
+                                            <option class="color-label yellow" value="yellow" {{ old('color') == "yellow" ? "selected" : null }}>黄色</option>
+                                            <option class="color-label orange" value="orange" {{ old('color') == "orange" ? "selected" : null }}>オレンジ</option>
+                                        </select>
+                                    </td>  
                                     <td class="form-group delete-record col-1">
                                         <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
                                     </td>
+                                    <td><span class="border p-1 px-2">⇅</span></td> 
                                     <td><input type="hidden" name="order-{{ $i }}" value="{{ $i }}" id="order-{{ $i }}" class="order"></td>
                                     <td><input type="hidden" name="dlt-frag-{{ $i }}" value="0" id="dlt-frag-{{ $i }}" class="dlt-frag"></td>                              
                                 </tr>

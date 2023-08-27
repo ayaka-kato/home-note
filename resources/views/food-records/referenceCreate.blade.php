@@ -72,8 +72,12 @@
                                 <td class="form-group waste-amount">
                                     <div class="form-control d-flex">
                                         <div>
-                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" ? "checked" : "" ) }}>
-                                            <label class="radio-left" for="waste-left-{{ $index }}">少ない</label>
+                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="0" {{ (old('waste-amount-' . $index) === "0" ? "checked" : "" ) }}>
+                                            <label class="radio-left" for="waste-left-{{ $index }}">ない</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="waste-center-{{ $index }}" name="waste-amount-{{ $index }}" value="1" {{ (old('waste-amount-' . $index) === "1" ? "checked" : "" ) }}>
+                                            <label class="radio-center" for="waste-center-{{ $index }}">少ない</label>
                                         </div>
                                         <div>
                                             <input type="radio" id="waste-right-{{ $index }}" name="waste-amount-{{ $index }}" value="2" {{ (old('waste-amount-' . $index) === "2" ? "checked" : "" ) }}>
