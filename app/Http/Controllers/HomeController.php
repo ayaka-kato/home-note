@@ -37,14 +37,15 @@ class HomeController extends Controller
         $start_date = now()->startOfMonth()->format('Y-m-d');  // 今月の始まりの日付
         $end_date = now()->endOfMonth()->format('Y-m-d');
 
-        // 期間中に一番廃棄数が多かった食材を取得
-        $rankings = $user->dates()->with(['foodRecords' => function($query) use ($start_date, $end_date){
-            $query->whereBetween('date', [$start_date, $end_date])
-                ->groupBy('ingredient')
-                ->select('ingredient', DB::raw('SUM(waste_amount) as total_waste'))
-                ->orderByDesc('total_waste')
-                ->limit(3);
-        }])->get();
+
+        $rankings = Date::join('food_records','dates.id','food_records.date_id')
+            ->where('dates.user_id', Auth::id()) // ユーザーの特定・日付データが取得できる
+            ->whereBetween('dates.date',  [$start_date, $end_date]) //日付の特定
+            ->groupBy('ingredient') //
+            ->select('ingredient', DB::raw('SUM(waste_amount) as total_waste'))
+            ->orderByDesc('total_waste')
+            ->limit(3)
+            ->get();
 
         // ロスが一番多い食材を含むレシピを表示
         // -------------------------------------------
