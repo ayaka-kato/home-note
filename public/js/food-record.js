@@ -29,19 +29,6 @@ const createRecordRow = (index) => {
 
     // 新しい行の内容を設定
     newRow.innerHTML = `
-        <td><span class="border p-1 px-2">⇅</span></td>
-        <td class="form-group">
-            <select name="color-${recordIndex}" class="label-color-select">
-                <option class="color-label" value="" {{ (old('color-' . ${recordIndex}) === "" ? "selected" : "" }}></option>
-                <option class="color-label pink" value="pink" {{ (old('color-' . ${recordIndex}) === "pink" ? "selected" : "" }}>ピンク</option>
-                <option class="color-label purple" value="purple" {{ (old('color-' . ${recordIndex}) === "purple" ? "selected" : "" }}>紫</option>
-                <option class="color-label blue" value="blue" {{ (old('color-' . ${recordIndex}) === "blue" ? "selected" : "" }}>青</option>
-                <option class="color-label aqua" value="aqua" {{ (old('color-' . ${recordIndex}) === "aqua" ? "selected" : "" }}>水色</option>
-                <option class="color-label green" value="green" {{ (old('color-' . ${recordIndex}) === "green" ? "selected" : "" }}>緑</option>
-                <option class="color-label yellow" value="yellow" {{ (old('color-' . ${recordIndex}) === "yellow" ? "selected" : "" }}>黄色</option>
-                <option class="color-label orange" value="orange" {{ (old('color-' . ${recordIndex}) === "orange" ? "selected" : "" }}>オレンジ</option>
-            </select>
-        </td> 
         <td class="form-group ingredient-name">
             <input type="text" name="ingredient-${recordIndex}" class="form-control" placeholder="（例）人参" value="">
         </td>
@@ -83,9 +70,22 @@ const createRecordRow = (index) => {
         <td class="form-group restock-amount">
             <input type="text" id="restock-amount-${recordIndex}" name="restock-amount-${recordIndex}" class="form-control"  {{ value != null ? value="old('restock-amount-${recordIndex}'): value="null" }}">
         </td>
+        <td class="form-group">
+            <select name="color-${recordIndex}" class="label-color-select">
+                <option class="color-label" value="" {{ (old('color-' . ${recordIndex}) === "" ? "selected" : "" }}></option>
+                <option class="color-label pink" value="pink" {{ (old('color-' . ${recordIndex}) === "pink" ? "selected" : "" }}>ピンク</option>
+                <option class="color-label purple" value="purple" {{ (old('color-' . ${recordIndex}) === "purple" ? "selected" : "" }}>紫</option>
+                <option class="color-label blue" value="blue" {{ (old('color-' . ${recordIndex}) === "blue" ? "selected" : "" }}>青</option>
+                <option class="color-label aqua" value="aqua" {{ (old('color-' . ${recordIndex}) === "aqua" ? "selected" : "" }}>水色</option>
+                <option class="color-label green" value="green" {{ (old('color-' . ${recordIndex}) === "green" ? "selected" : "" }}>緑</option>
+                <option class="color-label yellow" value="yellow" {{ (old('color-' . ${recordIndex}) === "yellow" ? "selected" : "" }}>黄色</option>
+                <option class="color-label orange" value="orange" {{ (old('color-' . ${recordIndex}) === "orange" ? "selected" : "" }}>オレンジ</option>
+            </select>
+        </td> 
         <td class="form-group delete-record">
             <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
         </td>
+        <td><span class="border p-1 px-2">⇅</span></td>
         <td><input type="hidden" name="order-${ recordIndex }" value="${ recordIndex }" id="order-${ recordIndex }" class="order"></td>  
         <td><input type="hidden" name="dlt-frag-${ recordIndex }}" value="0" id="dlt-frag-${ recordIndex }}" class="dlt-frag"></td>`;
 

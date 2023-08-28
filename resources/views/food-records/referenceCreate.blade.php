@@ -101,9 +101,9 @@
                                     </select>
                                 </td>   
                                 <td class="form-group delete-record">
-                                    <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $index }}" data-id="{{ $index }}" onclick="return confirm('これまでの累計データも消去されてしまいますが、本当に削除していいですか？')">削除</button>
-                                    <span class="border p-1 px-2">⇅</span>
+                                    <button type="button" class="btn btn-danger delete-Btn" id="deleteBtn-{{ $index }}" data-id="{{ $index }}" onclick="return confirm('「捨てがち食材ランキング」のカウントが消去されますが、本当に削除していいですか？')">削除</button>
                                 </td>
+                                <td class="change-row-icon"><span class="border p-1 px-2">⇅</span></td>
                                 <td><input type="hidden" name="order-{{ $index }}" value="{{ $index }}" id="order-{{ $index }}" class="order"></td>
                                 <td><input type="hidden" name="dlt-frag-{{ $index }}" value="0" id="dlt-frag-{{ $index }}" class="dlt-frag"></td>                              
                             </tr>

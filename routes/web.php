@@ -34,11 +34,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store',  [App\Http\Controllers\RecipeController::class, 'store'])->name('storeRecipe');           //レシピ新規登録
 
         // 作成者だけが操作できる。blade上で@canで制御
-        Route::group(['middleware'=> 'can:controlRecipe'], function() {
+        // Route::group(['middleware'=> 'can:controlRecipe'], function() {
             Route::get('/edit/{id}', [App\Http\Controllers\RecipeController::class, 'editRecipe'])->name('editRecipe');     //レシピ編集へ
             Route::post('/update/{id}', [App\Http\Controllers\RecipeController::class, 'update'])->name('updateRecipe');    //レシピ編集
             Route::delete('/delete/{id}', [App\Http\Controllers\RecipeController::class, 'destroy'])->name('deleteRecipe'); //レシピ削除
-        });
+        // });
     });
 
     // 【食材在庫データ関連】

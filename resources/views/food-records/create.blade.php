@@ -95,9 +95,9 @@
                                         </select>
                                     </td>  
                                     <td class="form-group delete-record col-1">
-                                        <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
+                                        <button type="button" class="btn btn-danger delete-Btn" id="deleteBtn-{{ $i }}" data-id="{{ $i }}">削除</button>
                                     </td>
-                                    <td><span class="border p-1 px-2">⇅</span></td> 
+                                    <td class="change-row-icon"><span class="border p-1 px-2">⇅</span></td> 
                                     <td><input type="hidden" name="order-{{ $i }}" value="{{ $i }}" id="order-{{ $i }}" class="order"></td>
                                     <td><input type="hidden" name="dlt-frag-{{ $i }}" value="0" id="dlt-frag-{{ $i }}" class="dlt-frag"></td>                              
                                 </tr>

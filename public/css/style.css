@@ -1,47 +1,125 @@
-/* 検索バー */
-.btn-outline-success {
-    width:90px;
-}
-
-.content .container-fluid .search-window {
-    width:300px;
-}
-
-.content .container-fluid .search-message {
-    margin-bottom:16px;
-}
-
-.content .container-fluid .input-group {
-    margin-bottom:16px;
-}
-#create-recipe form .card-body .form-group label {
-    margin-bottom:6px;
-}
-
-.slogan {
+/* -------------------------------------------
+ホーム画面
+------------------------------------------- */
+#home-view .slogan {
     font-size:0.9rem;
 }
-.sum-period {
+#home-view.sum-period, .small-font {
     font-size:0.8rem;
 }
 
-.small-font {
-    font-size:0.8rem;
+/* imgをレスポンシブに表示 */
+#home-view .recommend-recipe {
+    display:flex;
+}
+#home-view .recommend-recipe .card {
+    width:40%;
+    margin-right: 8px;
+}
+#home-view .recommend-recipe .card-body {
+    margin-right:10px;
+    padding-top: 70%;
+    margin: 10px 5px;
+    overflow:hidden;
+    position:relative;
+}
+#home-view .recommend-recipe img {
+    width:100%;
+    height:100%;
+    position:absolute;
+        top:50%;
+        left:50%;
+    transform:translate(-50%, -50%);
+}
+#home-view .recommend-recipe p {
+    font-size:1rem;
+}
+
+/* ----------------------------------------------------------------------------------
+共通CSS・パーツ類
+---------------------------------------------------------------------------------- */
+/* -------------------------------------------
+画像のプレビュー
+------------------------------------------- */
+.preview-size {
+    width:400px;
+}
+#previewImage {
+    width:200px;
+}
+#previewImage img {
+    width:100%;
+}
+
+.upload-image {
+    width:100%;
+}
+.upload-image img {
+    width:100%;
 }
 
 /* ---------------------------------------
-詳細画面
+水色のボーダーヘッダー
+--------------------------------------  */
+.custom-topnav {
+    background-color: #8be4f0;
+	background-image: linear-gradient(-90deg, #fff 50%, transparent 50%);
+	background-size: 14px 14px;
+}
+
+/* -------------------------------------------
+検索バー
+------------------------------------------- */
+.search-window form {
+    width:50%;
+}
+.search-window form .search-btn {
+    width:30%;
+    height:37px;
+}
+/* .content .container-fluid .search-window {
+    width:30%;
+} */
+.content .container-fluid .search-message {
+    margin-bottom:16px;
+}
+.content .container-fluid .input-group {
+    margin-bottom:16px;
+}
+
+/* -------------------------------------------
+スクロールボタン
+-------------------------------------------- */
+.scroll-btn-area {
+    z-index:999;
+    position:fixed;
+        right:5%;
+        bottom: 30vh;
+    background-color: rgba(224, 224, 222, 0.7);
+    border-radius: 10px;
+    padding:6px 12px;
+}
+.scroll-btn-area button {
+    padding:5px;
+}
+.scroll-btn-area p {
+    font-size: 0.8rem;
+}
+
+/* ---------------------------------------
+印刷ボタン
 --------------------------------------  */
 .print-area {
     position: relative;
+        top:-1px;
     width:30px;
+    padding:1px;
 }
 .print-area img {
     position: absolute;
-    width:100%;
+    width:90%;
     z-index: 0;
 }
-
 .print-area input {
     position: absolute;
     width:100%;
@@ -50,156 +128,12 @@
     z-index: 1;
 }
 
-
-/* ---------------------------------------
---------------------------------------  */
-.custom-topnav {
-    background-color: #8be4f0;
-	background-image: linear-gradient(-90deg, #fff 50%, transparent 50%);
-	background-size: 14px 14px;
-}
-
-
-.addForm:nth-child(even) {
-    background-color:#F4F6F9;
-}
-
-.preview-size {
-    width:400px;
-}
-
-#previewImage {
-    width:200px;
-}
-
-#previewImage img {
-    width:100%;
-}
-
-.food-select-area {
-    max-height: 200px; 
-
-    /* 指定した高さよりも大きくなるとスクロールになる */
-    overflow-y: auto;
-}
-
-.food-label {
-    width:100px;
-}
-
+/* -------------------------------------------
+色の設定
+-------------------------------------------*/
 .color-red {
     color:red;
 }
-
-.upload-image {
-    width:120px;
-}
-
-.upload-image img {
-    width:100%;
-}
-
-.scroll-btn-area {
-    z-index:999;
-    position:fixed;
-        right:100px;
-        bottom: 40vh;
-}
-
-.recipe-name {
-    background: -moz-linear-gradient(to right, #8be4f0 70%,white); 
-    background: -webkit-linear-gradient(to right,  #8be4f0 70%,white); 
-    background:linear-gradient(to right, #8be4f0 70%,white);
-    padding:6px;
-    border-left:double 10px #06a2ba;
-}
-
-/* 付箋のCSS */
-.food-ready-area {
-    margin-top:60px;
-    position: relative;
-    background: #fff0cd;
-    box-shadow: 0px 0px 0px 5px #fff0cd;
-    border: dashed 2px white;
-    padding: 0.2em 0.5em;
-    color: #454545;
-}
-
-/* 付箋のめくれた部分のCSS */
-.food-ready-area:after {
-    position: absolute;
-    content: '';
-    right: -7px;
-    top: -7px;
-    border-width: 0 20px 20px 0;
-    border-style: solid;
-    border-color: #ffdb88 #fff #ffdb88;
-    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.15);
-}
-
-.food-border {
-    width:90%;
-    margin: 0 15px 5px;
-    padding:0;
-    border-bottom:3px dotted white;
-}
-
-.dot-border {
-    border-top:3px dotted rgb(199, 197, 197);
-    padding-top:12px;
-}
-
-.card table td.responsive-btn .btn {
-    padding:4px 10px;
-    font-size: 14px;
-    margin: 4px 2px;
-}
-
-.recipe-image {
-    width:100%;
-}
-.recipe-image img {
-    width:80%;
-    height:auto;
-    border-radius: 10px;
-}
-
-.recipe-image #previewImage {
-    width:100%;
-}
-
-.recipe-image #previewImage img {
-    width:80%;
-}
-
-
-
-
-#myInput {
-  width: 100%; /* Full-width */
-  font-size: 16px; /* Increase font-size */
-  padding: 12px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
-}
-
-#mySelect {
-    width:150px;
-    height: 70px;
-    overflow-y: scroll;
-}
-
-#myUL option {
-  border: 1px solid #ddd; /* Add a border to all links */
-  margin-top: -1px; /* Prevent double borders */
-  background-color: #f6f6f6; /* Grey background color */
-  padding: 12px; /* Add some padding */
-  text-decoration: none; /* Remove default text underline */
-  font-size: 18px; /* Increase the font-size */
-  color: black; /* Add a black text color */
-  display: block; /* Make it into a block element to fill the whole list */
-}
-
 .color-pink {
     color:rgb(230, 104, 129);
 }
@@ -225,47 +159,14 @@
     background-color: rgb(249, 220, 165);
 }
 
-/* 在庫登録画面のラジオボタン */
-#records-container .food-record td div {
-    padding:0px
-}
 
-#records-container .food-record td div input {
-    display:none;
-}
-
-#records-container .food-record td div label{
-    height:100%;
-    width:50px;
-    text-align: center;
-    padding:5px 0;
-    font-weight: normal;
-}
-
-#records-container .food-record td div label.radio-left {
-    border-top-left-radius:4px;
-    border-bottom-left-radius:4px;
-    border-right:solid 0.5px #ddd;
-}
-
-#records-container .food-record td div label.radio-center {
-    padding: 5px 3px;
-    border-right:solid 0.5px #ddd;
-}
-
-#records-container .food-record td div label.radio-right {
-    border-top-right-radius:3px;
-    border-bottom-right-radius:3px;
-}
-
-#records-container .food-record td div input:checked + label {
-    background-color: gray;
-    color:white;
-    }
-
-    /* レスポンシブ対応 */
-    @media screen and (max-width: 768px) {
-    /* 大枠 */
+/* ----------------------------------------------------------------------------------
+レスポンシブ対応
+---------------------------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* -------------------------------------------
+    大枠
+    ------------------------------------------- */
     .content-wrapper {
         min-width: 360px;
     }
@@ -273,156 +174,50 @@
         padding: 5px 8px 0; 
     }
     .content-header .container-fluid h1 {
-        font-size:18px;
+        font-size:1.5rem;
         padding:10px 0;
     }
 
-    /* レシピ一覧画面 */
+    .card-header {
+        padding:4px 16px;
+        align-items: center;
+    }
+    .card-header .card-title {
+        margin:4px;
+        font-size: 1rem;
+    }
+    .card-body {
+        padding:8px;
+    }
+    .card-tools .input-group-append .btn {
+        margin-top:6px;
+        font-size: 10px;
+    }
+    .card table {
+        font-size:14px;
+    }
+
+    /* -------------------------------------------
+    検索バー
+    ------------------------------------------- */
     .content .container-fluid div.search-message {
         font-size:12px;
         margin:0;
     }
-
     .content .container-fluid .input-group {
-        margin-bottom:2px;
+        margin-bottom:10px;
     }
-
-    .content .container-fluid .input-group .search-window {
-        min-width:200px;
-        height: 30px;
-        font-size: 12px;
+    .search-window form {
+        width:65%;
     }
-
-    .content .container-fluid .input-group .search-window .search-btn {
-        font-size: 12px;
-        padding:1px;
-        width:30px;
+    .search-window form .search-btn {
+        width:38%;
     }
-
     #button-addon2 {
-        font-size:12px;
+        font-size:0.9rem;
         padding:3px 6px;
     }
     #button-addon2 i {
         display: none;
     }
-    .card-header {
-        padding:4px 16px;
-        align-items: center;
-    }
-
-    .card-header .card-title {
-        margin:4px;
-        font-size: 14px;
-    }
-    .card-body {
-        padding:8px;
-    }
-
-    .card-tools .input-group-append .btn {
-        margin-top:6px;
-        font-size: 10px;
-    }
-
-    .card table {
-        font-size:14px;
-    }
-    /* .card table th {
-        display:none;
-    } */
-
-    .card table td.responsive-img {
-        width:100%;
-        padding:0;
-        vertical-align:middle;
-    }
-
-    .card table td.responsive-img .upload-image {
-        width:100%;
-    }
-
-    .card table td.responsive-td {
-        display: block;
-        padding:2px;
-        font-size: 8px;
-        margin-right:2px;
-    }
-
-    .card table td.responsive-td button {
-        font-size:12px;
-        padding:2px 0;
-    } 
-    
-    .card table td.responsive-btn {
-        /* display: block; */
-        padding: 6px 0 0;
-    }
-
-    .card table td.responsive-btn .btn {
-        font-size: 6px;
-        padding:3px 4px;
-        border-radius:0;
-    }
-
-    /* レシピ登録画面 */
-    #create-recipe .form-group {
-        margin-bottom:3px;
-    }
-    #create-recipe table, label,b {
-        font-size:1rem;
-    }
-    #create-recipe input {
-        height:26px;
-        font-size: 12px;
-    }
-    #create-recipe .btn {
-        height:22px;
-        font-size: 10px;
-        padding:2px 6px;
-    }
-    #create-recipe span {
-        font-size: 6px;
-    }
-
-    #create-recipe #ingredient-table {
-        flex-direction: column;
-    }
-
-    #create-recipe #ingredient-table #amount-table {
-        display: flex;
-        flex-direction: column;
-        /* align-items: center; */
-    }
-    /* TODO: */
-    #create-recipe #ingredient-table #amount-table th {
-        display: block;
-    }
-    #create-recipe #ingredient-table #amount-table tr {
-        display: flex;
-    }
-    #create-recipe #ingredient-table #amount-table td {
-        padding:2px 4px;
-    }
-
-    #create-recipe .dot-border {
-        margin-top:10px;
-        padding:6px 8px 12px;
-    }
-
-    .food-record .ingredient-name input,.ideal-amount input, .restock-amount input {
-        width: 4rem;
-    }
-
-    @media screen and (min-width: 441px) and (max-width:500px) {
-
-    }
-
-    @media screen and (min-width: 501px) and (max-width:570px) {
-
-    }
-    
-    @media screen and (min-width: 571px) and (max-width:768px) {
-
-    }
 }
-

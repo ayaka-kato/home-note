@@ -9,8 +9,8 @@
 @section('content')
 
 <div class="container-fluid">    
-    <div class="row">
-        <div class="col-10">          
+    <div class="row" id="home-view">
+        <div class="col-12 col-md-10">          
             <p class="mb-1 slogan">＼ムダを知って貯金を増やす！！／</p>
             <h5 class="color-pink">捨てがち食材ランキング</h5>
             <div>
@@ -40,37 +40,41 @@
                 <h5 class="color-pink mb-3">おすすめメニュー</h5>
                 @else
                 <h5 class="color-pink mb-3">食材の使い切りにおすすめなメニュー♪</h5>
-                @foreach($useUpRecipes as $recipe)
-                <div class="card recommend-recipe">
-                    <a href="{{ route('getRecipe', ['id' => $recipe->id ] ) }}">
-                        <div class="card-body">
-                            @if( $recipe->image)
-                            <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
-                            @else
-                            <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
-                            @endif
-                        </div>
-                        <div class="card-header"><p>{{ $recipe->name }}</p></div>
-                    </a>
+                <div class="recommend-recipe">
+                    @foreach($useUpRecipes as $recipe)
+                    <div class="card">
+                        <a href="{{ route('getRecipe', ['id' => $recipe->id ] ) }}">
+                            <div class="card-body">
+                                @if( $recipe->image)
+                                <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
+                                @endif
+                            </div>
+                            <div class="card-header"><p>{{ $recipe->name }}</p></div>
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
-                @endforeach
-
+                
                 <h5 class="color-pink">ストックを活かして作るおすすめレシピ♪</h5>
                 @endif
-                @foreach($recommendRecipes as $recipe)
-                <div class="card recommend-recipe">
-                    <a href="{{ route('getRecipe', [ 'id' => $recipe->id ] ) }}">
-                        <div class="card-body">
-                            @if( $recipe->image)
-                            <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
-                            @else
-                            <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
-                            @endif
-                        </div>
-                        <div class="card-header"><p>{{ $recipe->name }}</p></div>
-                    </a>
+                <div class="recommend-recipe">
+                    @foreach($recommendRecipes as $recipe)
+                    <div class="card">
+                        <a href="{{ route('getRecipe', [ 'id' => $recipe->id ] ) }}">
+                            <div class="card-body">
+                                @if( $recipe->image)
+                                <img src="data:image/png;base64,{{ $recipe->image }}" alt="レシピ写真">
+                                @else
+                                <img src="{{ asset('img/no-image.png') }}" alt="レシピ写真">
+                                @endif
+                            </div>
+                            <div class="card-header"><p>{{ $recipe->name }}</p></div>
+                        </a>
+                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
     </div>

@@ -1,0 +1,236 @@
+/* -------------------------------------------
+レシピ詳細・レシピ編集画面
+------------------------------------------- */
+#edit-recipe, #detail-recipe {
+    position: relative;
+}
+#edit-recipe .right-btn {
+    position: absolute;
+        top:6%;
+        right:9%;
+}
+#detail-recipe .right-btn {
+    width:90px;
+    position: absolute;
+    top:6%;
+    right:16%;
+}
+#recipe-index .input-group form, #recipe-index .input-group div {
+    display:contents;
+}
+#recipe-index .input-group {
+    display:flex;
+    justify-content: space-between;
+}
+#recipe-index .input-group a {
+    padding-top:8px;
+    height:37px;
+}
+
+#create-recipe .font-normal {
+    font-weight: normal;
+    font-size: 1rem;
+}
+#create-recipe #previewImage {
+    width:100%;
+    margin-right:10px;
+    padding-top: 60%;
+    margin: 10px 0;
+    overflow:hidden;
+    position:relative;
+}
+#create-recipe #previewImage img {
+    width:100%;
+    height:100%;
+    position:absolute;
+        top:50%;
+        left:50%;
+    transform:translate(-50%, -50%);
+}
+#create-recipe #ingredient-table {
+    display:flex;
+}
+.info-area {
+    display:flex;
+}
+/* レシピタイトル */
+.recipe-name {
+    background: -moz-linear-gradient(to right, #8be4f0 70%,white); 
+    background: -webkit-linear-gradient(to right,  #8be4f0 70%,white); 
+    background:linear-gradient(to right, #8be4f0 70%,white);
+    padding:6px;
+    border-left:double 10px #06a2ba;
+}
+.recipe-name input {
+    width:90%;
+}
+/* レシピ名 */
+#create-recipe form .card-body .form-group label {
+    margin-bottom:6px;
+}
+
+/* レシピカテゴリ選択 */
+.food-select-area {
+    max-height: 200px; 
+    overflow-y: auto; /* 指定した高さよりも大きくなるとスクロールになる */
+}
+.category-area {
+    margin:8px 0 0;
+}
+
+/* 材料：付箋のCSS */
+.food-ready-area {
+    margin-top:60px;
+    position: relative;
+    background: #fff0cd;
+    box-shadow: 0px 0px 0px 5px #fff0cd;
+    border: dashed 2px white;
+    padding: 0.2em 1em;
+    color: #454545;
+}
+.food-border {
+    width:90%;
+    margin: 0 15px 5px;
+    padding:0;
+    border-bottom:3px dotted white;
+}
+/* 付箋のめくれた部分のCSS */
+.food-ready-area:after {
+    position: absolute;
+    content: '';
+    right: -7px;
+    top: -7px;
+    border-width: 0 20px 20px 0;
+    border-style: solid;
+    border-color: #ffdb88 #fff #ffdb88;
+    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+.food-ready-area .font-normal, .food-ready-area .serving.font-normal {
+    font-weight: normal;
+}
+.food-ready-area .serving {
+    margin:0;
+    padding:0;
+}
+.food-ready-area table {
+    margin-left:6px;
+}
+#addIngredientBtn {
+    margin-top: 5%;
+    margin-left:8%;
+    width:105px;
+}
+/* クリアボタン */
+.ingredient .col-1 {
+    padding-right:10px;
+}
+.clearIngredientBtn, .clearProcessBtn {
+    border:1px solid gray;
+    padding:3px 8px;
+}
+
+/* レシピ画像 */
+/* 詳細画面 */
+.recipe-image {
+    width:100%;
+    
+    margin-right:10px;
+    padding-top: 80%;
+    margin: 10px 0;
+    overflow:hidden;
+    position:relative;
+}
+.recipe-image img {
+    width:100%;
+    height:100%;
+    position:absolute;
+        top:50%;
+        left:50%;
+    transform:translate(-50%, -50%);
+}
+/* 編集画面 */
+#previewImage {
+    width:100%;
+    margin-right:10px;
+    padding-top: 80%;
+    margin: 10px 0;
+    overflow:hidden;
+    position:relative;
+}
+#previewImage img {
+    width:100%;
+    height:100%;
+    position:absolute;
+        top:50%;
+        left:50%;
+    transform:translate(-50%, -50%);
+}
+
+/* 区切り線 */
+.dot-border {
+    border-top:3px dotted rgb(199, 197, 197);
+    padding-top:12px;
+}
+
+/* ----------------------------------------------------------------------------------
+レスポンシブ対応
+---------------------------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+    /* 編集画面 */
+    .info-process form {
+        display:flex;
+        flex-direction: column;
+    }
+    .info-process form .info-area {
+        display:block;
+    }
+    .info-process form .info-area .food-ready-area {
+        margin:18px 0;
+    }
+    #edit-recipe .right-btn {
+        position: absolute;
+        right: 0%;
+    }
+
+    /* 詳細画面 */
+    #detail-recipe .right-btn {
+        position: absolute;
+            right:-2%;
+        margin:0;
+    }
+    #detail .info-process {
+        display:flex;
+        flex-direction: column;
+    }
+    #detail .info-process .info-area {
+        display:block;
+    }
+    #detail .info-process .info-area .food-ready-area {
+        margin:18px 0;
+    }
+    #detail .right-btn {
+        position: absolute;
+        right: 0%;
+    }
+    /* 一覧画面 */
+    .upload-image {
+        width:100px;
+    }
+    #index-table .fixed {
+        background:white;
+        position:sticky;
+            left:-10px;
+        z-index: 99;
+        padding:0.5rem 1rem;
+    }
+    /* 登録画面 */
+    #create-recipe #ingredient-table {
+        flex-direction: column;
+    }
+    #create-recipe #addIngredientBtn {
+        margin-top: 0;
+        margin-left:0;
+    }
+
+
+}

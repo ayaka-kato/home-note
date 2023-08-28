@@ -26,7 +26,7 @@
                         <!-- 印刷ボタン -->
                         <form class="print-area mr-1">                            
                             <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
-                            <input type="button" id="print" onclick="window.print();">
+                            <input type="button" class="p-0 m-0" id="print" onclick="window.print();">
                         </form>
                         <!-- Lineボタン -->
                         <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="http://home-note-080ff2fd6a87.herokuapp.com/food-records/restockList" data-color="default" data-size="small" style="display: none;"></div>
@@ -71,6 +71,7 @@
 @stop
 
 @section('css')
+
 @stop
 
 @section('js')

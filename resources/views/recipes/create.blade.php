@@ -7,8 +7,8 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="col-md-10">
+    <div class="row" id="create-recipe">
+        <div class="col-12 col-md-10">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -24,12 +24,12 @@
                     @csrf
                     <div class="card-body">
 
-                        <div class="form-group col-12 col-sm-8 col-md-8">
+                        <div class="form-group col-12 col-md-8 col-xl-6">
                             <label for="name">レシピ名<span class="color-red">*必須</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="（例）肉じゃが" value="{{ old('name') }}" autofocus>
                         </div>
 
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-10 col-md-8">
                             <label>カテゴリ</label>
                             <!-- Collapse ボタン -->
                             <a class="btn btn-success" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">選択する</a>
@@ -59,19 +59,19 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-sm-12 col-md-10">
+                        <div class="form-group col-12 col-md-10">
                             <b>材料</b>
                             <div class="d-flex" id="ingredient-table">
-                                <div class="form-group col-5 col-sm-3 col-md-3">
-                                    <label for="serving">何人前</label>
+                                <div class="form-group col-12  col-sm-8 col-md-3">
+                                    <label for="serving" class="font-normal">何人前</label>
                                     <input type="text" class="form-control" id="serving" name="serving" placeholder="（例）2人前" value="{{ old('serving')}}">                                            
                                 </div>
-                                <div class="form-group col-12 col-sm-9 col-md-9" >                                
-                                    <table class="table table-hover text-nowrap" id="amount-table">
+                                <div class="form-group col-12 col-md-9" >                                
+                                    <table class="table table-responsive table-hover text-nowrap" id="amount-table">
                                         <thead>
                                             <tr>
-                                                <th class="col-6 col-md-6">名前</th>
-                                                <th class="col-6 col-md-6">分量</th>
+                                                <th class="col-6 col-md-6 font-normal">名前</th>
+                                                <th class="col-6 col-md-6 font-normal">分量</th>
                                             </tr>
                                         </thead>
                                         <tbody>                                 
@@ -97,25 +97,25 @@
                             </div>
                         </div>
 
-                        <div class="form-group  col-md-8">
+                        <div class="form-group  col-12 col-md-8">
                             <label for="link">参考リンク</label>
                             <input type="text" class="form-control" id="link" name="link" placeholder="（例）https//..." value="{{ old('link') }}">
                         </div>
 
-                        <div class="form-group  col-md-8">
+                        <div class="form-group col-12 col-md-8">
                             <label for="image">画像</label>
-                            <div id="previewImage"></div>
+                            <div id="previewImage" class="border"></div>
                             <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
                         </div>
 
-                        <div class="col-md-12 dot-border">
+                        <div class="col-12 dot-border">
                             <b>作り方</b>
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th class="col-1 col-md-1">順番</th>
-                                        <th class="col-4 col-md-4">工程</th>
-                                        <th class="col-6 col-md-6">詳細</th>
+                                        <th class="col-1 col-md-1 font-normal">順番</th>
+                                        <th class="col-4 col-md-4 font-normal">工程</th>
+                                        <th class="col-6 col-md-6 font-normal">詳細</th>
                                     </tr>
                                 </thead>
                                 <tbody>
