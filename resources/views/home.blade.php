@@ -1,5 +1,4 @@
 @extends('adminlte::page')
-<!-- TODO: -->
 @section('title', 'ホーム')
 
 @section('content_header')

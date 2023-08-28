@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // TODO:あとでミドルウェアに書き換える
+use Illuminate\Support\Facades\Auth; 
 use App\Models\User;
 use App\Models\Recipe;
 use App\Models\Ingredient;
@@ -11,7 +11,6 @@ use App\Models\Process;
 
 class RecipeController extends Controller
 {
-    // TODO:後でミドルウェアに書き換える
     public function __construct()
     {
         $this->middleware('auth');

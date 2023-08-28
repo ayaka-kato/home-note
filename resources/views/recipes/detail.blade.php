@@ -42,7 +42,7 @@
                         @if ( $recipe->created_at != $recipe->updated_at )
                         <p>更新日：{{ $recipe->updated_at }}</p>
                         @endif
-                        <!-- TODO:印刷ボタン・共有ボタン・Herokuあげたらリンク先の設定する -->
+
                         <div class="d-flex">
                             <!-- 印刷ボタン -->
                             <form class="print-area mr-1">                            
@@ -60,7 +60,7 @@
                         <div class="row">
                             <h4 class="mt-2">材料</h4>
                             @if( $recipe->serving )
-                                <p class="col-8 col-md-7 serving">{{ $recipe->serving }}</p>
+                                <p class="col-8 col-md-7 serving">（{{ $recipe->serving }}）</p>
                             @endif
                             @foreach ($ingredients as $ingredient)
                                 <p class="food-border">

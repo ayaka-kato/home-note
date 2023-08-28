@@ -15,7 +15,6 @@ use Carbon\Carbon;
 class FoodRecordController extends Controller
 {
 
-    // TODO:後でミドルウェアに書き換える
     public function __construct()
     {
         $this->middleware('auth');

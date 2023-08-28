@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1>お買い物リスト</h1>
-    <p>登録日：{{ $date }}</p>
+    <p>最新登録日：{{ $date }}</p>
 @stop
 
 @section('content')
