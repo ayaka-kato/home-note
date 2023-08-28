@@ -18,17 +18,7 @@
                 </ul>
             </div>
             @endif
-            <div class="d-flex">
-            <!-- TODO: -->
-                <!-- 印刷ボタン -->
-                <form class="print-area mr-1">                            
-                    <img src="{{ asset('img/printer-fill.svg') }}" alt="印刷ボタン">
-                    <input type="button" id="print" onclick="window.print();">
-                </form>
-                <!-- Lineボタン -->
-                <div class="line-it-button" data-lang="ja" data-type="share-b" data-env="REAL" data-url="http://127.0.0.1:8000/edit-foodRecord/.{{ $date->id }}" data-color="default" data-size="small" data-count="false" data-ver="3" style="display: none;"></div>
-                
-            </div>
+
             <div class="card card-primary">
                 <div class="card-body">                   
                     <table class="table table-hover text-nowrap record-table col-12">

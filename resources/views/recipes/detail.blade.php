@@ -50,7 +50,7 @@
                                 <input type="button" id="print" onclick="window.print();">
                             </form>
                             <!-- Lineボタン -->
-                            <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="http://{{ route('getRecipe', ['id' => $recipe->id ] ) }}" data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
+                            <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="{{ route('getRecipe', ['id' => $recipe->id ] ) }}" data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div>
                             <!-- twitterボタン -->
                             <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="true" data-text="{{ '〖' . $recipe->name . '〗'}}" data-url="{{ route('getRecipe', ['id' => $recipe->id ] ) }}" data-size="large"></a>
                         </div>
