@@ -25,7 +25,7 @@
                     <div class="card-body">
 
                         <div class="form-group col-12 col-md-8 col-xl-6">
-                            <label for="name">レシピ名<span class="color-red">*必須</span></label>
+                            <label for="name">レシピ名<span class="need-mark">必須</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="（例）肉じゃが" value="{{ old('name') }}" autofocus>
                         </div>
 
@@ -147,6 +147,7 @@
             <div class="scroll-btn-area">
                 <button onclick="scrollToBottom()" class="btn btn-scroll top"><img src="{{ asset('img/arrow-down-circle.svg') }}" alt="画面下へスクロールするアイコン"></button>
                 <button onclick="scrollToTop()" class="btn btn-scroll bottom"><img src="{{ asset('img/arrow-up-circle.svg') }}" alt="画面上へスクロールするアイコン"></button>
+                <p class="m-0 text-center">スクロールボタン</p>
             </div>
         </div>
     </div>

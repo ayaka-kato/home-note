@@ -88,6 +88,19 @@
 }
 
 /* -------------------------------------------
+必須マーク
+-------------------------------------------- */
+.need-mark {
+    color:white;
+    background-color:rgb(236, 105, 105);
+    border-radius:5px;
+    font-size: 0.5rem;
+    font-weight: normal;
+    padding:3px 5px;
+    margin-left:2px;
+}
+
+/* -------------------------------------------
 スクロールボタン
 -------------------------------------------- */
 .scroll-btn-area {
@@ -191,10 +204,10 @@
     }
     .card-tools .input-group-append .btn {
         margin-top:6px;
-        font-size: 10px;
+        font-size: 0.9rem;
     }
     .card table {
-        font-size:14px;
+        font-size:1rem;
     }
 
     /* -------------------------------------------

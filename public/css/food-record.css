@@ -1,3 +1,11 @@
+#index-record h1 {
+    white-space: nowrap;
+}
+#index-record .right-btn a {
+    border-radius:5px;
+    padding:8px 10px;
+}
+
 /* -------------------------------------------
 在庫登録画面のラジオボタン
 ------------------------------------------- */

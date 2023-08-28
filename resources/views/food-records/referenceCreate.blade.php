@@ -34,9 +34,9 @@
                                 <p>{{ session('message') }}</p>
                             @endif
                             <tr>
-                                <th class="form-group col-2"><p>食材</p></th>
-                                <th class="form-group col-2"><p>理想在庫</p></th>
-                                <th class="form-group col-1"><p>実在庫</p></th>
+                                <th class="form-group col-2"><p>食材<span class="need-mark">必須</span></p></th>
+                                <th class="form-group col-2"><p>理想在庫<span class="need-mark">必須</span></p></th>
+                                <th class="form-group col-1"><p>実在庫<span class="need-mark">必須</span></p></th>
                                 <th class="form-group col-1"><p>廃棄数</p></th>
                                 <th class="form-group col-2"><p>補充数量・コメント</p></th>
                                 <th><p>色</p></th>
@@ -119,6 +119,11 @@
                     </div>
                 </form>
             </div>
+            <div class="scroll-btn-area">
+                <button onclick="scrollToBottom()" class="btn btn-scroll top"><img src="{{ asset('img/arrow-down-circle.svg') }}" alt="画面下へスクロールするアイコン"></button>
+                <button onclick="scrollToTop()" class="btn btn-scroll bottom"><img src="{{ asset('img/arrow-up-circle.svg') }}" alt="画面上へスクロールするアイコン"></button>
+                <p class="m-0 text-center">スクロールボタン</p>
+            </div>
         </div>
     </div>
 @stop
@@ -129,6 +134,7 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 <script src="{{ asset('js/food-record.js') }}"></script>
+
 <script>
 // -----------------------------------------------------------------------------------------------------------
 // ドラッグ＆ドロップ並び替え

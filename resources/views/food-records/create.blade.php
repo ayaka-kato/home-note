@@ -29,9 +29,9 @@
                         <table class="table table-responsive table-hover text-nowrap record-table">
                             <thead>
                                 <tr>
-                                    <th class="form-group col-2"><p>食材<span class="color-red">必須</span></p></th>
-                                    <th class="form-group col-2"><p>理想在庫<span class="color-red">必須</span></p></th>
-                                    <th class="form-group col-2"><p>実在庫<span class="color-red">必須</span></p></th>
+                                    <th class="form-group col-2"><p>食材<span class="need-mark">必須</span></p></th>
+                                    <th class="form-group col-2"><p>理想在庫<span class="need-mark">必須</span></p></th>
+                                    <th class="form-group col-2"><p>実在庫<span class="need-mark">必須</span></p></th>
                                     <th class="form-group col-2"><p>廃棄数</p></th>
                                     <th class="form-group col-2"><p>補充数量・コメント</p></th>
                                     <th class="form-group col-1"><p>色</p></th>
@@ -110,6 +110,11 @@
                         <button type="submit" class="btn btn-primary" id="record-submit-btn">登録</button>
                     </div>
                 </form>
+            </div>
+            <div class="scroll-btn-area">
+                <button onclick="scrollToBottom()" class="btn btn-scroll top"><img src="{{ asset('img/arrow-down-circle.svg') }}" alt="画面下へスクロールするアイコン"></button>
+                <button onclick="scrollToTop()" class="btn btn-scroll bottom"><img src="{{ asset('img/arrow-up-circle.svg') }}" alt="画面上へスクロールするアイコン"></button>
+                <p class="m-0 text-center">スクロールボタン</p>
             </div>
         </div>
     </div>

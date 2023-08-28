@@ -41,9 +41,9 @@
                                 <p>{{ session('message') }}</p>
                             @endif
                             <tr>
-                                <th class="form-group"><p>食材</p></th>
-                                <th class="form-group"><p>理想在庫</p></th>
-                                <th class="form-group"><p>実在庫</p></th>
+                                <th class="form-group"><p>食材<span class="need-mark"></p></th>
+                                <th class="form-group"><p>理想在庫<span class="need-mark"></p></th>
+                                <th class="form-group"><p>実在庫<span class="need-mark"></p></th>
                                 <th class="form-group"><p>廃棄数</p></th>
                                 <th class="form-group"><p>補充数量・コメント</p></th>
                                 <th><p>色</p></th>
@@ -125,6 +125,11 @@
                         <button type="submit" class="btn btn-primary" id="record-submit-btn">登録</button>
                     </div>
                 </form>
+            </div>
+            <div class="scroll-btn-area">
+                <button onclick="scrollToBottom()" class="btn btn-scroll top"><img src="{{ asset('img/arrow-down-circle.svg') }}" alt="画面下へスクロールするアイコン"></button>
+                <button onclick="scrollToTop()" class="btn btn-scroll bottom"><img src="{{ asset('img/arrow-up-circle.svg') }}" alt="画面上へスクロールするアイコン"></button>
+                <p class="m-0 text-center">スクロールボタン</p>
             </div>
         </div>
     </div>

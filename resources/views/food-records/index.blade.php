@@ -3,20 +3,18 @@
 @section('title', '冷蔵庫ストックデータ一覧')
 
 @section('content_header')
+<div id="index-record" class="d-flex justify-content-between align-items-center">
     <h1>冷蔵庫ストックデータ一覧</h1>
-    <div class="card-header">
-        <div class="card-tools">
-            @php $currentDate = Carbon\Carbon::now()->format('Y-m-d'); @endphp
-            <div class="input-group input-group-sm">
-                <div class="input-group-append">
-                    @if ($dates->contains('date', $currentDate))
-                    @else
-                        <a href="{{ route('createRecord') }}" class="btn btn-primary mt-2">ストックデータ登録</a>
-                    @endif
-                </div>
-            </div>
+    @php $currentDate = Carbon\Carbon::now()->format('Y-m-d'); @endphp
+    <div class="right-btn">
+        <div class="input-group-append">
+            @if ($dates->contains('date', $currentDate))
+            @else
+            <a href="{{ route('createRecord') }}" class="btn btn-primary">ストックデータ登録</a>
+            @endif
         </div>
     </div>
+</div>
 @stop
 
 @section('content')

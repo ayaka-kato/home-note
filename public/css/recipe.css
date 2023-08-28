@@ -12,8 +12,12 @@
 #detail-recipe .right-btn {
     width:90px;
     position: absolute;
-    top:6%;
-    right:16%;
+        top:6%;
+        right:16%;
+}
+#detail-recipe .right-btn a {
+    border-radius:5px;
+    padding:8px 10px;
 }
 #recipe-index .input-group form, #recipe-index .input-group div {
     display:contents;
@@ -25,6 +29,8 @@
 #recipe-index .input-group a {
     padding-top:8px;
     height:37px;
+    border-radius:5px;
+    padding:8px 10px;
 }
 
 #create-recipe .font-normal {
