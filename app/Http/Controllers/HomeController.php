@@ -50,24 +50,24 @@ class HomeController extends Controller
         // ロスが一番多い食材を含むレシピを表示
         // -------------------------------------------
         // $rankingの食材を含むレシピを取得
-        if (count($rankings) > 0 && count($rankings[0]->foodRecords) > 0) {
-            $mostWastedIngredient = $rankings[0]->foodRecords[0]->ingredient;
+        if (count($rankings) > 0) {
+            $mostWastedIngredient = $rankings[0]->ingredient;
 
             $useUpRecipes = Recipe::whereHas('ingredients', function ($query) use ($mostWastedIngredient) {
                 $query->where('ingredient', $mostWastedIngredient);
             })
             ->inRandomOrder()
-            ->limit(2)
+            ->limit(3)
             ->get();
 
             // $useUpRecipesのレシピIDを取得
             $useUpRecipesIds = $useUpRecipes->pluck('id');
 
-
             // 直近の在庫データで、在庫が多い食材を含むレシピをおすすめとして表示
             // -------------------------------------------
             // 一番新しいdate_idから食材在庫のレコードを取得
-            $latestStocks = $user->dates()->foodRecords()
+            $latestStocks =  Date::join('food_records','dates.id','food_records.date_id')
+            ->where('dates.user_id', Auth::id())
             ->select('ingredient', DB::raw('MAX(date_id) as latest_date_id'))
             ->groupBy('ingredient')
             ->get();
@@ -82,7 +82,7 @@ class HomeController extends Controller
                     ->get();
             })
             ->inRandomOrder()
-            ->limit(2)
+            ->limit(3)
             ->get();
 
             return view('home', compact('rankings', 'start_date', 'end_date', 'useUpRecipes', 'recommendRecipes'));
