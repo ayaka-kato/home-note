@@ -82,12 +82,12 @@ const createRecordRow = (index) => {
                 <option class="color-label orange" value="orange" {{ (old('color-' . ${recordIndex}) === "orange" ? "selected" : "" }}>オレンジ</option>
             </select>
         </td> 
-        <td class="form-group delete-record">
-            <button type="button" class="btn btn-danger delete-Btn mt-3" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
+        <td class="form-group delete-record col-1">
+            <button type="button" class="btn btn-danger delete-Btn" id="deleteBtn-${recordIndex}" data-id="${recordIndex}">削除</button>
         </td>
         <td><span class="border p-1 px-2">⇅</span></td>
         <td><input type="hidden" name="order-${ recordIndex }" value="${ recordIndex }" id="order-${ recordIndex }" class="order"></td>  
-        <td><input type="hidden" name="dlt-frag-${ recordIndex }}" value="0" id="dlt-frag-${ recordIndex }}" class="dlt-frag"></td>`;
+        <td><input type="hidden" name="dlt-frag-${ recordIndex }}" value="0" id="dlt-frag-${ recordIndex }" class="dlt-frag"></td>`;
 
     return newRow;
 };
@@ -98,7 +98,7 @@ addRecordBtn.addEventListener('click', () => {
     recordsContainer.appendChild(newRow);
     recordIndex++;
 
-    if (recordIndex > 50) {
+    if (recordIndex > 49) {
         closeElement(addRecordBtn);
     }
 
@@ -220,3 +220,17 @@ exeBtn.addEventListener('click', () => {
         });
     });
 });
+
+// -------------------------
+// ページ一番上にスクロールする機能
+// -------------------------
+function scrollToTop() {
+    window.scrollTo(0, 0);
+}
+
+// -------------------------
+// ページ一番下にスクロールする機能
+// -------------------------
+function scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+}

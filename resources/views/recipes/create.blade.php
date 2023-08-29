@@ -137,7 +137,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">工程を追加</button>
+                        <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">手順を追加</button>
                     </div>
                     <div class="card-footer text-center">
                         <button type="submit" class="btn btn-primary col-8 col-sm-6 m-auto">登録</button>

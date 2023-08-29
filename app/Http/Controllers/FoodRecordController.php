@@ -69,11 +69,11 @@ class FoodRecordController extends Controller
         $rules = [];
         
         for ($i = 0; $i < 50; $i++) {
-            $rules["order-$i"] = "integer|max:2";
+            $rules["order-$i"] = "integer";
             $rules["color-$i"] = "string|max:10|nullable";
-            $rules["ingredient-$i"] = "required|string|max:20";
+            $rules["ingredient-$i"] = "string|max:20|nullable";
             $rules["ideal-amount-$i"] = "string|max:50|nullable";
-            $rules["real-amount-$i"] = "required|integer|max:1";
+            $rules["real-amount-$i"] = "integer|max:1|nullable";
             $rules["waste-amount-$i"] = "integer|max:1|nullable";
             $rules["restock-amount-$i"] = "string|max:50|nullable";
         }

@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             @endif
-            
+
             <div class="card">
                 <div class="card-body info-process">
                     <form action="{{ route('updateRecipe', [ 'id' => $recipe->id ] ) }}" method="post" enctype="multipart/form-data">
@@ -161,7 +161,7 @@
                                     @endfor
                                     </tbody>
                                 </table>
-                                <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">工程を追加</button>                                      
+                                <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">手順を追加</button>                                      
                             </div>
                         </div>
                         <div class="card-footer text-center">

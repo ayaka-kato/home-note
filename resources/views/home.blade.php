@@ -13,22 +13,28 @@
             <p class="mb-1 slogan">＼ムダを知って貯金を増やす！！／</p>
             <h5 class="color-pink">捨てがち食材ランキング</h5>
             <div>
-                @if($rankings->isEmpty())
-                    <p>※データが未登録です。</p>
-                @else
+                @if(count($rankings) > 0)
                 <table class="table col-12 col-md-8 text-center mb-0">
                     <tr>
                         <td>1位</td>
                         <td>{{ $rankings[0]->ingredient }}</td>
                     </tr>
+                    @if(count($rankings) > 1 && isset($rankings[1]->ingredient))
+                    <tr>
                         <td>2位</td>
                         <td>{{ $rankings[1]->ingredient }}</td>
                     </tr>
+                    @endif
+                    @if(count($rankings) > 2 && isset($rankings[2]->ingredient))
+                    <tr>
                         <td>3位</td>
                         <td>{{ $rankings[2]->ingredient }}</td>
                     </tr>
+                    @endif
                 </table>
                 <p class="mb-0 sum-period">(集計期間：{{ $start_date }} ～ {{ $end_date }})</p>
+                @else
+                <p>※データが未登録です。</p>
                 @endif
             </div>
             <br>

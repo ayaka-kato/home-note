@@ -251,7 +251,7 @@ return [
             'text'    => 'レシピ登録',
             'url'     => 'recipes/create',
         ],
-        ['header' => '冷蔵庫ストック管理'],
+        ['header' => 'ストック管理'],
         [
             'text'    => 'ストックデータ一覧',
             'url'     => 'food-records/index',
