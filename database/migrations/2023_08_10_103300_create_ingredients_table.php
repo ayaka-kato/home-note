@@ -17,8 +17,8 @@ class CreateIngredientsTable extends Migration
             $table->id();
             // unsigned()：正の整数で登録する。idに使う。
             $table->integer('recipe_id')->unsigned()->index();
-            $table->string('ingredient')->nullable();
-            $table->string('amount')->nullable();
+            $table->string('ingredient', 20)->nullable();
+            $table->string('amount', 20)->nullable();
             $table->timestamps();
         });
     }

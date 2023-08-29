@@ -17,8 +17,8 @@ class CreateProcessesTable extends Migration
             $table->id();
             // unsignedBigInteger()：外部キーに使う
             $table->unsignedBigInteger('recipe_id');
-            $table->string('process')->nullable();;
-            $table->string('detail')->nullable();;
+            $table->string('process',20)->nullable();;
+            $table->string('detail',180)->nullable();;
             $table->timestamps();
         });
     }

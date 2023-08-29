@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', '冷蔵庫チェックリスト詳細')
+@section('title', 'ストックデータ詳細')
 
 @section('content_header')
-    <h1>冷蔵庫チェックリスト詳細</h1>
+    <h1>ストックデータ詳細</h1>
 @stop
 
 @section('content')

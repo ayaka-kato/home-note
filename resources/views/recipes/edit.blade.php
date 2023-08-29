@@ -18,6 +18,16 @@
 @section('content')
     <div class="row">
         <div class="col-12 col-md-11">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
             <div class="card">
                 <div class="card-body info-process">
                     <form action="{{ route('updateRecipe', [ 'id' => $recipe->id ] ) }}" method="post" enctype="multipart/form-data">
@@ -121,9 +131,10 @@
                                 <table class="table table-responsive table-hover text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th class="col-2">順番</th>
+                                            <th class="col-1">順番</th>
                                             <th class="col-4">手順</th>
                                             <th class="col-6">詳細</th>
+                                            <th class="col-1"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -144,7 +155,7 @@
                                         <tr class="process" style="display:none;">
                                             <td class="col-1">{{$i}}</td>
                                             <td class="col-4"><input type="text" class="form-control" id="process-{{ $i }}" name="process-{{ $i }}" id="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-5"><textarea class="form-control" id="detail-{{ $i }}" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-6"><textarea class="form-control" id="detail-{{ $i }}" name="detail-{{ $i }}">{{ old('detail-'. $i ) }}</textarea></td>
                                             <td class="col-1"><button type="button" class="btn clearProcessBtn" data-id="{{ $i }}">×</button></td>
                                         </tr>
                                     @endfor
@@ -153,8 +164,8 @@
                                 <button type="button" class="btn btn-success add-Btn" id="addProcessBtn">工程を追加</button>                                      
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">更新</button>
+                        <div class="card-footer text-center">
+                            <button type="submit" class="btn btn-primary col-8 col-sm-6 m-auto">更新</button>
                         </div>
                     </form>
                 </div>

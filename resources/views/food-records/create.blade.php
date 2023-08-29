@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', '冷蔵庫チェックリスト')
+@section('title', 'ストックデータ登録')
 
 @section('content_header')
-    <h1>冷蔵庫チェックリスト</h1>
+    <h1>ストックデータ登録</h1>
     <p>登録日：{{ Carbon\Carbon::now()->format('Y-m-d') }}</p>
 @stop
 
@@ -30,7 +30,7 @@
                             <thead>
                                 <tr>
                                     <th class="form-group col-2"><p>食材<span class="need-mark">必須</span></p></th>
-                                    <th class="form-group col-2"><p>理想在庫<span class="need-mark">必須</span></p></th>
+                                    <th class="form-group col-2"><p>理想在庫</p></th>
                                     <th class="form-group col-2"><p>実在庫<span class="need-mark">必須</span></p></th>
                                     <th class="form-group col-2"><p>廃棄数</p></th>
                                     <th class="form-group col-2"><p>補充数量・コメント</p></th>

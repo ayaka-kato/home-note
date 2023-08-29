@@ -79,14 +79,14 @@
                                                 <!-- 初期表示 -->
                                                 @if($i < 5)
                                                 <tr class="ingredient">                                            
-                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
-                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient-' . $i ) }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount-' . $i) }}"></td>
                                                 </tr>
                                                 <!-- 追加ボタン押下で表示 -->
                                                 @else
                                                 <tr class="ingredient" style="display:none;">   
-                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient') }}"></td>
-                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount') }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="ingredient-{{ $i }}" placeholder="（例）人参" value="{{ old('ingredient' . $i) }}"></td>
+                                                    <td class="col-6 col-md-4"><input type="text" class="form-control" name="amount-{{ $i }}" placeholder="（例）1/2本" value="{{ old('amount-' . $i) }}"></td>
                                                 </tr>
                                                 @endif
                                             @endfor
@@ -124,13 +124,13 @@
                                         <tr class="process">
                                             <td class="col-1 col-md-1">{{$i+1}}</td>
                                             <td class="col-4 col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-6 col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-6 col-md-6"><textarea class="form-control" name="detail-{{ $i }}">{{ old('detail-'. $i ) }}</textarea></td>
                                         </tr>
                                         @else
                                         <tr class="process" style="display:none;">
                                             <td class="col-1 col-md-1">{{$i+1}}</td>
                                             <td class="col-4 col-md-4"><input type="text" class="form-control" name="process-{{ $i }}" value="{{ old('process-'. $i ) }}"></td>
-                                            <td class="col-6 col-md-6"><textarea class="form-control" name="detail-{{ $i }}" value="{{ old('detail-'. $i ) }}"></textarea></td>
+                                            <td class="col-6 col-md-6"><textarea class="form-control" name="detail-{{ $i }}">{{ old('detail-'. $i ) }}</textarea></td>
                                         </tr>
                                         @endif
                                     @endfor

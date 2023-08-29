@@ -16,18 +16,6 @@ class RecipeController extends Controller
         $this->middleware('auth');
     }
 
-    // /**--------------------------------------------------------
-    //  * Request $request
-    //  * 
-    //  * レシピ一覧画面表示
-    // -------------------------------------------------------- */
-    // public function index()
-    // {
-    //     // with()でrecipe_idに紐づくingredientsを取得
-    //     $recipes = Recipe::with('ingredients')->orderBy('created_at', 'desc')->get();
-    //     return view('recipes.index', compact('recipes'));
-    // }
-
     /**--------------------------------------------------------
      * Request $request
      * 
@@ -46,19 +34,19 @@ class RecipeController extends Controller
     {
         // バリデーションするデータを$rulesに格納
         $rules = [
-            'name' => 'required|string|max:30',
-            'category' => 'string|nullable',
-            'serving' => 'string|max:255|nullable',
-            'link' => 'string|max:255|nullable',
+            'name' => 'required|string|max:100',
+            'category' => 'string|max:10|nullable',
+            'serving' => 'string|max:20|nullable',
+            'link' => 'string|max:180|nullable',
         ];
         
         for ($i = 0; $i < 20; $i++) {
-            $rules["ingredient-$i"] = "string|max:255|nullable";
-            $rules["amount-$i"] = "string|max:255|nullable";
+            $rules["ingredient-$i"] = "string|max:20|nullable";
+            $rules["amount-$i"] = "string|max:20|nullable";
         }
         for ($j = 0; $j < 8; $j++) {
-            $rules["process-$j"] = "string|max:255|nullable";
-            $rules["detail-$j"] = "string|max:255|nullable";
+            $rules["process-$j"] = "string|max:20|nullable";
+            $rules["detail-$j"] = "string|max:180|nullable";
         }
         // バリデーション
         $this->validate($request, $rules);
