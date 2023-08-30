@@ -90,12 +90,12 @@ class RecipeController extends Controller
             $file = $request->file('image');
             $encodedBase64Str = base64_encode(file_get_contents($file));
 
-            // バイト数を調べる
-            $byteSize = strlen(base64_decode($encodedBase64Str));
+            // // バイト数を調べる
+            // $byteSize = strlen(base64_decode($encodedBase64Str));
 
-            if ($byteSize > 50000) { // 50 kilobytes = 50000 bytes。もし画像が50キロバイト以上だったら
-                return redirect()->back()->withErrors(['image' => '画像サイズは50キロバイト以下で登録してください。'] );
-            }
+            // if ($byteSize > 50000) { // 50 kilobytes = 50000 bytes。もし画像が50キロバイト以上だったら
+            //     return redirect()->back()->withErrors(['image' => '画像サイズは50キロバイト以下で登録してください。'] );
+            // }
         }
 
         // ユーザー情報の取得
@@ -242,12 +242,12 @@ class RecipeController extends Controller
             $file = $request->file('image');
             $encodedBase64Str = base64_encode(file_get_contents($file));
 
-            // バイト数を調べる
-            $byteSize = strlen(base64_decode($encodedBase64Str));
+            // // バイト数を調べる
+            // $byteSize = strlen(base64_decode($encodedBase64Str));
 
-            if ($byteSize > 50000) { // 50 kilobytes = 50000 bytes。もし画像が50キロバイト以上だったら
-                return redirect()->back()->withErrors(['image' => '画像サイズは50キロバイト以下で登録してください。'] );
-            }
+            // if ($byteSize > 50000) { // 50 kilobytes = 50000 bytes。もし画像が50キロバイト以上だったら
+            //     return redirect()->back()->withErrors(['image' => '画像サイズは50キロバイト以下で登録してください。'] );
+            // }
         }
 
         $user = $request->user();
