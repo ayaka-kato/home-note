@@ -73,8 +73,8 @@ class FoodRecordController extends Controller
             $rules["color-$i"] = "string|max:10|nullable";
             $rules["ingredient-$i"] = "string|max:20|nullable";
             $rules["ideal-amount-$i"] = "string|max:50|nullable";
-            $rules["real-amount-$i"] = "integer|max:1|nullable";
-            $rules["waste-amount-$i"] = "integer|max:1|nullable";
+            $rules["real-amount-$i"] = "integer|max:2|nullable";
+            $rules["waste-amount-$i"] = "integer|max:2|nullable";
             $rules["restock-amount-$i"] = "string|max:50|nullable";
         }
 
@@ -113,6 +113,7 @@ class FoodRecordController extends Controller
                     'waste_amount' => $request->input($wasteAmountKey),
                     'restock_amount' => $request->input($restockAmountKey),
                 ]);
+
 
                 // リレーション登録
                 $dateModel->foodRecords()->save($record);

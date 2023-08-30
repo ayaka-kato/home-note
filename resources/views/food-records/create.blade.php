@@ -30,7 +30,7 @@
                             <thead>
                                 <tr>
                                     <th class="form-group col-2"><p>食材<span class="need-mark">必須</span></p></th>
-                                    <th class="form-group col-2"><p>理想在庫</p></th>
+                                    <th class="form-group col-2"><p>理想在庫<span class="need-mark">必須</span></p></th>
                                     <th class="form-group col-2"><p>実在庫<span class="need-mark">必須</span></p></th>
                                     <th class="form-group col-2"><p>廃棄数</p></th>
                                     <th class="form-group col-2"><p>補充数量・コメント</p></th>

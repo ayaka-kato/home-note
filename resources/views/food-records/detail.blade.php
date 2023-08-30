@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>ストックデータ詳細</h1>
+    <p>登録日：{{ $date->date }}</p>
 @stop
 
 @section('content')

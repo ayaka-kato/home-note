@@ -53,7 +53,7 @@
                                     <label for="password">{{ __('Password') }}</label>
                                 </td>
                                 <td>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="半角英数8～20文字" required autocomplete="new-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -66,7 +66,7 @@
                                     <label for="password-confirm">{{ __('Confirm Password') }}</label>
                                 </td>
                                 <td>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="半角英数8～20文字" required autocomplete="new-password">
                                 </td>
                             </tr>
                         </table>

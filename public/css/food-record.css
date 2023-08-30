@@ -6,6 +6,16 @@
     padding:8px 10px;
 }
 
+.clear-reference {
+    border:solid 2px black;
+    background-color:#F0F0F0;
+    border-radius: 0;
+    font-size: 0.9rem;
+    padding:3px 6px;
+    text-decoration: none;
+    color:black;
+}
+
 /* -------------------------------------------
 在庫登録画面のラジオボタン
 ------------------------------------------- */

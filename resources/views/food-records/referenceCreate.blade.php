@@ -26,7 +26,7 @@
                     <div class="card-body">
                     <!-- <button type="button" id="sort-button">色で並び替える</button> -->
                     <button type="button" id="exe-btn">補充数量に反映する</button>
-                    <a href="{{ route('createNewRecord') }}" class="btn btn-default">クリア</a>
+                    <a href="{{ route('createNewRecord') }}" class="btn clear-reference">クリア</a>
                                         
                     <table class="table table-hover table-responsive text-nowrap record-table col-12">
                         <thead>
@@ -35,7 +35,7 @@
                             @endif
                             <tr>
                                 <th class="form-group col-2"><p>食材<span class="need-mark">必須</span></p></th>
-                                <th class="form-group col-2"><p>理想在庫</p></th>
+                                <th class="form-group col-2"><p>理想在庫<span class="need-mark">必須</span></p></th>
                                 <th class="form-group col-1"><p>実在庫<span class="need-mark">必須</span></p></th>
                                 <th class="form-group col-1"><p>廃棄数</p></th>
                                 <th class="form-group col-2"><p>補充数量・コメント</p></th>
