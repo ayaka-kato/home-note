@@ -25,7 +25,7 @@ const createRecordRow = (index) => {
     const newRow = document.createElement('tr');
     newRow.id = 'food-record-' + recordIndex;
     newRow.dataset.id = recordIndex;
-    newRow.className = 'food-record';
+    newRow.className = 'food-record handle';
 
     // 新しい行の内容を設定
     newRow.innerHTML = `

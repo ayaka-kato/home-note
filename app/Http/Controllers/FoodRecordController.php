@@ -67,6 +67,7 @@ class FoodRecordController extends Controller
     public function recordValidate(Request $request)
     {
         $rules = [];
+ 
         
         for ($i = 0; $i < 50; $i++) {
             $rules["order-$i"] = "integer";
@@ -88,11 +89,16 @@ class FoodRecordController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->recordValidate($request); 
 
         $user = Auth::user();
         $date = Carbon::now()->format('Y-m-d');
         $dateModel = $user->dates()->firstOrCreate(['date' => $date]);
+
+        // TODO:コード理解
+        $errors = [];
+        $lastI = 0;
 
         for($i = 0; $i < 50; $i++){
             $orderKey =  'order-' . $i;
@@ -104,6 +110,9 @@ class FoodRecordController extends Controller
             $restockAmountKey =  'restock-amount-' . $i;
 
             if($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
+                // TODO:コード理解
+                $lastI = $i;
+
                 $record = new FoodRecord([
                     'order' => $request->input($orderKey),
                     'color' => $request->input($colorKey),
@@ -114,12 +123,30 @@ class FoodRecordController extends Controller
                     'restock_amount' => $request->input($restockAmountKey),
                 ]);
 
-
                 // リレーション登録
                 $dateModel->foodRecords()->save($record);
+
+            // TODO:コード理解
+            } else{
+                $errors[$i+1] = $i+1 . '行目の必須項目の入力がされていません。';
             }
         }
-        return redirect()->route('indexRecords');
+
+        // TODO:コード理解
+        for($i = 0; $i < 50; $i++){
+            if(isset($errors[$i+1]) && $lastI > $i){
+
+            } else{
+                unset($errors[$i+1]);
+            }
+        }
+
+        // TODO:コード理解
+        if(count($errors) > 0){
+            return redirect()->back()->withErrors($errors);
+        }else{
+            return redirect()->route('indexRecords');
+        }      
     }  
 
     /**

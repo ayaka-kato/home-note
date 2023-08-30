@@ -18,6 +18,11 @@
                     </ul>
                 </div>
             @endif
+            @if (session('message'))
+            <div class="alert alert-danger">
+                <p class="error-msg text-center mt-3">{{ session('message') }}</p>
+            </div>
+            @endif
 
             <div class="card card-primary" id="create-recipe">
                 <form method="POST" action="{{ route('storeRecipe') }}" enctype="multipart/form-data">
@@ -105,7 +110,7 @@
                         <div class="form-group col-12 col-md-8">
                             <label for="image">画像</label>
                             <div id="previewImage" class="border"></div>
-                            <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
+                            <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}" accept=".jpg, .jpeg, .png, .gif">
                         </div>
 
                         <div class="col-12 dot-border">

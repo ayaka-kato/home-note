@@ -27,6 +27,11 @@
                     </ul>
                 </div>
             @endif
+            @if (session('message'))
+            <div class="alert alert-danger">
+                <p class="error-msg text-center mt-3">{{ session('message') }}</p>
+            </div>
+            @endif
 
             <div class="card">
                 <div class="card-body info-process">
@@ -75,7 +80,7 @@
                                         @endif
                                     </div>
                                     <p class="my-1">画像：</p>
-                                    <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">                                
+                                    <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}" accept=".jpg, .jpeg, .png, .gif">                                
                                 </div>
 
                                 <!-- リンク・共有 -->

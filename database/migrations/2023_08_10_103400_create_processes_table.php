@@ -15,8 +15,7 @@ class CreateProcessesTable extends Migration
     {
         Schema::create('processes', function (Blueprint $table) {
             $table->id();
-            // unsignedBigInteger()：外部キーに使う
-            $table->unsignedBigInteger('recipe_id');
+            $table->integer('recipe_id')->unsigned()->index();
             $table->string('process',20)->nullable();;
             $table->string('detail',180)->nullable();;
             $table->timestamps();

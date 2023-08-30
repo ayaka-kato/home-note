@@ -122,7 +122,7 @@
                     <button type="button" class="btn btn-success my-2" id="addRecordBtn">追加</button>
 
                     <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-primary m-auto col-4" id="record-submit-btn">登録</button>
+                        <button type="submit" class="btn btn-primary m-auto col-4" id="record-submit-btn">更新</button>
                     </div>
                 </form>
             </div>

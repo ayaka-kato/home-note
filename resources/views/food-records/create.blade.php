@@ -16,6 +16,7 @@
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
+                        <p class="error-msg text-center mt-3">{{ session('message') }}</p>
                     </ul>
                 </div>
             @endif
