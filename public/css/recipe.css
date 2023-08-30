@@ -123,7 +123,7 @@
 }
 #addIngredientBtn {
     margin-top: 5%;
-    margin-left:8%;
+    margin-left:2%;
     width:105px;
 }
 /* クリアボタン */
@@ -235,8 +235,7 @@
     }
     #create-recipe #addIngredientBtn {
         margin-top: 0;
-        margin-left:0;
+        margin-left:8%;
     }
-
 
 }
