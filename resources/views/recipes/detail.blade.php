@@ -75,7 +75,7 @@
                 <div class="card-body process-area">
                     <div class="col-12 dot-border">
                         <h4>作り方</h4>
-                        <table class="table table-responsive table-hover text-nowrap">
+                        <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th class="col-1">順番</th>

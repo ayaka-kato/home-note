@@ -19,6 +19,12 @@
     border-radius:5px;
     padding:8px 10px;
 }
+#detail table {
+    table-layout: fixed;
+}
+#detail table tr td p {
+    white-space: normal;
+}
 #recipe-index .input-group form, #recipe-index .input-group div {
     display:contents;
 }
