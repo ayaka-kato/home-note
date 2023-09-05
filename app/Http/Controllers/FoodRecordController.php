@@ -31,7 +31,7 @@ class FoodRecordController extends Controller
 
     /**
      * 
-     * 食材データ入力画面表示
+     * 食材データ入力画面表示（前回データ引用）
      */
     public function viewReferenceCreate()
     {
@@ -39,11 +39,11 @@ class FoodRecordController extends Controller
         $today = date('Y-m-d');
         $user = Auth::user();
         $date = $user->dates()->whereDate('created_at', $today)->first();
+        
         // 過去最新のレコードを取得する
         $latestDate = $user->dates()->latest('created_at')->first();
 
-        
-        // 本日の在庫データの登録がすでにあれば、
+        // // 本日の在庫データの登録がすでにあれば、
         if ($date){
             $foodRecords = $date->foodRecords()->get();
             return view('food-records.edit', compact('foodRecords', 'date'));
@@ -67,7 +67,6 @@ class FoodRecordController extends Controller
     public function recordValidate(Request $request)
     {
         $rules = [];
- 
         
         for ($i = 0; $i < 50; $i++) {
             $rules["order-$i"] = "integer";
@@ -90,16 +89,15 @@ class FoodRecordController extends Controller
     public function store(Request $request)
     {
 
+        // バリデーション
         $this->recordValidate($request); 
-
-        $user = Auth::user();
-        $date = Carbon::now()->format('Y-m-d');
-        $dateModel = $user->dates()->firstOrCreate(['date' => $date]);
 
         // TODO:コード理解
         $errors = [];
         $lastI = 0;
 
+
+        // エラー行にエラーメッセージを格納し、エラーがない行は登録するループ
         for($i = 0; $i < 50; $i++){
             $orderKey =  'order-' . $i;
             $colorKey =  'color-' . $i;
@@ -109,42 +107,71 @@ class FoodRecordController extends Controller
             $wasteAmountKey =  'waste-amount-' . $i;
             $restockAmountKey =  'restock-amount-' . $i;
 
-            if($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
-                // TODO:コード理解
-                $lastI = $i;
+            // 一つの項目でも入力があれば
+            if ($request->input($colorKey) !== null || $request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null || $request->input($wasteAmountKey) !== null || $request->input($restockAmountKey) !== null) {
 
-                $record = new FoodRecord([
-                    'order' => $request->input($orderKey),
-                    'color' => $request->input($colorKey),
-                    'ingredient' => $request->input($ingredientKey),
-                    'ideal_amount' => $request->input($idealAmountKey),
-                    'real_amount' => $request->input($realAmountKey),
-                    'waste_amount' => $request->input($wasteAmountKey),
-                    'restock_amount' => $request->input($restockAmountKey),
-                ]);
+                // 必須項目すべてに入力がある時
+                if ($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
 
-                // リレーション登録
-                $dateModel->foodRecords()->save($record);
+                    // TODO:コード理解
+                    // $lastI = $i;
 
-            // TODO:コード理解
-            } else{
-                $errors[$i+1] = $i+1 . '行目の必須項目の入力がされていません。';
+                } else{
+                    $errors[$i+1] = $i+1 . '行目の必須項目の入力がされていません。';                
+                }
             }
         }
 
+        // エラーが無ければエラー用の配列を削除する
         // TODO:コード理解
         for($i = 0; $i < 50; $i++){
-            if(isset($errors[$i+1]) && $lastI > $i){
 
+        //  if(isset($errors[$i+1]) && $lastI > $i){
+            if(isset($errors[$i+1])){
+
+            // エラーが無ければ配列を削除する
             } else{
+                // unset():変数・配列を削除する関数。そのままにしておくとメモリを食ったり、誤作動を起こす可能性がある
                 unset($errors[$i+1]);
             }
         }
 
-        // TODO:コード理解
+        // エラーの有無による表示の分岐
+        // エラーがあれば、表示
         if(count($errors) > 0){
-            return redirect()->back()->withErrors($errors);
+            return redirect()->back()->withErrors($errors)->withInput();
+
         }else{
+            $date = Carbon::now()->format('Y-m-d');
+            $dateModel = Auth::user()->dates()->firstOrCreate(['date' => $date]);
+            $dateId = $dateModel->id;
+
+            for($i = 0; $i < 50; $i++){
+                $orderKey =  'order-' . $i;
+                $colorKey =  'color-' . $i;
+                $ingredientKey =  'ingredient-' . $i;
+                $idealAmountKey =  'ideal-amount-' . $i;
+                $realAmountKey =  'real-amount-' . $i;
+                $wasteAmountKey =  'waste-amount-' . $i;
+                $restockAmountKey =  'restock-amount-' . $i;
+
+                // 必須項目すべてに入力がある時
+                if ($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
+                    $record = foodRecord::create([
+                        'date_id' => $dateId,
+                        'order' => $request->input($orderKey),
+                        'color' => $request->input($colorKey),
+                        'ingredient' => $request->input($ingredientKey),
+                        'ideal_amount' => $request->input($idealAmountKey),
+                        'real_amount' => $request->input($realAmountKey),
+                        'waste_amount' => $request->input($wasteAmountKey),
+                        'restock_amount' => $request->input($restockAmountKey),
+                    ]); 
+
+                    // リレーション登録
+                    $dateModel->foodRecords()->save($record);
+                }
+            }
             return redirect()->route('indexRecords');
         }      
     }  
@@ -195,7 +222,50 @@ class FoodRecordController extends Controller
                 $order[] = $request->input($orderKey);
             }
         }
-        
+
+        // 入力漏れがないか確認
+        $errors = [];
+        foreach ($order as $index) {
+            $orderKey =  'order-' . $index;
+            $colorKey =  'color-' . $index;
+            $ingredientKey =  'ingredient-' . $index;
+            $idealAmountKey =  'ideal-amount-' . $index;
+            $realAmountKey =  'real-amount-' . $index;
+            $wasteAmountKey =  'waste-amount-' . $index;
+            $restockAmountKey =  'restock-amount-' . $index;
+
+            // 一つの項目でも入力があれば
+            if ($request->input($colorKey) !== null || $request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null || $request->input($wasteAmountKey) !== null || $request->input($restockAmountKey) !== null) {
+
+                // 必須項目すべてに入力がある時
+                if ($request->input($ingredientKey) !== null && $request->input($idealAmountKey) !== null && $request->input($realAmountKey) !== null){
+
+                }else{
+                    $errors[$index +1] = $index +1 . '行目の必須項目の入力がされていません。'; 
+                }
+            }
+        }
+
+        // エラーが無ければエラー用の配列を削除する
+        // TODO:コード理解
+        foreach ($order as $index) {
+
+            if(isset($errors[$index+1])){
+
+            // エラーが無ければ配列を削除する
+            } else{
+                // unset():変数・配列を削除する関数。そのままにしておくとメモリを食ったり、誤作動を起こす可能性がある
+                unset($errors[$index+1]);
+            }
+        }
+
+        // エラーの有無による表示の分岐
+        // エラーがあれば、表示
+        if(count($errors) > 0){
+            return redirect()->back()->withErrors($errors)->withInput();
+
+        } else {
+
         // 並び替え順にデータを更新
         foreach ($order as $index) {
 
@@ -215,51 +285,48 @@ class FoodRecordController extends Controller
                 
                 // delete-frag=0であれば更新
                 if($dltFrag == 0){
-                    if ($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null) {
-                        // fillメソッドを使用して更新
-                        $record->fill([
-                            'order' => $request->input($orderKey),
-                            'color' => $request->input($colorKey),
-                            'ingredient' => $request->input($ingredientKey),
-                            'ideal_amount' => $request->input($idealAmountKey),
-                            'real_amount' => $request->input($realAmountKey),
-                            'waste_amount' => $request->input($wasteAmountKey),
-                            'restock_amount' => $request->input($restockAmountKey),
-                        ])->save();
-                    }
+                    // fillメソッドを使用して更新
+                    $record->fill([
+                        'order' => $request->input($orderKey),
+                        'color' => $request->input($colorKey),
+                        'ingredient' => $request->input($ingredientKey),
+                        'ideal_amount' => $request->input($idealAmountKey),
+                        'real_amount' => $request->input($realAmountKey),
+                        'waste_amount' => $request->input($wasteAmountKey),
+                        'restock_amount' => $request->input($restockAmountKey),
+                    ])->save();
 
                 // delete-frag=1であれば削除
                 }else {
                     $record->delete();
-
                 }          
 
             // DBにレコードがない場合（新規登録）
             }else {
-                    $orderKey =  'order-' . $index;
-                    $colorKey =  'color-' . $index;
-                    $ingredientKey =  'ingredient-' . $index;
-                    $idealAmountKey =  'ideal-amount-' . $index;
-                    $realAmountKey =  'real-amount-' . $index;
-                    $wasteAmountKey =  'waste-amount-' . $index;
-                    $restockAmountKey =  'restock-amount-' . $index;
+                $orderKey =  'order-' . $index;
+                $colorKey =  'color-' . $index;
+                $ingredientKey =  'ingredient-' . $index;
+                $idealAmountKey =  'ideal-amount-' . $index;
+                $realAmountKey =  'real-amount-' . $index;
+                $wasteAmountKey =  'waste-amount-' . $index;
+                $restockAmountKey =  'restock-amount-' . $index;
 
-                    if($request->input($ingredientKey) !== null || $request->input($idealAmountKey) !== null || $request->input($realAmountKey) !== null){
-                        FoodRecord::create([
-                            'date_id' => $date->id,
-                            'order' => $request->input($orderKey),
-                            'color' => $request->input($colorKey),
-                            'ingredient' => $request->input($ingredientKey),
-                            'ideal_amount' => $request->input($idealAmountKey),
-                            'real_amount' => $request->input($realAmountKey),
-                            'waste_amount' => $request->input($wasteAmountKey),
-                            'restock_amount' => $request->input($restockAmountKey),
-                        ]);
-                    }
+                FoodRecord::create([
+                    'date_id' => $date->id,
+                    'order' => $request->input($orderKey),
+                    'color' => $request->input($colorKey),
+                    'ingredient' => $request->input($ingredientKey),
+                    'ideal_amount' => $request->input($idealAmountKey),
+                    'real_amount' => $request->input($realAmountKey),
+                    'waste_amount' => $request->input($wasteAmountKey),
+                    'restock_amount' => $request->input($restockAmountKey),
+                ]);
             }
         }
         return redirect()->route('indexRecords');
     }
+}
+
 
     /**
      * Request $request

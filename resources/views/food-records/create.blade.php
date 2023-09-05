@@ -43,10 +43,10 @@
                                 @for($i = 0; $i < 5; $i++)
                                 <tr id="food-record-{{ $i }}" class="food-record handle" data-id="{{ $i }}">                             
                                     <td class="form-group ingredient-name col-2">
-                                        <input type="text" name="ingredient-{{ $i }}" class="form-control" placeholder="（例）人参" value="{{ old('ingredient') }}">
+                                        <input type="text" name="ingredient-{{ $i }}" class="form-control" placeholder="（例）人参" value="{{ old('ingredient-' . $i) }}">
                                     </td>
                                     <td class="form-group ideal-amount col-2">
-                                        <input type="text" id="ideal-amount-{{ $i }}" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount') }}">
+                                        <input type="text" id="ideal-amount-{{ $i }}" name="ideal-amount-{{ $i }}" class="form-control" placeholder="（例）2本"  value="{{ old('ideal-amount-' . $i) }}">
                                     </td>
                                     <td class="form-group real-amount col-2">
                                         <div class="form-control d-flex">

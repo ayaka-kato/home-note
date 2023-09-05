@@ -79,7 +79,7 @@
                                 <td class="form-group waste-amount">
                                     <div class="form-control d-flex">
                                         <div>
-                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="0" {{ (old('waste-amount-' . $index) === "0" || $foodRecord->waste_amount === 1) ? "checked" : "" }}>
+                                            <input type="radio" id="waste-left-{{ $index }}" name="waste-amount-{{ $index }}" value="0" {{ (old('waste-amount-' . $index) === "0" || $foodRecord->waste_amount === 0) ? "checked" : "" }}>
                                             <label class="radio-left" for="waste-left-{{ $index }}">ない</label>
                                         </div>
                                         <div>
