@@ -1,4 +1,5 @@
 # おうちノート（食材在庫管理システム）
+![ログイン画面](https://github.com/ayaka-kato/item-management/assets/128237356/03481114-d081-4801-9951-743aebdf7f3f)
 
 ## 概要
 * このシステムは、ユーザーの食材在庫の管理を手軽にし、食材ロス削減の一助となることを目的とします。 
@@ -13,6 +14,23 @@
 * ストックデータに基づく集計、ランキングの表示、おすすめレシピの表示
 * LINE・Twitterへの共有
 
+#### ホーム画面
+![ホーム画面](https://github.com/ayaka-kato/item-management/assets/128237356/c5437175-ee77-4d49-a8ec-723a18ef4911)
+* 当月で廃棄数の多い食材が3位まで表示されます（ストックデータ登録より入力）。
+* 最も廃棄数の多かった食材を用いたレシピを3件表示し、ユーザーに食材の活用方法を紹介します。
+* また、直近のストックデータから在庫数の多い食材を使ったレシピを3件表示します。
+
+#### レシピ登録画面 
+![レシピ登録画面](https://github.com/ayaka-kato/item-management/assets/128237356/8755e4b9-9dff-424c-abb6-e21c59fdd61c)
+* 追加ボタンを押して食材は20件まで、手順は8件まで入力することができます。
+* 選択している画像はプレビューが表示されます。
+
+#### ストックデータ入力画面
+![ストックデータ入力画面](https://github.com/ayaka-kato/item-management/assets/128237356/b15c154d-e4fc-4a8f-a5b4-dec3bf6d6257)
+* 追加ボタンを押して50行まで入力行を増やせます。
+* 入力行に色を付ける、ドラッグアンドドロップで並び替えるといったことができます。
+
+
 ## 開発環境
 PHP 8.1.22
 MySQL 15.1
@@ -20,6 +38,9 @@ Laravel 8.83.3
 
 ## 設計書
 [設計書ページへ](https://drive.google.com/drive/folders/1Jf-XiV9SgHDYCyvopEAw1YfiTRErNk-D)
+
+## ER図
+![ER図](https://github.com/ayaka-kato/item-management/assets/128237356/de438661-ed0e-4f65-b9ff-5260cb83e982)
 
 ## システム閲覧
 [アプリケーションページへ](http://home-note-080ff2fd6a87.herokuapp.com/)
