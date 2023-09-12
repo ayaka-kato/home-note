@@ -1,35 +1,30 @@
-## 商品管理システム
+# おうちノート（食材在庫管理システム）
 
-### 環境構築手順
+## 概要
+* このシステムは、ユーザーの食材在庫の管理を手軽にし、食材ロス削減の一助となることを目的とします。 
+* このシステムでは、日々の在庫確認について、スマホからチェックリストを用いて簡単に確認ができます。
+* また、廃棄数が多かった食材、直近の在庫が多い食材を用いたレシピをおすすめとして表示し、ユーザーの食品ロスの削減をサポートします。
 
-* Gitクローン
-* .env.example をコピーして .env を作成
-* MySQLかPostgreSQLのデータベース作成（名前：item_management）  
-  ローカルでMAMPを使用しているのであれば、MySQL推奨
-* .env にデータベース接続情報追加
-```
-例）
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=item_management
-DB_USERNAME=root
-DB_PASSWORD=root
-```
-* APP_KEY生成
-```
-$ php artisan key:generate
-```
-* Composerインストール
-```
-$ composer install
-```
-* フロント環境構築
-```
-$ npm install
-$ npm run dev
-```
-* マイグレーション
-```
-$ php artisan migrate
-```
+## 主な機能
+* レシピの新規登録、編集、削除
+* レシピ一覧の閲覧、キーワードによる検索
+* ストックデータの新規登録、編集
+* ストックデータの色付け機能、並び替え機能
+* ストックデータに基づく集計、ランキングの表示、おすすめレシピの表示
+* LINE・Twitterへの共有
+
+## 開発環境
+PHP 8.1.22
+MySQL 15.1
+Laravel 8.83.3
+
+## 設計書
+[設計書ページへ](https://drive.google.com/drive/folders/1Jf-XiV9SgHDYCyvopEAw1YfiTRErNk-D)
+
+## システム閲覧
+[アプリケーションページへ](http://home-note-080ff2fd6a87.herokuapp.com/)
+
+### テストアカウント情報
+
+メールアドレス：admin1234@example.com
+パスワード：password1
